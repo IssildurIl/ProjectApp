@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,12 +50,12 @@ import java.util.Random;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class PlayActivity extends AppCompatActivity {
-    Button Click;
+    ImageButton Click;
     String playerName = "";
     String roomName = "";
     String role ="";
     String message ="";
-    Button rollDicesButton;
+    ImageButton rollDicesButton;
     boolean flag1=true;
     TextView nick;
     ImageView iv_deck, iv_card1, iv_card2, iv_card3, iv_card4, iv_card5, iv_card6;
@@ -261,7 +262,7 @@ public class PlayActivity extends AppCompatActivity {
         });
 
 //кубики
-        rollDicesButton = (Button) findViewById(R.id.Roll);
+        rollDicesButton = (ImageButton) findViewById(R.id.Roll);
         rollDicesButton.setEnabled(false); //
         mLeftImageView = (ImageView) findViewById(R.id.imageview_left);
         mRightImageView = (ImageView) findViewById(R.id.imageview_right);
