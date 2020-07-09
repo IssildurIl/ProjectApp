@@ -2,15 +2,11 @@ package com.example.projectapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class StartActivity extends AppCompatActivity {
@@ -21,7 +17,7 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.mainmenu);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         FontTexts();
-        startService(new Intent(this, Music.class));
+        startService(new Intent(this, commonplayer.class));
 
     }
 
@@ -66,7 +62,7 @@ public class StartActivity extends AppCompatActivity {
     //Кнопка "выход"
     public void onBackPressed(View view) {
         moveTaskToBack(true); android.os.Process.killProcess(android.os.Process.myPid()); System.exit(1);
-        stopService(new Intent(this, Music.class));
+        stopService(new Intent(this, commonplayer.class));
     }
     //Кнопка "играть"
     public void goTogames(View view){

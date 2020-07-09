@@ -28,9 +28,11 @@
             android:parentActivityName=".StartActivity" />
 
         <service
-            android:name=".Music"
+            android:name=".commonplayer"
             android:enabled="true" />
-
+        <service
+            android:name=".battleplayer"
+            android:enabled="true" />
         <activity
             android:name=".Deckofcards"
             android:parentActivityName=".StartActivity" />

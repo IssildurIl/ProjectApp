@@ -1,48 +1,31 @@
 package com.example.projectapp;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ClipData;
-import android.content.ClipDescription;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.graphics.PointF;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.DragEvent;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class Deckofcards extends AppCompatActivity {
     ImageButton Click;
@@ -71,12 +54,28 @@ public class Deckofcards extends AppCompatActivity {
     //
     FrameLayout spells, hand;
     int value1, value2, value3;
+    //звуки в игре
+
+    private SoundPool soundPool;
+    private int sound1, sound2, sound3, sound4 ;
 
     //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.deckofcards);
+        //общие звуки
+        stopService(new Intent(Deckofcards.this, commonplayer.class));
+        startService(new Intent(Deckofcards.this, battleplayer.class));
+        //местные звуки
+        soundPool = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
+
+        sound1 = soundPool.load(this, R.raw.givecards, 1);
+        sound2 = soundPool.load(this, R.raw.dropcard, 1);
+        sound3 = soundPool.load(this, R.raw.takedmg, 1);
+        sound4 = soundPool.load(this, R.raw.dice, 1);
+        //музыка
+
 
         rollDicesButton = (ImageButton) findViewById(R.id.Roll);
         rollDicesButton.setEnabled(false);
@@ -85,6 +84,7 @@ public class Deckofcards extends AppCompatActivity {
         Click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                soundPool.play(sound3, 1, 1, 0, 1, 1);
                 Click.setEnabled(false);
                 rollDicesButton.setEnabled(true);
                 tableAction(leave_card);
@@ -161,6 +161,7 @@ public class Deckofcards extends AppCompatActivity {
         iv_deck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                soundPool.play(sound1, 1, 1, 0, 0, 1);
                 takeCard(leave_card);
                 rollDicesButton.setEnabled(true);
             }
@@ -174,6 +175,7 @@ public class Deckofcards extends AppCompatActivity {
         rollDicesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                soundPool.play(sound4, 1, 1, 0, 0, 1);
                 Click.setEnabled(true);
                 rollDicesButton.setEnabled(false);
                 fooRollDice();
@@ -262,6 +264,7 @@ public class Deckofcards extends AppCompatActivity {
             final View view = (View) event.getLocalState();
             switch (dragEvent) {
                 case DragEvent.ACTION_DROP:
+                    soundPool.play(sound2, 1, 1, 0, 0, 1);
                     //11.05.2020 16:59
                     switch (view.getId()) {
                         case R.id.iv_card1:
@@ -1494,4 +1497,14 @@ public class Deckofcards extends AppCompatActivity {
         ((ImageView) findViewById(R.id.thirdcard2)).setImageResource(R.drawable.d_card);
         leave_card = 0;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(new Intent(Deckofcards.this, battleplayer.class));
+        startService(new Intent(Deckofcards.this, commonplayer.class));
+        soundPool.release();
+        soundPool = null;
+    }
+    //музыка
 }

@@ -30,13 +30,6 @@ public class OptionActivity extends AppCompatActivity {
         final TextView mus = (TextView)findViewById(R.id.textMusic);
         mus.setTypeface(Typeface.createFromAsset(
                 getAssets(), "fonts/JurassicPark-BL48.ttf"));
-        mPlayer=MediaPlayer.create(this, R.raw.music);
-        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-            }
-        });
-
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         int curValue = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
