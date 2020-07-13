@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,14 +9,13 @@
     android:theme="@android:style/ThemeOverlay.Material.Dark">
 
     <LinearLayout
-        android:layout_width="310dp"
-        android:layout_height="400dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="150dp"
+        android:layout_width="395dp"
+        android:layout_height="472dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="5dp"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:padding="10dp">
 
         <Button
             android:id="@+id/start"
@@ -23,8 +23,8 @@
             android:background="@android:color/transparent"
             android:clickable="true"
             android:onClick="goTogames"
-            android:text="@string/menu_start_game"
-            />
+            android:text="@string/menu_start_game" />
+
         <Button
             android:id="@+id/Netgame"
             style="@style/MenuFont"
@@ -66,7 +66,23 @@
             android:onClick="onBackPressed"
             android:text="@string/menu_exit" />
 
+        <FrameLayout
+            android:layout_width="375dp"
+            android:layout_height="wrap_content">
+
+            <pl.droidsonroids.gif.GifImageView
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:layout_marginLeft="207sp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/firemove2" />
+
+            <pl.droidsonroids.gif.GifImageView
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:layout_marginLeft="35sp"
+                android:layout_marginBottom="10sp"
+                android:src="@drawable/firemove2" />
+        </FrameLayout>
     </LinearLayout>
-
-
 </RelativeLayout>

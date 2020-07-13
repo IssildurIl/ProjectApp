@@ -75,7 +75,8 @@ public class Deckofcards extends AppCompatActivity {
         sound3 = soundPool.load(this, R.raw.takedmg, 1);
         sound4 = soundPool.load(this, R.raw.dice, 1);
         //музыка
-
+        //
+        //
 
         rollDicesButton = (ImageButton) findViewById(R.id.Roll);
         rollDicesButton.setEnabled(false);
@@ -84,7 +85,7 @@ public class Deckofcards extends AppCompatActivity {
         Click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundPool.play(sound3, 1, 1, 0, 1, 1);
+                soundPool.play(sound3, 1, 1, 0, 0, 1);
                 Click.setEnabled(false);
                 rollDicesButton.setEnabled(true);
                 tableAction(leave_card);
@@ -139,9 +140,6 @@ public class Deckofcards extends AppCompatActivity {
         seccard.setOnDragListener(dragListener);
         thirdcard.setOnDragListener(dragListener);
 
-        fstcard.setImageResource(R.drawable.i_card);
-        seccard.setImageResource(R.drawable.k_card);
-        thirdcard.setImageResource(R.drawable.d_card);
 
         iv_card1.setOnLongClickListener(longClickListener);
         iv_card2.setOnLongClickListener(longClickListener);
