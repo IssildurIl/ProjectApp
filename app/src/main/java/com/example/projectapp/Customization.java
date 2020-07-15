@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.EditText;
@@ -45,6 +47,8 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.customactivity);
 //
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
@@ -103,7 +107,7 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
         imageView.setLayoutParams(new
                 ImageSwitcher.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        imageView.setBackgroundColor(0xFF000000);
+        imageView.setBackgroundColor(0x00000000);
         return imageView;
     }
     @Override

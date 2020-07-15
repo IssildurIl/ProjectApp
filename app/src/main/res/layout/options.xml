@@ -6,7 +6,7 @@
     xmlns:layout="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".OptionActivity"
-    android:background="@drawable/view_with_background">
+    android:background="@drawable/view_with_background_all">
 
     <TextView
         android:id="@+id/backtomenu"

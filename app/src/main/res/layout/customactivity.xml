@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Customization"
-    android:background="@drawable/view_with_background">
+    android:background="@drawable/view_with_background_all">
 
     <TextView
         android:id="@+id/title"
@@ -27,6 +27,7 @@
         android:layout_height="128dp"
         android:layout_marginTop="73dp"
         android:layout_marginBottom="195dp"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/backb1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.688"

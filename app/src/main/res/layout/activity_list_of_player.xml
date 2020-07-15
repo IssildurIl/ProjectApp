@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/view_with_background_all"
     tools:context=".ListOfPlayer">
 
     <ListView

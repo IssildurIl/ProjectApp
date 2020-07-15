@@ -32,5 +32,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:19.3.0'
     implementation 'gr.pantrif:easy-android-splash-screen:0.0.1'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
-    implementation 'info.hoang8f:fbutton:1.0.5'
+    implementation 'com.wajahatkarim3.EasyFlipView:EasyFlipView:1.0.0'
 }

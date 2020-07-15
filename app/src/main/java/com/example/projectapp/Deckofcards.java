@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
@@ -16,6 +17,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -38,7 +42,7 @@ public class Deckofcards extends AppCompatActivity {
     int card_num = 0, leave_card = 6, leave_opp = 6;
     ImageView PlayerIcon, mLeftImageView, mRightImageView,mMidImageView;
     int mIcon;
-    //
+    // view.startAnimation(animRotate);
     private SharedPreferences mSettings;
     public static final String APP_PREFERENCES = "mysettings";
     public static final String APP_PREFERENCES_NAME = "Nickname";
@@ -59,10 +63,18 @@ public class Deckofcards extends AppCompatActivity {
     private SoundPool soundPool;
     private int sound1, sound2, sound3, sound4 ;
 
+    //анимация
+
+    //
+
+    //
+
     //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.deckofcards);
         //общие звуки
         stopService(new Intent(Deckofcards.this, commonplayer.class));
@@ -77,6 +89,9 @@ public class Deckofcards extends AppCompatActivity {
         //музыка
         //
         //
+        final TextView textnick = (TextView)findViewById(R.id.playerNick);
+        textnick .setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
 
         rollDicesButton = (ImageButton) findViewById(R.id.Roll);
         rollDicesButton.setEnabled(false);
