@@ -18,9 +18,11 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,6 +30,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,7 +70,6 @@ public class Deckofcards extends AppCompatActivity {
     private int sound1, sound2, sound3, sound4 ;
 
     //анимация
-
     //
 
     //
@@ -109,6 +112,7 @@ public class Deckofcards extends AppCompatActivity {
                 Click.setVisibility(View.INVISIBLE);
                 rollDicesButton.setEnabled(true);
                 rollDicesButton.setVisibility(View.VISIBLE);
+                iv_deck.setEnabled(true);
                 tableAction(leave_card);
                 takeCardOpp(leave_opp);
                 opp_turn();
@@ -183,6 +187,7 @@ public class Deckofcards extends AppCompatActivity {
                 soundPool.play(sound1, 1, 1, 0, 0, 1);
                 takeCard(leave_card);
                 rollDicesButton.setEnabled(true);
+                iv_deck.setEnabled(false);
             }
         });
 
@@ -266,7 +271,13 @@ public class Deckofcards extends AppCompatActivity {
         alertDialog.setView(image);
         alertDialog.show();
     }
-
+    //карта из руки больше
+    public void displeisize(View view){
+        ViewGroup.LayoutParams lp = view.getLayoutParams();
+        lp.width += 26;
+        lp.height += 44;
+        view.setLayoutParams(lp);
+    }
     //10.05.2020 3:23
     View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
         @Override
@@ -285,6 +296,8 @@ public class Deckofcards extends AppCompatActivity {
             boolean flag;
             final View view = (View) event.getLocalState();
             switch (dragEvent) {
+                case DragEvent.ACTION_DRAG_STARTED:
+                    return true;
                 case DragEvent.ACTION_DRAG_ENTERED:
                     view.setVisibility(View.GONE);
                     return true;
