@@ -14,6 +14,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -96,13 +98,17 @@ public class Deckofcards extends AppCompatActivity {
         rollDicesButton = (ImageButton) findViewById(R.id.Roll);
         rollDicesButton.setEnabled(false);
         Click = (ImageButton) findViewById(R.id.end);
+        Click.setVisibility(View.INVISIBLE);
         Click.setEnabled(false);
         Click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 soundPool.play(sound3, 1, 1, 0, 0, 1);
                 Click.setEnabled(false);
+                rollDicesButton.animate().setDuration(1000).rotationYBy(3600f).start();
+                Click.setVisibility(View.INVISIBLE);
                 rollDicesButton.setEnabled(true);
+                rollDicesButton.setVisibility(View.VISIBLE);
                 tableAction(leave_card);
                 takeCardOpp(leave_opp);
                 opp_turn();
@@ -189,8 +195,11 @@ public class Deckofcards extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 soundPool.play(sound4, 1, 1, 0, 0, 1);
-                Click.setEnabled(true);
                 rollDicesButton.setEnabled(false);
+                Click.animate().setDuration(500).rotationYBy(3600f).start();
+                rollDicesButton.setVisibility(View.INVISIBLE);
+                Click.setEnabled(true);
+                Click.setVisibility(View.VISIBLE);
                 fooRollDice();
             }
         });
@@ -276,6 +285,12 @@ public class Deckofcards extends AppCompatActivity {
             boolean flag;
             final View view = (View) event.getLocalState();
             switch (dragEvent) {
+                case DragEvent.ACTION_DRAG_ENTERED:
+                    view.setVisibility(View.GONE);
+                    return true;
+                case DragEvent.ACTION_DRAG_EXITED:
+                    view.setVisibility(View.VISIBLE);
+                    return true;
                 case DragEvent.ACTION_DROP:
                     soundPool.play(sound2, 1, 1, 0, 0, 1);
                     //11.05.2020 16:59
@@ -333,6 +348,7 @@ public class Deckofcards extends AppCompatActivity {
                                 iv_card6.setImageDrawable(null);
                         }
                     }
+                    view.setVisibility(View.VISIBLE );
             }
             return true;
         }
@@ -423,19 +439,26 @@ public class Deckofcards extends AppCompatActivity {
     }
     public void fooRollOneDice() {
         value3 = randomDiceValue();
+        mMidImageView.animate().setDuration(1000).rotationYBy(360f).start();
         int res3 = getResources().getIdentifier("dice" + value3,
                 "drawable", "com.example.projectapp");
+        mMidImageView.animate().setDuration(1000).rotationYBy(3600f).start();
         mMidImageView.setImageResource(res3);
     }
     public void fooRollDice() {
         value1 = randomDiceValue();
         value2 = randomDiceValue();
+        mLeftImageView.animate().setDuration(1000).rotationYBy(360f).start();
         int res1 = getResources().getIdentifier("dice" + value1,
                 "drawable", "com.example.projectapp");
+        mLeftImageView.setImageResource(res1);
+        mLeftImageView.animate().setDuration(1000).rotationXBy(3600f).start();
+        mRightImageView.animate().setDuration(1000).rotationXBy(360f).start();
         int res2 = getResources().getIdentifier("dice" + value2,
                 "drawable", "com.example.projectapp");
-        mLeftImageView.setImageResource(res1);
         mRightImageView.setImageResource(res2);
+        mRightImageView.animate().setDuration(1000).rotationYBy(3600f).start();
+
     }
     public void takeCard(int qnt) {
         cleanTable();
@@ -1234,7 +1257,8 @@ public class Deckofcards extends AppCompatActivity {
     }
 
     public void tableActionOpp(int qnt) {
-        fooRollDice();
+
+        fooRollDice();//Приостанавливает поток на 1 секунду
         String aa="";
         fooRollOneDice();
         int[] hp = {0, 0};
@@ -1294,6 +1318,8 @@ public class Deckofcards extends AppCompatActivity {
                     }
                 });
                 alertDialog.show();
+                stopService(new Intent(Deckofcards.this, battleplayer.class));
+                startService(new Intent(Deckofcards.this, commonplayer.class));
             }
         } else {
             ((TextView) findViewById(R.id.hp2)).setText(Integer.toString(hp));
@@ -1325,6 +1351,8 @@ public class Deckofcards extends AppCompatActivity {
                     }
                 });
                 alertDialog.show();
+                stopService(new Intent(Deckofcards.this, battleplayer.class));
+                startService(new Intent(Deckofcards.this, commonplayer.class));
             }
         } else {
             ((TextView) findViewById(R.id.hp)).setText(Integer.toString(hp));
