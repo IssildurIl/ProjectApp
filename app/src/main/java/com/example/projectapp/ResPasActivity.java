@@ -3,6 +3,8 @@ package com.example.projectapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,7 +26,9 @@ public class ResPasActivity extends AppCompatActivity {
     private Button btnReset, btnBack;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
-
+    SharedPreferences mSettings;
+    public static final String APP_PREFERENCES = "mysettings";
+    public static final String APP_PREFERENCES_EMAIL = "mail"; // имя кота
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +40,8 @@ public class ResPasActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         fonttext();
         auth = FirebaseAuth.getInstance();
-
+        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        inputEmail.setText(mSettings.getString(APP_PREFERENCES_EMAIL,""));
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

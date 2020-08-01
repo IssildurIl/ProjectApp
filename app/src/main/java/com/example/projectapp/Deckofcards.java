@@ -142,8 +142,8 @@ public class Deckofcards extends AppCompatActivity{
                     card_table[i]=0;
                     countSymbol[i]=0;
                 }
-                //opp_turn();
-                //tableActionOpp(leave_opp);
+                opp_turn();
+                tableActionOpp(leave_opp);
             }
         });
         main_cards = new ArrayList<>();
