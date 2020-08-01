@@ -11,13 +11,14 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="395dp"
-        android:layout_height="472dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="209dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical"
         android:padding="10dp"
         fbutton:layout_constraintBottom_toBottomOf="parent"
+        fbutton:layout_constraintEnd_toEndOf="parent"
         fbutton:layout_constraintStart_toStartOf="parent"
         fbutton:layout_constraintTop_toTopOf="parent">
 
@@ -74,8 +75,8 @@
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="30sp"
         android:layout_height="30sp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="235dp"
+        android:layout_marginEnd="170dp"
+        android:layout_marginBottom="120dp"
         android:src="@drawable/firemove2"
         fbutton:layout_constraintBottom_toBottomOf="parent"
         fbutton:layout_constraintEnd_toEndOf="parent" />
@@ -84,8 +85,8 @@
         android:id="@+id/gifImageView2"
         android:layout_width="30sp"
         android:layout_height="30sp"
-        android:layout_marginStart="80dp"
-        android:layout_marginBottom="235dp"
+        android:layout_marginStart="165dp"
+        android:layout_marginBottom="120dp"
         android:src="@drawable/firemove2"
         fbutton:layout_constraintBottom_toBottomOf="parent"
         fbutton:layout_constraintStart_toStartOf="parent" />
@@ -94,7 +95,6 @@
         android:id="@+id/element1"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:visibility="invisible"
         android:rotation="+90"
         android:src="@drawable/fireball"
         fbutton:layout_constraintBottom_toBottomOf="parent"
@@ -107,7 +107,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="516dp"
         android:rotation="-90"
-        android:visibility="invisible"
         android:src="@drawable/fireball"
         fbutton:layout_constraintBottom_toBottomOf="parent"
         fbutton:layout_constraintEnd_toEndOf="parent" />

@@ -67,4 +67,9 @@
         <item name="android:activityCloseEnterAnimation">@anim/slide_left</item>
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
+    <style name="ourFont">
+        <item name="android:fontFamily">@fonts/JurassicPark-BL48</item>
+        <item name="fontFamily">@fonts/JurassicPark-BL48</item>
+        <item name="android:textStyle">normal</item>
+    </style>
 </resources>

@@ -6,7 +6,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.Point;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
@@ -16,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Display;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,21 +29,25 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class Deckofcards extends AppCompatActivity {
+public class Deckofcards extends AppCompatActivity{
     ImageButton Click;
     ImageButton rollDicesButton;
     TextView nick;
@@ -47,11 +57,14 @@ public class Deckofcards extends AppCompatActivity {
     ImageView fstcard, seccard, thirdcard;
     int card_num = 0, leave_card = 6, leave_opp = 6;
     ImageView PlayerIcon, mLeftImageView, mRightImageView,mMidImageView;
-    int mIcon;
     // view.startAnimation(animRotate);
     private SharedPreferences mSettings;
     public static final String APP_PREFERENCES = "mysettings";
     public static final String APP_PREFERENCES_NAME = "Nickname";
+    public static final String APP_PREFERENCES_ICONE = "0";
+    private int[] mIcone = { R.drawable.icon_enchanter, R.drawable.icon_genie,
+            R.drawable.icon_hogshouse, R.drawable.icon_krazztar, R.drawable.icon_lady,
+            R.drawable.icon_princess, R.drawable.icon_spiritmaster,R.drawable.icon_wizard};
     //
     ArrayList<Integer> main_cards;
     ArrayList<Integer> cards_i;
@@ -67,13 +80,14 @@ public class Deckofcards extends AppCompatActivity {
     //звуки в игре
 
     private SoundPool soundPool;
-    private int sound1, sound2, sound3, sound4 ;
+    private int sound1, secretsound, sound3, sound4,darknesssound,firesound,naturesound,illusionsound ;
 
     //анимация
     //
-
-    //
-
+    //голосовое
+    private TextView result_tv;
+    private Button startlisten,stoplisten,mute;
+    private SpeechRecognizerManager mSpeechManager;
     //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +95,8 @@ public class Deckofcards extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.deckofcards);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+        //голосовые команды
         //общие звуки
         stopService(new Intent(Deckofcards.this, commonplayer.class));
         startService(new Intent(Deckofcards.this, battleplayer.class));
@@ -88,14 +104,21 @@ public class Deckofcards extends AppCompatActivity {
         soundPool = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
 
         sound1 = soundPool.load(this, R.raw.givecards, 1);
-        sound2 = soundPool.load(this, R.raw.dropcard, 1);
+        secretsound = soundPool.load(this, R.raw.dropcard, 1);
         sound3 = soundPool.load(this, R.raw.takedmg, 1);
         sound4 = soundPool.load(this, R.raw.dice, 1);
+        darknesssound = soundPool.load(this, R.raw.darkness, 1);
+        firesound = soundPool.load(this, R.raw.fire, 1);
+        naturesound = soundPool.load(this, R.raw.nature, 1);
+        illusionsound = soundPool.load(this, R.raw.illusion,1);
         //музыка
         //
         //
         final TextView textnick = (TextView)findViewById(R.id.playerNick);
         textnick .setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+        final TextView textnick2 = (TextView)findViewById(R.id.playerNick2);
+        textnick2.setTypeface(Typeface.createFromAsset(
                 getAssets(), "fonts/JurassicPark-BL48.ttf"));
 
         rollDicesButton = (ImageButton) findViewById(R.id.Roll);
@@ -115,8 +138,12 @@ public class Deckofcards extends AppCompatActivity {
                 iv_deck.setEnabled(true);
                 tableAction(leave_card);
                 takeCardOpp(leave_opp);
-                opp_turn();
-                tableActionOpp(leave_opp);
+                for (int i=0; i<3; i++){
+                    card_table[i]=0;
+                    countSymbol[i]=0;
+                }
+                //opp_turn();
+                //tableActionOpp(leave_opp);
             }
         });
         main_cards = new ArrayList<>();
@@ -132,11 +159,11 @@ public class Deckofcards extends AppCompatActivity {
         element_mas = new ArrayList<>();
         createArrayListOfElement(element_mas);
         illusion_mas = new ArrayList<>();
-        createArrayListOfIllusion(element_mas);
+        createArrayListOfIllusion(illusion_mas);
         nature_mas = new ArrayList<>();
-        createArrayListOfNature(element_mas);
+        createArrayListOfNature(nature_mas);
         secret_mas = new ArrayList<>();
-        createArrayListOfSecret(element_mas);
+        createArrayListOfSecret(secret_mas);
         //shuffle the cards
         Collections.shuffle(main_cards);
 
@@ -173,13 +200,7 @@ public class Deckofcards extends AppCompatActivity {
         iv_card5.setOnLongClickListener(longClickListener);
         iv_card6.setOnLongClickListener(longClickListener);
 //
-        Intent intent = getIntent();
-        mIcon = Integer.parseInt(intent.getStringExtra("I2"));
-        String NickName = getIntent().getStringExtra("mnick");
-        PlayerIcon.setImageResource(mIcon);
-        // set background
-        //getWindow().setBackgroundDrawableResource(mDesk);
-        //nick.setText(NickName);
+
 
         iv_deck.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,15 +227,19 @@ public class Deckofcards extends AppCompatActivity {
                 Click.setEnabled(true);
                 Click.setVisibility(View.VISIBLE);
                 fooRollDice();
+                fooRollOneDice();
             }
         });
-//
+
     }
 
     public void getText() {
+
         nick = (TextView) findViewById(R.id.playerNick);
         String savedText = mSettings.getString(APP_PREFERENCES_NAME, "");
+        String mysavedIcone = mSettings.getString(APP_PREFERENCES_ICONE, "0");
         nick.setText(savedText);
+        PlayerIcon.setImageResource(mIcone[Integer.parseInt(mysavedIcone)]);
     }
 
     private int randomDiceValue() {
@@ -263,7 +288,8 @@ public class Deckofcards extends AppCompatActivity {
                 drawable = ((ImageView) findViewById(R.id.thirdcard2)).getDrawable();
                 break;
             default:
-                drawable = iv_deck.getDrawable();
+                drawable = getDrawable(R.drawable.magic_back);
+                //drawable = iv_deck.getDrawable();
         }
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(Deckofcards.this, R.style.CustomDialog);
         final ImageView image = new ImageView(this);
@@ -271,13 +297,7 @@ public class Deckofcards extends AppCompatActivity {
         alertDialog.setView(image);
         alertDialog.show();
     }
-    //карта из руки больше
-    public void displeisize(View view){
-        ViewGroup.LayoutParams lp = view.getLayoutParams();
-        lp.width += 26;
-        lp.height += 44;
-        view.setLayoutParams(lp);
-    }
+
     //10.05.2020 3:23
     View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
         @Override
@@ -297,6 +317,7 @@ public class Deckofcards extends AppCompatActivity {
             final View view = (View) event.getLocalState();
             switch (dragEvent) {
                 case DragEvent.ACTION_DRAG_STARTED:
+                    view.setVisibility(View.INVISIBLE);
                     return true;
                 case DragEvent.ACTION_DRAG_ENTERED:
                     view.setVisibility(View.GONE);
@@ -305,7 +326,6 @@ public class Deckofcards extends AppCompatActivity {
                     view.setVisibility(View.VISIBLE);
                     return true;
                 case DragEvent.ACTION_DROP:
-                    soundPool.play(sound2, 1, 1, 0, 0, 1);
                     //11.05.2020 16:59
                     switch (view.getId()) {
                         case R.id.iv_card1:
@@ -340,7 +360,26 @@ public class Deckofcards extends AppCompatActivity {
                     if (flag) {
                         //cardAction(detectCard(get_im));
                         card_table[leave_card - 1] = detectCard(get_im);
-                        whatSymbol(card_table[leave_card - 1],leave_card-1);
+                        int symb=whatSymbol(card_table[leave_card - 1],leave_card-1);
+                        Toast.makeText(Deckofcards.this,""+symb,Toast.LENGTH_LONG).show();
+                        //19.07 воспроизведение звука по символу
+                        switch (symb){
+                            case 1:
+                                soundPool.play(darknesssound, 1, 1, 0, 0, 1);
+                                break;
+                            case 2:
+                                soundPool.play(firesound, 1, 1, 0, 0, 1);
+                                break;
+                            case 3:
+                                soundPool.play(illusionsound, 1, 1, 0, 0, 1);
+                                break;
+                            case 4:
+                                soundPool.play(naturesound, 1, 1, 0, 0, 1);
+                                break;
+                            case 5:
+                                soundPool.play(secretsound,1,1,0,0,1);
+                                break;
+                        }
                         switch (view.getId()) {
                             case R.id.iv_card1:
                                 get_im = iv_card2.getDrawable();
@@ -366,25 +405,31 @@ public class Deckofcards extends AppCompatActivity {
             return true;
         }
     };
-    public void whatSymbol(int cardtable, int num){
+
+    public int whatSymbol(int cardtable, int num){
         if (darkness_mas.contains(cardtable)){
             countSymbol[num]=1;
         }
+        else
         if (element_mas.contains(cardtable)){
             countSymbol[num]=2;
         }
+        else
         if (illusion_mas.contains(cardtable)){
             countSymbol[num]=3;
             }
+        else
         if (nature_mas.contains(cardtable)){
             countSymbol[num]=4;
         }
+        else
         if (secret_mas.contains(cardtable)){
             countSymbol[num]=5;
         }
+        return countSymbol[num];
     }
     public int NumSymbol(int countSymbol[], int symbol){
-        int num = 0;
+        int num = 1;
         for (int i = 0; i < countSymbol.length; i++)
         {
           if (countSymbol[i]==symbol){
@@ -577,6 +622,7 @@ public class Deckofcards extends AppCompatActivity {
                 ((ImageView) findViewById(R.id.fstcard2)).setImageResource(card_opp[num]);
                 remove_card_opp(num);
                 card_table[leave_opp] = card_opp[num];
+                whatSymbol(card_table[leave_opp],leave_opp);
                 leave_opp++;
                 break;
             }
@@ -586,6 +632,7 @@ public class Deckofcards extends AppCompatActivity {
                 ((ImageView) findViewById(R.id.seccard2)).setImageResource(card_opp[num]);
                 remove_card_opp(num);
                 card_table[leave_opp] = card_opp[num];
+                whatSymbol(card_table[leave_opp],leave_opp);
                 leave_opp++;
                 break;
             }
@@ -595,6 +642,7 @@ public class Deckofcards extends AppCompatActivity {
                 ((ImageView) findViewById(R.id.thirdcard2)).setImageResource(card_opp[num]);
                 remove_card_opp(num);
                 card_table[leave_opp] = card_opp[num];
+                whatSymbol(card_table[leave_opp],leave_opp);
                 leave_opp++;
                 break;
             }
@@ -1178,10 +1226,10 @@ public class Deckofcards extends AppCompatActivity {
                 }
                 break;
             case R.drawable.k_darkness_4:
-                return new int[]{-2*NumSymbol(countSymbol,1),0};
+             return new int[]{-2*NumSymbol(countSymbol,1),0};
 
             case R.drawable.k_element_1:
-                return new int[]{-NumSymbol(countSymbol,2),0};
+             return new int[]{-NumSymbol(countSymbol,2),0};
             case R.drawable.k_element_2:
                 switch (NumSymbol(countSymbol,2)){
                     case 1:
@@ -1251,9 +1299,9 @@ public class Deckofcards extends AppCompatActivity {
                 }
                 break;
             case R.drawable.k_nature_3:
-                return new int[]{-2*CouNumSymb(),0};
+             return new int[]{-2*CouNumSymb(),0};
             case R.drawable.k_nature_4:
-                return new int[]{-1, 0};
+              return new int[]{-5, 0};
             case R.drawable.k_nature_5:
                 return new int[]{-2, 0};
         }
@@ -1267,22 +1315,31 @@ public class Deckofcards extends AppCompatActivity {
             setHP(getHP() + hp[0]);
             setSelfHP(getSelfHP() + hp[1]);
         }
+        String aaa="me";
+        for (int i=0; i<3; i++){
+            aaa+=" "+countSymbol[i];
+        }
+        //Toast.makeText(Deckofcards.this,aaa,Toast.LENGTH_SHORT).show();
     }
 
     public void tableActionOpp(int qnt) {
-
-        fooRollDice();//Приостанавливает поток на 1 секунду
+        fooRollDice();
         String aa="";
         fooRollOneDice();
         int[] hp = {0, 0};
         for (int i = 0; i < qnt; i++) {
             hp = cardAction(card_table[i]);
-            aa= ((TextView) findViewById(R.id.playerNick)).getText().toString();
+            /*aa= ((TextView) findViewById(R.id.playerNick)).getText().toString();
             aa+=" "+hp[0]+";"+hp[1];
-            ((TextView) findViewById(R.id.playerNick)).setText(aa);
+            ((TextView) findViewById(R.id.playerNick)).setText(aa);*/
             setHP(getHP() + hp[1]);
             setSelfHP(getSelfHP() + hp[0]);
         }
+        String aaa="Opp";
+        for (int i=0; i<3; i++){
+            aaa+=" "+countSymbol[i];
+        }
+        Toast.makeText(Deckofcards.this,aaa,Toast.LENGTH_SHORT).show();
     }
 
 
@@ -1549,6 +1606,10 @@ public class Deckofcards extends AppCompatActivity {
         ((ImageView) findViewById(R.id.fstcard2)).setImageResource(R.drawable.i_card);
         ((ImageView) findViewById(R.id.seccard2)).setImageResource(R.drawable.k_card);
         ((ImageView) findViewById(R.id.thirdcard2)).setImageResource(R.drawable.d_card);
+        for (int i=0; i<3; i++){
+            card_table[i]=0;
+            countSymbol[i]=0;
+        }
         leave_card = 0;
     }
 
@@ -1561,4 +1622,5 @@ public class Deckofcards extends AppCompatActivity {
         soundPool = null;
     }
     //музыка
+
 }

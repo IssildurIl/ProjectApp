@@ -12,9 +12,12 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.PointF;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
 import android.media.Image;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -68,41 +71,70 @@ public class PlayActivity extends AppCompatActivity {
     public int[] s_card_hand = { 0, 0, 0, 0, 0, 0, 0};
     ImageView fstcard,seccard,thirdcard;
     int card_num=0, c_leave_card=6, c_leave_opp=0, s_leave_card=6, s_leave_opp=6;
-    ImageView PlayerIcon, mLeftImageView,mRightImageView;
-    int mIcon, mDesk;
+    ImageView PlayerIcon, mLeftImageView,mRightImageView,mMidImageView;
+    int countSymbol[] = new int[3];
     //
     private SharedPreferences mSettings;
     public static final String APP_PREFERENCES = "mysettings";
     public static final String APP_PREFERENCES_NAME = "Nickname";
+    public static final String APP_PREFERENCES_ICONE = "0";
+    public static final String APP_PREFERENCES_NETNAME = "net player name";
+    private int[] mIcone = { R.drawable.icon_enchanter, R.drawable.icon_genie,
+            R.drawable.icon_hogshouse, R.drawable.icon_krazztar, R.drawable.icon_lady,
+            R.drawable.icon_princess, R.drawable.icon_spiritmaster,R.drawable.icon_wizard};
     //
     ArrayList<Integer> main_cards;
     ArrayList<Integer> cards_i;
     ArrayList<Integer> cards_k;
     ArrayList<Integer> cards_d;
+    ArrayList<Integer> darkness_mas, element_mas, illusion_mas, nature_mas, secret_mas;
     // поле
     ImageView tab_im1;
     //
     FrameLayout spells, hand;
-    int value1, value2;
+    int value1, value2,value3;
     String mas_card="";
     //
     FirebaseDatabase database;
     DatabaseReference messageRef;
+
+    private SoundPool soundPool;
+    private int sound1, secretsound, sound3, sound4,darknesssound,firesound,naturesound,illusionsound ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+        stopService(new Intent(PlayActivity.this, commonplayer.class));
+        startService(new Intent(PlayActivity.this, battleplayer.class));
+        //местные звуки
+        soundPool = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
+
+        final TextView textnick = (TextView)findViewById(R.id.playerNick);
+        textnick .setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+        final TextView textnick2 = (TextView)findViewById(R.id.playerNick2);
+        textnick2.setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+
+        sound1 = soundPool.load(this, R.raw.givecards, 1);
+        secretsound = soundPool.load(this, R.raw.dropcard, 1);
+        sound3 = soundPool.load(this, R.raw.takedmg, 1);
+        sound4 = soundPool.load(this, R.raw.dice, 1);
+        darknesssound = soundPool.load(this, R.raw.darkness, 1);
+        firesound = soundPool.load(this, R.raw.fire, 1);
+        naturesound = soundPool.load(this, R.raw.nature, 1);
+        illusionsound = soundPool.load(this, R.raw.illusion,1);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Click = findViewById(R.id.clickbtn);
+        Click = findViewById(R.id.end);
         Click.setEnabled(false);
 
         database = FirebaseDatabase.getInstance();
 
-        SharedPreferences preferences = getSharedPreferences("PREFS",0);
-        playerName = preferences.getString("playerName","");
-
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        playerName = mSettings.getString(APP_PREFERENCES_NETNAME,"default player");
+        String savedIcone = mSettings.getString(APP_PREFERENCES_ICONE, "0");
         getText();
 
         Bundle extras = getIntent().getExtras();
@@ -118,11 +150,12 @@ public class PlayActivity extends AppCompatActivity {
                 ((TextView)findViewById(R.id.playerNick2)).setText(roomName);
             }
         }
-        ((ImageView)findViewById(R.id.playerIcon)).setImageResource(R.drawable.icon_enchanter);
+        ((ImageView)findViewById(R.id.playerIcon)).setImageResource(mIcone[Integer.parseInt(savedIcone)]);
         Click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Click.setEnabled(false);
+                soundPool.play(sound3, 1, 1, 0, 0, 1);
                 //rollDicesButton.setEnabled(true);
                 message= role+":";
                 switch (role){
@@ -132,14 +165,6 @@ public class PlayActivity extends AppCompatActivity {
                         }else{
                             tableAction(3);//
                         }
-                        /*
-                        if (s_leave_opp<4) {
-                            tableActionOpp(s_leave_opp);
-                        }
-                         */
-
-
-
                         mas_card="";
                         takeCardToOpp(s_leave_opp);
                         //Toast.makeText(PlayActivity.this,""+s_card_hand[0]+"-"+s_card_hand[5],Toast.LENGTH_SHORT).show();
@@ -158,12 +183,6 @@ public class PlayActivity extends AppCompatActivity {
                         if (c_leave_opp<4){
                             tableActionOpp(c_leave_opp);
                         }
-                        /*
-                        if (c_leave_card<4) {
-                            tableAction(c_leave_card);
-                        }
-
-                         */
                         mas_card="";
                         for (int i=0; i<c_leave_card; i++){
                             mas_card+=c_card_table[i]+"*";
@@ -172,9 +191,6 @@ public class PlayActivity extends AppCompatActivity {
                 }
                 message+="dice"+value1+value2;
                 messageRef.setValue(message);
-
-                //opp_turn();
-
             }
         });
         main_cards = new ArrayList<>();
@@ -185,6 +201,16 @@ public class PlayActivity extends AppCompatActivity {
         createArrayListOfK(cards_k);
         cards_d = new ArrayList<>();
         createArrayListOfD(cards_d);
+        darkness_mas = new ArrayList<>();
+        createArrayListOfDarkness(darkness_mas);
+        element_mas = new ArrayList<>();
+        createArrayListOfElement(element_mas);
+        illusion_mas = new ArrayList<>();
+        createArrayListOfIllusion(illusion_mas);
+        nature_mas = new ArrayList<>();
+        createArrayListOfNature(nature_mas);
+        secret_mas = new ArrayList<>();
+        createArrayListOfSecret(secret_mas);
         //shuffle the cards
         Collections.shuffle(main_cards);
 
@@ -240,21 +266,12 @@ public class PlayActivity extends AppCompatActivity {
         iv_card4.setOnLongClickListener(longClickListener);
         iv_card5.setOnLongClickListener(longClickListener);
         iv_card6.setOnLongClickListener(longClickListener);
-        /*
-        Intent intent = getIntent();
-        mIcon = Integer.parseInt(intent.getStringExtra("I2"));
-        mDesk = Integer.parseInt(intent.getStringExtra("D2"));
-        String NickName = getIntent().getStringExtra("mnick");
-        PlayerIcon.setImageResource(mIcon);
-        // set background
-        //getWindow().setBackgroundDrawableResource(mDesk);
-        //nick.setText(NickName);
 
-         */
 
         iv_deck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                soundPool.play(sound1, 1, 1, 0, 0, 1);
                 switch(role){
                     case "guest":
                         takeCard(s_leave_card);
@@ -271,9 +288,11 @@ public class PlayActivity extends AppCompatActivity {
         rollDicesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                soundPool.play(sound4, 1, 1, 0, 0, 1);
                 Click.setEnabled(true);
                 rollDicesButton.setEnabled(false);
                 fooRollDice();
+                fooRollOneDice();
             }
         });
 //
@@ -379,6 +398,7 @@ public class PlayActivity extends AppCompatActivity {
         nick =(TextView) findViewById(R.id.playerNick);
         String savedText = mSettings.getString(APP_PREFERENCES_NAME, "");
         nick.setText(savedText);
+        //PlayerIcon.setImageResource();
     }
     private int randomDiceValue() {
         Random random = new Random();
@@ -485,6 +505,35 @@ public class PlayActivity extends AppCompatActivity {
                     }
                     // 12.05.2020 13:35 смещение карт в руке
                     if (flag){
+                        //РАЗБАНЬ МЕНЯ
+                        //РАЗБАНЬ МЕНЯ
+                        //РАЗБАНЬ МЕНЯ
+                        /*int symb=whatSymbol(card_table[leave_card - 1],leave_card-1);
+                        switch (symb){
+                            case 1:
+                                soundPool.play(darknesssound, 1, 1, 0, 0, 1);
+                                break;
+                            case 2:
+                                soundPool.play(firesound, 1, 1, 0, 0, 1);
+                                break;
+                            case 3:
+                                soundPool.play(illusionsound, 1, 1, 0, 0, 1);
+                                break;
+                            case 4:
+                                soundPool.play(naturesound, 1, 1, 0, 0, 1);
+                                break;
+                            case 5:
+                                soundPool.play(secretsound,1,1,0,0,1);
+                                break;
+                        }
+
+                         */
+                        //РАЗБАНЬ МЕНЯ
+                        //РАЗБАНЬ МЕНЯ
+                        //РАЗБАНЬ МЕНЯ
+
+
+
                         //cardAction(detectCard(get_im));
                         //card_table[leave_card-1]=detectCard(get_im);
                         switch(role){
@@ -594,16 +643,6 @@ public class PlayActivity extends AppCompatActivity {
         this.finish();
     }
 
-    public void fooRollDice(){
-        value1 = randomDiceValue();
-        value2 = randomDiceValue();
-        int res1 = getResources().getIdentifier("dice" + value1,
-                "drawable", "com.example.projectapp");
-        int res2 = getResources().getIdentifier("dice" + value2,
-                "drawable", "com.example.projectapp");
-        mLeftImageView.setImageResource(res1);
-        mRightImageView.setImageResource(res2);
-    }
 
     public void fooSetDice(int d1, int d2){
         value1 = d1;
@@ -775,132 +814,644 @@ public class PlayActivity extends AppCompatActivity {
  */
 
     public int[] cardAction(int card){
-        switch(card){
+        switch (card) {
+            //Смэрт
+            case R.drawable.d_darkness_1:
+                switch (NumSymbol(countSymbol,1)){
+                    case 1:
+                        switch (value1)
+                        {
+                            case 2: case 3: case 4:
+                            return new int[]{-1, 0};
+                            case 5:case 6:
+                            return new int[]{-2, 0};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-2, 0};
+                            case 10: case 11: case 12:
+                                return new int[]{-6, 0};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-2, 0};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-6, 0};
+                        }
+                        break;
+                }
+                break;
+            case R.drawable.d_darkness_2:
+                switch (NumSymbol(countSymbol,1)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{0, -1};
+                            case 5:case 6:
+                                return new int[]{-4, 0};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{0, -1};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-4, 0};
+                            case 10: case 11: case 12:
+                                return new int[]{-8, 0};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{0, -1};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-4, 0};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-8, 0};
+                        }
+                        break;
+                }
+                break;
             case R.drawable.d_darkness_3:
-                switch(value1+value2){
-                    case 2: case 3: case 4:
-                        return new int[] {-2, 0};
-                    case 5: case 6: case 7: case 8: case 9:
-                        return new int[] {-3, 0};
-                    case 10: case 11: case 12:
-                        return new int[] {-4, 0};
+                switch (NumSymbol(countSymbol,1)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{-2, 0};
+                            case 5:case 6:
+                                return new int[]{-3, 0};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{-2, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-3, 0};
+                            case 10: case 11: case 12:
+                                return new int[]{-4, 0};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-2, 0};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-6, 0};
+                        }
+                        break;
                 }
                 break;
             case R.drawable.d_darkness_4:
-                switch(value1+value2){
-                    case 2: case 3: case 4:
-                        return new int[] {-2, -1};
-                    case 5: case 6: case 7: case 8: case 9:
-                        return new int[] {-3, -1};
-                    case 10: case 11: case 12:
-                        return new int[] {-5, -1};
+                switch (NumSymbol(countSymbol,1)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{-2, -1};
+                            case 5:case 6:
+                                return new int[]{-3, -1};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{-2, -1};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-3, -1};
+                            case 10: case 11: case 12:
+                                return new int[]{-5, -1};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-2, -1};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-3, -1};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-5, -1};
+                        }
+                        break;
                 }
                 break;
+            //Стихия
             case R.drawable.d_element_1:
-                switch(value1+value2){
-                    case 2: case 3: case 4:
-                        return new int[] {-1, 0};
-                    case 5: case 6: case 7: case 8: case 9:
-                        return new int[] {-2, 0};
-                    case 10: case 11: case 12:
-                        return new int[] {-4, 0};
+                switch (NumSymbol(countSymbol,2)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{-1, 0};
+                            case 5:case 6:
+                                return new int[]{-2, 0};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-2, 0};
+                            case 10: case 11: case 12:
+                                return new int[]{-4, 0};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-2, 0};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-4, 0};
+                        }
+                        break;
                 }
                 break;
             case R.drawable.d_element_2:
-                switch(value1+value2){
-                    case 2: case 3: case 4:
-                        return new int[] {-1, 0};
-                    case 5: case 6: case 7: case 8: case 9:
-                        return new int[] {-3, 0};
-                    case 10: case 11: case 12:
-                        return new int[] {-5, 0};
+                switch (NumSymbol(countSymbol,2)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{-1, 0};
+                            case 5:case 6:
+                                return new int[]{-3, -1};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-3, -1};
+                            case 10: case 11: case 12:
+                                return new int[]{-5, -1};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-3, -1};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-5, -1};
+                        }
+                        break;
                 }
                 break;
+            case R.drawable.d_element_3:
+                switch (NumSymbol(countSymbol,2)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{-1, 0};
+                            case 5:case 6:
+                                return new int[]{-1, 0};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-1, 0};
+                            case 10: case 11: case 12:
+                                return new int[]{-7, 0};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-1, 0};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-7, 0};
+                        }
+                        break;
+                }
+                break;
+            case R.drawable.d_element_4:
+                switch (NumSymbol(countSymbol,2)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{-1, 0};
+                            case 5:case 6:
+                                return new int[]{-3, 0};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-3, 0};
+                            case 10: case 11: case 12:
+                                return new int[]{-4, 0};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-3, 0};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-4, 0};
+                        }
+                        break;
+                }
+                break;
+
+            //Иллюзия! Думай как делать сокровища
             case R.drawable.d_illusion_4:
-                switch(value1+value2){
-                    case 2: case 3: case 4:
-                        return new int[] {-1, 0};
-                    case 5: case 6: case 7: case 8: case 9:
-                        return new int[] {-3, 0};
-                    case 10: case 11: case 12:
-                        return new int[] {-4, 0};
+                switch (NumSymbol(countSymbol,3)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{-1, 0};
+                            case 5:case 6:
+                                return new int[]{-3, 0};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-3, 0};
+                            case 10: case 11: case 12:
+                                return new int[]{-4, 0};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-3, 0};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-4, 0};
+                        }
+                        break;
                 }
                 break;
+
+            //Природа
             case R.drawable.d_nature_1:
-                switch(value1+value2){
-                    case 2: case 3: case 4:
-                        return new int[] {-1, 0};
-                    case 5: case 6: case 7: case 8: case 9:
-                        return new int[] {-2, 0};
-                    case 10: case 11: case 12:
-                        return new int[] {-4, 0};
+                switch (NumSymbol(countSymbol,4)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{-1, 0};
+                            case 5:case 6:
+                                return new int[]{-2, 0};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-2, 0};
+                            case 10: case 11: case 12:
+                                return new int[]{-4, 0};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-2, 0};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-4, 0};
+                        }
+                        break;
                 }
                 break;
             case R.drawable.d_nature_2:
-                switch(value1+value2){
-                    case 2: case 3: case 4:
-                        return new int[] {0, 0};
-                    case 5: case 6: case 7: case 8: case 9:
-                        return new int[] {0, 2};
-                    case 10: case 11: case 12:
-                        return new int[] {0, 4};
+                switch (NumSymbol(countSymbol,4)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{0, 0};
+                            case 5:case 6:
+                                return new int[]{0, +2};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{0, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{0, +2};
+                            case 10: case 11: case 12:
+                                return new int[]{0, +4};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{0, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{0, +2};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{0, +4};
+                        }
+                        break;
                 }
                 break;
             case R.drawable.d_nature_3:
-                switch(value1+value2){
-                    case 2: case 3: case 4:
-                        return new int[] {-2, 0};
-                    case 5: case 6: case 7: case 8: case 9:
-                        return new int[] {-3, 0};
-                    case 10: case 11: case 12:
-                        return new int[] {-6, 0};
+                switch (NumSymbol(countSymbol,4)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{-2, 0};
+                            case 5:case 6:
+                                return new int[]{-3, 0};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{-2, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-3, 0};
+                            case 10: case 11: case 12:
+                                return new int[]{-6, 0};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-2, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-3, 0};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-6, 0};
+                        }
+                        break;
                 }
                 break;
+            case R.drawable.d_nature_4:
+                switch (NumSymbol(countSymbol,4)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{-1, 0};
+                            case 5:case 6:
+                                return new int[]{-2, 0};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-2, 0};
+                            case 10: case 11: case 12:
+                                return new int[]{-2*NumSymbol(countSymbol,4), 0};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-2, 0};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-2*NumSymbol(countSymbol,4), 0};
+                        }
+                        break;
+                }
+                break;
+            case R.drawable.d_nature_5:
+                switch (NumSymbol(countSymbol,4)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{-1, +1};
+                            case 5:case 6:
+                                return new int[]{-2, 0};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2) {
+                            case 2: case 3: case 4:
+                                return new int[]{-1, +1};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-2, 0};
+                            case 10: case 11: case 12:
+                                return new int[]{-2, +2};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, +1};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-2, 0};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-2, +2};
+                        }
+                        break;
+                }
+                break;
+            // ДЕЛАЙ СЕКРЕТ
+            ///ИСТОЧНИКИ
+            //Тьма
+            case R.drawable.i_darkness_1:
+                switch (value1){
+                    case 1:case 2: case 3:
+                        return new int[]{0,-value1};
+                    case 4: case 5: case 6:
+                        return new int[]{0,+value1};
+                }
+                break;
+            case R.drawable.i_darkness_3:
+                return new int[]{-value1 , -value2};
+            case R.drawable.i_darkness_4:
+                return new int[]{-2,0};
+            //Стихия
+            case R.drawable.i_element_1:
+                return new int[]{-CouNumSymb(),0};
             case R.drawable.i_element_2:
+                return new int[]{-3,0};
             case R.drawable.i_element_3:
-                return new int[] {-3, 0};
+                return new int[]{-3,0};
+            case R.drawable.i_element_4:
+                return new int[]{-3,0};
+            //Иллюзия
+            //Природа
+            case R.drawable.i_nature_1:
+                if (value1==6) return new int[]{+3,+3};
+                else return new int[]{0,+3};
+            case R.drawable.i_nature_2:
+                return new int[]{0,+CouNumSymb()};
             case R.drawable.i_nature_4:
-                return new int[] {0, 2};
-            case R.drawable.i_nature_5://
-                return new int[] {-3, 0};
-            case R.drawable.i_secret_4:
-                return new int[] {-3, 0};
+                return new int[]{0,+2};
+            case R.drawable.i_nature_5:
+                return new int[]{-3,0};
+            //Секрет
+
             case R.drawable.k_darkness_1:
-                switch(value1+value2){
-                    case 2: case 3: case 4:
-                        return new int[] {-2, 0};
-                    case 5: case 6: case 7: case 8: case 9:
-                        return new int[] {-4, -1};
-                    case 10: case 11: case 12:
-                        return new int[] {-5, -2};
+                switch (NumSymbol(countSymbol,1)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{-2, 0};
+                            case 5:case 6:
+                                return new int[]{-4, -1};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{-2, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-4, -1};
+                            case 10: case 11: case 12:
+                                return new int[]{-5, -2};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-2, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-4, -1};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-5, -2};
+                        }
+                        break;
                 }
                 break;
             case R.drawable.k_darkness_2:
-                switch(value1+value2){
-                    case 2: case 3: case 4:
-                        return new int[] {0, -3};
-                    case 5: case 6: case 7: case 8: case 9:
-                        return new int[] {-3, 0};
-                    case 10: case 11: case 12:
-                        return new int[] {-5, 0};
+                switch (NumSymbol(countSymbol,1)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{0, -3};
+                            case 5:case 6:
+                                return new int[]{-3, 0};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{0, -3};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-3, 0};
+                            case 10: case 11: case 12:
+                                return new int[]{-5, 0};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{0, -3};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-3, 0};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-5, 0};
+                        }
+                        break;
                 }
                 break;
+            case R.drawable.k_darkness_4:
+                return new int[]{-2*NumSymbol(countSymbol,1),0};
+
+            case R.drawable.k_element_1:
+                return new int[]{-NumSymbol(countSymbol,2),0};
+            case R.drawable.k_element_2:
+                switch (NumSymbol(countSymbol,2)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{-1, 0};
+                            case 5:case 6:
+                                return new int[]{-3, -1};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-3, -1};
+                            case 10: case 11: case 12:
+                                return new int[]{-5, 0};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-3, -1};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-5, 0};
+                        }
+                        break;
+                }
+                break;
+            case R.drawable.k_element_3:
+                if (getHP() %2!=0){
+                    return new int[]{-CouNumSymb(),0};
+                }
             case R.drawable.k_nature_1:
-                switch(value1+value2){
-                    case 2: case 3: case 4:
-                        return new int[] {-1, 0};
-                    case 5: case 6: case 7: case 8: case 9:
-                        return new int[] {-1, 1};
-                    case 10: case 11: case 12:
-                        return new int[] {-3, 3};
+                switch (NumSymbol(countSymbol,4)){
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{-1, 0};
+                            case 5:case 6:
+                                return new int[]{-1, +1};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-1, +1};
+                            case 10: case 11: case 12:
+                                return new int[]{-3, +3};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-1, +1};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-3, +3};
+                        }
+                        break;
                 }
                 break;
+            case R.drawable.k_nature_3:
+                return new int[]{-2*CouNumSymb(),0};
             case R.drawable.k_nature_4:
-                return new int[] {-1, 0};
-            case R.drawable.k_secret_1:
-                return new int[] {-2, 0};
+                return new int[]{-1, 0};
+            case R.drawable.k_nature_5:
+                return new int[]{-2, 0};
         }
-        return new int[] {0, 0};
+        return new int[]{0, 0};
     }
 
     public void tableAction(int qnt){
@@ -1075,5 +1626,140 @@ public class PlayActivity extends AppCompatActivity {
                 c_leave_card=0;
                 break;
         }
+    }
+    public int whatSymbol(int cardtable, int num){
+        if (darkness_mas.contains(cardtable)){
+            countSymbol[num]=1;
+        }
+        else
+        if (element_mas.contains(cardtable)){
+            countSymbol[num]=2;
+        }
+        else
+        if (illusion_mas.contains(cardtable)){
+            countSymbol[num]=3;
+        }
+        else
+        if (nature_mas.contains(cardtable)){
+            countSymbol[num]=4;
+        }
+        else
+        if (secret_mas.contains(cardtable)){
+            countSymbol[num]=5;
+        }
+        return countSymbol[num];
+    }
+    public void fooRollOneDice() {
+        value3 = randomDiceValue();
+        mMidImageView.animate().setDuration(1000).rotationYBy(360f).start();
+        int res3 = getResources().getIdentifier("dice" + value3,
+                "drawable", "com.example.projectapp");
+        mMidImageView.animate().setDuration(1000).rotationYBy(3600f).start();
+        mMidImageView.setImageResource(res3);
+    }
+    public void fooRollDice() {
+        value1 = randomDiceValue();
+        value2 = randomDiceValue();
+        mLeftImageView.animate().setDuration(1000).rotationYBy(360f).start();
+        int res1 = getResources().getIdentifier("dice" + value1,
+                "drawable", "com.example.projectapp");
+        mLeftImageView.setImageResource(res1);
+        mLeftImageView.animate().setDuration(1000).rotationXBy(3600f).start();
+        mRightImageView.animate().setDuration(1000).rotationXBy(360f).start();
+        int res2 = getResources().getIdentifier("dice" + value2,
+                "drawable", "com.example.projectapp");
+        mRightImageView.setImageResource(res2);
+        mRightImageView.animate().setDuration(1000).rotationYBy(3600f).start();
+
+    }
+    public int NumSymbol(int countSymbol[], int symbol){
+        int num = 1;
+        for (int i = 0; i < countSymbol.length; i++)
+        {
+            if (countSymbol[i]==symbol){
+                num+=1;
+            }
+        }
+        return num;
+    }
+    public int CouNumSymb(){
+        int counter=0;
+        if (countSymbol[0]!=0){counter++;}
+        if (countSymbol[1]!=0 && countSymbol[0]!=countSymbol[1]){counter++;}
+        if(countSymbol[2]!=0 && countSymbol[1]!=countSymbol[2] && countSymbol[2]!=countSymbol[0]){counter++;}
+        return counter;
+    }
+    public void createArrayListOfDarkness(ArrayList darkness_mas) {
+        darkness_mas.add(R.drawable.d_darkness_1);
+        darkness_mas.add(R.drawable.d_darkness_2);
+        darkness_mas.add(R.drawable.d_darkness_3);
+        darkness_mas.add(R.drawable.d_darkness_4);
+        darkness_mas.add(R.drawable.i_darkness_1);
+        darkness_mas.add(R.drawable.i_darkness_2);
+        darkness_mas.add(R.drawable.i_darkness_3);
+        darkness_mas.add(R.drawable.i_darkness_4);
+        darkness_mas.add(R.drawable.k_darkness_1);
+        darkness_mas.add(R.drawable.k_darkness_2);
+        darkness_mas.add(R.drawable.k_darkness_3);
+        darkness_mas.add(R.drawable.k_darkness_4);
+    }
+    public void createArrayListOfElement(ArrayList element_mas) {
+        element_mas.add(R.drawable.d_element_1);
+        element_mas.add(R.drawable.d_element_2);
+        element_mas.add(R.drawable.d_element_3);
+        element_mas.add(R.drawable.d_element_4);
+        element_mas.add(R.drawable.i_element_1);
+        element_mas.add(R.drawable.i_element_2);
+        element_mas.add(R.drawable.i_element_3);
+        element_mas.add(R.drawable.i_element_4);
+        element_mas.add(R.drawable.k_element_1);
+        element_mas.add(R.drawable.k_element_2);
+        element_mas.add(R.drawable.k_element_3);
+        element_mas.add(R.drawable.k_element_4);
+    }
+    public void createArrayListOfIllusion(ArrayList illusion_mas) {
+        illusion_mas.add(R.drawable.d_illusion_1);
+        illusion_mas.add(R.drawable.d_illusion_2);
+        illusion_mas.add(R.drawable.d_illusion_3);
+        illusion_mas.add(R.drawable.d_illusion_4);
+        illusion_mas.add(R.drawable.i_illusion_1);
+        illusion_mas.add(R.drawable.i_illusion_2);
+        illusion_mas.add(R.drawable.i_illusion_3);
+        illusion_mas.add(R.drawable.i_illusion_4);
+        illusion_mas.add(R.drawable.k_illusion_1);
+        illusion_mas.add(R.drawable.k_illusion_2);
+        illusion_mas.add(R.drawable.k_illusion_3);
+        illusion_mas.add(R.drawable.k_illusion_4);
+    }
+    public void createArrayListOfNature(ArrayList nature_mas){
+        nature_mas.add(R.drawable.d_nature_1);
+        nature_mas.add(R.drawable.d_nature_2);
+        nature_mas.add(R.drawable.d_nature_3);
+        nature_mas.add(R.drawable.d_nature_4);
+        nature_mas.add(R.drawable.d_nature_5);
+        nature_mas.add(R.drawable.i_nature_1);
+        nature_mas.add(R.drawable.i_nature_2);
+        nature_mas.add(R.drawable.i_nature_3);
+        nature_mas.add(R.drawable.i_nature_4);
+        nature_mas.add(R.drawable.i_nature_5);
+        nature_mas.add(R.drawable.k_nature_1);
+        nature_mas.add(R.drawable.k_nature_2);
+        nature_mas.add(R.drawable.k_nature_3);
+        nature_mas.add(R.drawable.k_nature_4);
+        nature_mas.add(R.drawable.k_nature_5);
+    }
+    public void createArrayListOfSecret(ArrayList secret_mas){
+        secret_mas.add(R.drawable.d_secret_1);
+        secret_mas.add(R.drawable.d_secret_2);
+        secret_mas.add(R.drawable.d_secret_3);
+        secret_mas.add(R.drawable.d_secret_4);
+        secret_mas.add(R.drawable.i_secret_1);
+        secret_mas.add(R.drawable.i_secret_2);
+        secret_mas.add(R.drawable.i_secret_3);
+        secret_mas.add(R.drawable.i_secret_4);
+        secret_mas.add(R.drawable.k_secret_1);
+        secret_mas.add(R.drawable.k_secret_2);
+        secret_mas.add(R.drawable.k_secret_3);
+        secret_mas.add(R.drawable.k_secret_4);
     }
 }

@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/view_with_background_all"
-    tools:context=".Deckofcards">
+    tools:context=".Deckofcards"
+    tools:ignore="MissingDefaultResource">
 
     <TextView
         android:id="@+id/hp"
@@ -28,64 +29,50 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/playerNick" />
 
-    <ImageView
-        android:id="@+id/deck_bot"
-        android:layout_width="71dp"
-        android:layout_height="74dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="25dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/magic_back_cards"
-        app:layout_constraintBottom_toTopOf="@+id/dice"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/hand2" />
-
 
     <TextView
         android:id="@+id/playerNick2"
         android:layout_width="110dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/btnback"
         android:gravity="center"
         android:padding="2sp"
         android:paddingStart="8sp"
         android:paddingTop="12sp"
-        android:text="Nick"
+        android:text="Saruman"
         android:textColor="@color/design_default_color_on_secondary"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/playerIcon2"
+        app:layout_constraintEnd_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/hp2"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/hp"
         android:padding="5dp"
         android:shadowColor="#000000"
         android:shadowDx="2.5"
         android:shadowDy="2.3"
         android:shadowRadius="2.6"
-        android:text="20"
+        android:text="5"
         android:textAlignment="center"
         android:textColor="#9b2d30"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/playerNick2"
+        app:layout_constraintEnd_toStartOf="@+id/playerNick2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/dead2"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/burning_skull"
         android:padding="5dp"
         android:shadowColor="#a61720"
@@ -97,7 +84,7 @@
         android:textColor="#000000"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/hp2"
+        app:layout_constraintEnd_toStartOf="@+id/hp2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -110,12 +97,13 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:srcCompat="@drawable/icon_wizard" />
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="99dp"
         android:layout_height="79dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ramka" />
 
@@ -125,10 +113,11 @@
         android:layout_height="50dp"
 
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="11dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/burning_skull"
-        android:padding="5dp"
 
+        android:padding="5dp"
         android:shadowColor="#A61720"
         android:shadowDx="2.5"
         android:shadowDy="2.3"
@@ -139,6 +128,7 @@
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/hand"
         app:layout_constraintStart_toEndOf="@+id/hp" />
 
     <ImageView
@@ -147,24 +137,23 @@
         android:layout_height="74dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="20dp"
         android:scaleType="centerInside"
         android:src="@drawable/magic_back_cards"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/hand"
-        app:layout_constraintTop_toBottomOf="@+id/end" />
+        app:layout_constraintBottom_toTopOf="@+id/end"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <FrameLayout
         android:id="@+id/hand"
         android:layout_width="297dp"
         android:layout_height="96dp"
-        android:layout_marginStart="15dp"
 
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/your_rounded_shape"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spells">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dead">
 
         <ImageView
             android:id="@+id/iv_card6"
@@ -266,22 +255,21 @@
         android:padding="0sp"
         android:paddingStart="4sp"
         android:text="Player"
-        android:textColor="@color/design_default_color_on_secondary"
+        android:gravity="center"
+        android:textColor="#ffffff"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/playerIcon" />
 
     <FrameLayout
         android:id="@+id/spells"
-        android:layout_width="286dp"
-        android:layout_height="135dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="224dp"
+        android:layout_width="275dp"
+        android:layout_height="138dp"
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spells2">
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/hand"
+        app:layout_constraintEnd_toStartOf="@+id/end">
 
         <ImageView
             android:id="@+id/thirdcard"
@@ -336,34 +324,32 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageButton
-        android:id="@+id/Roll"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/end"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/brick_roll" />
-
-    <ImageButton
         android:id="@+id/end"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="119dp"
-        app:layout_constraintBottom_toTopOf="@+id/hand"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="76dp"
+        app:layout_constraintBottom_toTopOf="@+id/backb1"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/brick_end_of_turn" />
+
+    <ImageButton
+        android:id="@+id/Roll"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/brick_roll" />
 
     <FrameLayout
         android:id="@+id/spells2"
         android:layout_width="275dp"
         android:layout_height="138dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="224dp"
-        android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/spells"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/hand2">
 
         <ImageView
             android:id="@+id/thirdcard2"
@@ -408,10 +394,10 @@
         android:layout_width="300dp"
         android:layout_height="95dp"
         android:layout_marginStart="15dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/your_rounded_shape"
-        app:layout_constraintBottom_toTopOf="@+id/spells2"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/iv_card62"
@@ -497,10 +483,10 @@
         android:id="@+id/dice"
         android:layout_width="47dp"
         android:layout_height="144dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/Roll"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/spells"
+        app:layout_constraintStart_toEndOf="@+id/spells2"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageview_left"
@@ -532,5 +518,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ramka" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

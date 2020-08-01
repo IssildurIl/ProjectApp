@@ -21,19 +21,21 @@ import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Customization extends AppCompatActivity implements ViewSwitcher.ViewFactory, GestureDetector.OnGestureListener {
-    private ImageSwitcher mIconeSwicher,mDeskSwither;
+    private ImageSwitcher mIconeSwicher;
 //
 
     public static final String APP_PREFERENCES = "mysettings";
     public static final String APP_PREFERENCES_NAME = "Nickname"; // имя кота
+    public static final String APP_PREFERENCES_ICONE="0";
     SharedPreferences mSettings;
     EditText StrNick;
-
+    int foto;
 //
 
     int position = 0;
@@ -65,11 +67,11 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
         mIconeSwicher.setOutAnimation(outAnimation);
         mIconeSwicher.setImageResource(mIcone[0]);
 
-
+        foto = Integer.parseInt(APP_PREFERENCES_ICONE);
         FontTexts();
         mGestureDetector = new GestureDetector(this, this);
-//StrNick = (EditText)findViewById(R.id.inputNick);
         loadText();
+
     }
     private void FontTexts(){
         final TextView title = (TextView)findViewById(R.id.title);
@@ -148,32 +150,39 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
 // слева направо
                 setPositionPrevIcone();
                 mIconeSwicher.setImageResource(mIcone[position]);
+
             }
         }
         catch (Exception e) {
 // nothing
             return true;
         }
+        foto = position;
         return true;
     }
     public void gotoMenu(View view) {
         saveText();
         Intent i = new Intent(Customization.this, StartActivity.class);
         i.putExtra("mnick",StrNick.getText().toString());
-        i.putExtra("I1",Integer.toString(mIcone[position]));
+        i.putExtra("I1",Integer.toString(mIcone[foto]));
         startActivity(i);
         this.finish();
+        Toast.makeText(Customization.this,""+ foto,Toast.LENGTH_LONG).show();
     }
     void saveText() {
         StrNick = (EditText)findViewById(R.id.inputNick);
         SharedPreferences.Editor ed = mSettings.edit();
         ed.putString(APP_PREFERENCES_NAME, StrNick.getText().toString());
+        ed.putString(APP_PREFERENCES_ICONE, String.valueOf(foto));
         ed.commit();
     }
 
-    void loadText() {
+    public void loadText() {
         StrNick = (EditText)findViewById(R.id.inputNick);
         String savedText = mSettings.getString(APP_PREFERENCES_NAME, "");
+        String savedFoto=mSettings.getString(APP_PREFERENCES_ICONE,"0");
+        foto = Integer.parseInt(savedFoto);
+        mIconeSwicher.setImageResource(mIcone[Integer.parseInt(savedFoto)]);
         StrNick.setText(savedText);
     }
 

@@ -3,8 +3,10 @@ package com.example.projectapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -25,35 +28,47 @@ import java.util.List;
 
 public class ListOfPlayer extends AppCompatActivity {
     ListView playerlist;
-    Button createroom;
-
+    Button createroom,chngacc;
+    TextView nick;
     List<String> roomsList;
-
     String playerName= "";
     String roomName= "";
 
     FirebaseDatabase database;
     DatabaseReference roomRef;
     DatabaseReference roomsRef;
-
+    private SharedPreferences mSettings;
+    public static final String APP_PREFERENCES = "mysettings";
+    public static final String APP_PREFERENCES_NETNAME = "net player name";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_list_of_player);
-
+        Typeface typeBold = Typeface.createFromAsset(getAssets(),"fonts/JurassicPark-BL48.ttf");
         database = FirebaseDatabase.getInstance();
 
-        SharedPreferences preferences = getSharedPreferences("PREFS",0);
-        playerName = preferences.getString("playerName","");
-        roomName=playerName;
 
+        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        playerName = mSettings.getString(APP_PREFERENCES_NETNAME,"default player");
+        roomName=playerName;
+        fonttext();
         playerlist = findViewById(R.id.playerlist);
         createroom= findViewById(R.id.createroom);
+        chngacc =findViewById(R.id.changeacc);
+        nick = findViewById(R.id.usernick);
+        nick.setText("Игрок: "+playerName);
         //all exiting available rooms
+        chngacc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListOfPlayer.this, LogInActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         roomsList= new ArrayList<>();
-
         createroom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,4 +140,16 @@ public class ListOfPlayer extends AppCompatActivity {
         });
 
     }
+    public void fonttext() {
+        final TextView txt1 = (android.widget.TextView)findViewById(R.id.usernick);
+        txt1.setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+        final Button btn1 = (Button) findViewById(R.id.createroom);
+        btn1.setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+        final Button btn2 = (Button) findViewById(R.id.changeacc);
+        btn2.setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+    }
+
 }
