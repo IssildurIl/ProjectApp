@@ -28,6 +28,7 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -49,6 +50,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
@@ -97,9 +99,10 @@ public class PlayActivity extends AppCompatActivity {
     //
     FirebaseDatabase database;
     DatabaseReference messageRef;
-
+    DatabaseReference roomsRef;
     private SoundPool soundPool;
     private int sound1, secretsound, sound3, sound4,darknesssound,firesound,naturesound,illusionsound ;
+    List<String> roomsList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,7 +119,7 @@ public class PlayActivity extends AppCompatActivity {
         final TextView textnick2 = (TextView)findViewById(R.id.playerNick2);
         textnick2.setTypeface(Typeface.createFromAsset(
                 getAssets(), "fonts/JurassicPark-BL48.ttf"));
-
+        roomsList= new ArrayList<>();
         sound1 = soundPool.load(this, R.raw.givecards, 1);
         secretsound = soundPool.load(this, R.raw.dropcard, 1);
         sound3 = soundPool.load(this, R.raw.takedmg, 1);
@@ -638,6 +641,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     public void gotoMenu(View view) {
+       removeDataFromDatabase();
         Intent i = new Intent(PlayActivity.this, StartActivity.class);
         startActivity(i);
         this.finish();
@@ -1513,6 +1517,7 @@ public class PlayActivity extends AppCompatActivity {
                 AlertDialog alertDialog = new AlertDialog.Builder(PlayActivity.this).create();
                 alertDialog.setTitle("Игра окончена");
                 alertDialog.setMessage("Вы победили!");
+                removeDataFromDatabase();
                 alertDialog.setIcon(R.drawable.end_win);
                 alertDialog.setButton("Back", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -1544,6 +1549,7 @@ public class PlayActivity extends AppCompatActivity {
                 alertDialog.setTitle("Игра окончена");
                 alertDialog.setMessage("Вы проиграли! Не отчаивайтесь, это не конец света, есть же некромантия!");
                 alertDialog.setIcon(R.drawable.end_dead);
+                removeDataFromDatabase();
                 alertDialog.setButton("Back", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent i = new Intent(PlayActivity.this, StartActivity.class);
@@ -1761,5 +1767,9 @@ public class PlayActivity extends AppCompatActivity {
         secret_mas.add(R.drawable.k_secret_2);
         secret_mas.add(R.drawable.k_secret_3);
         secret_mas.add(R.drawable.k_secret_4);
+    }
+    void removeDataFromDatabase(){
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference("rooms/"+playerName);
+        root.setValue(null);
     }
 }
