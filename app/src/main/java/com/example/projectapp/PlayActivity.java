@@ -310,85 +310,98 @@ public class PlayActivity extends AppCompatActivity {
                 int last_index, prev_index;
                 String[] sub_str = { "", "", "", "", "", "", "" };
                 if(role.equals("host")){
-                    if(dataSnapshot.getValue(String.class).contains("guest:")){
-                        rollDicesButton.setEnabled(true);
-                        prev_index=text.indexOf("+");
-                        c_leave_card=Integer.parseInt(text.substring(prev_index-1,prev_index));
-                        last_index=text.lastIndexOf("+");
+                    try{
+                        if(dataSnapshot.getValue(String.class).contains("guest:")) {
+                            rollDicesButton.setEnabled(true);
+                            prev_index = text.indexOf("+");
+                            c_leave_card = Integer.parseInt(text.substring(prev_index - 1, prev_index));
+                            last_index = text.lastIndexOf("+");
 
-                        if (prev_index!=last_index) {
-                            sub_str = text.substring(prev_index + 1, last_index).split("\\+");
-                            //Toast.makeText(PlayActivity.this, sub_str.toString(), Toast.LENGTH_SHORT).show();
-                            int j=0;
-                            for (int i = (6-c_leave_card); i < 6; i++) {
-                                c_card_hand[i] = Integer.parseInt(sub_str[j]);
-                                j++;
+                            if (prev_index != last_index) {
+                                sub_str = text.substring(prev_index + 1, last_index).split("\\+");
+                                //Toast.makeText(PlayActivity.this, sub_str.toString(), Toast.LENGTH_SHORT).show();
+                                int j = 0;
+                                for (int i = (6 - c_leave_card); i < 6; i++) {
+                                    c_card_hand[i] = Integer.parseInt(sub_str[j]);
+                                    j++;
+                                }
+                            } else {
+                                for (int i = (6 - c_leave_card); i < 6; i++) {
+                                    c_card_hand[i] = 0;
+                                }
                             }
-                        }else{
-                            for (int i = (6-c_leave_card); i < 6; i++) {
-                                c_card_hand[i] = 0;
-                            }
-                        }
-                        takeCardOpp(c_leave_card, c_card_hand);
+                            takeCardOpp(c_leave_card, c_card_hand);
 
-                        prev_index=text.indexOf("dice");
-                        d1=Integer.parseInt(text.substring(prev_index+4,prev_index+5));
-                        d2=Integer.parseInt(text.substring(prev_index+5,prev_index+6));
-                        fooSetDice(d1,d2);
+                            prev_index = text.indexOf("dice");
+                            d1 = Integer.parseInt(text.substring(prev_index + 4, prev_index + 5));
+                            d2 = Integer.parseInt(text.substring(prev_index + 5, prev_index + 6));
+                            fooSetDice(d1, d2);
 
-                        prev_index=text.indexOf("*");
-                        c_leave_opp=Integer.parseInt(text.substring(prev_index-1,prev_index));
-                        last_index=text.lastIndexOf("*");
-                        if (prev_index!=last_index) {
-                            sub_str = text.substring(prev_index + 1, last_index).split("\\*");
-                            for (int i = 0; i < c_leave_opp; i++) {
-                                c_table_opp[i] = Integer.parseInt(sub_str[i]);
+                            prev_index = text.indexOf("*");
+                            c_leave_opp = Integer.parseInt(text.substring(prev_index - 1, prev_index));
+                            last_index = text.lastIndexOf("*");
+                            if (prev_index != last_index) {
+                                sub_str = text.substring(prev_index + 1, last_index).split("\\*");
+                                for (int i = 0; i < c_leave_opp; i++) {
+                                    c_table_opp[i] = Integer.parseInt(sub_str[i]);
+                                }
+                                setTable(c_leave_opp, c_table_opp);
+                                tableAction(c_leave_opp); //c_leave_card
                             }
-                            setTable(c_leave_opp, c_table_opp);
-                            tableAction(c_leave_opp); //c_leave_card
-                        }
-                        c_leave_card=0;
+                            c_leave_card = 0;
                         /*
                         prev_index=text.indexOf("dice");
                         d1=Integer.parseInt(text.substring(prev_index+4,prev_index+5));
                         d2=Integer.parseInt(text.substring(prev_index+5,prev_index+6));
                         fooSetDice(d1,d2);
                                                 */
-                        Click.setEnabled(true);
-                        //((TextView)findViewById(R.id.test)).setText(text);
-                        Toast.makeText(PlayActivity.this,text.replace("guest:",""),Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    if(dataSnapshot.getValue(String.class).contains("host:")){
-                        rollDicesButton.setEnabled(true);
-
-                        prev_index=text.indexOf("dice");
-                        d1=Integer.parseInt(text.substring(prev_index+4,prev_index+5));
-                        d2=Integer.parseInt(text.substring(prev_index+5,prev_index+6));
-                        fooSetDice(d1,d2);
-
-                        prev_index=text.indexOf("*");
-                        s_leave_opp=Integer.parseInt(text.substring(prev_index-1,prev_index));
-                        last_index=text.lastIndexOf("*");
-                        if (prev_index!=last_index) {
-                            sub_str = text.substring(prev_index + 1, last_index).split("\\*");
-                            for (int i = 0; i < s_leave_opp; i++) {
-                                s_table_opp[i] = Integer.parseInt(sub_str[i]);
-                            }
-                            setTable(s_leave_opp, s_table_opp);
-                            tableActionOpp(s_leave_opp);
+                            Click.setEnabled(true);
+                            //((TextView)findViewById(R.id.test)).setText(text);
+                            Toast.makeText(PlayActivity.this, text.replace("guest:", ""), Toast.LENGTH_SHORT).show();
                         }
+                    }catch (NullPointerException e){}
+                }else if(role.equals("guest")){
+                    try{
+                        if(dataSnapshot.getValue(String.class).contains("host:")){
+                            rollDicesButton.setEnabled(true);
+
+                            prev_index=text.indexOf("dice");
+                            d1=Integer.parseInt(text.substring(prev_index+4,prev_index+5));
+                            d2=Integer.parseInt(text.substring(prev_index+5,prev_index+6));
+                            fooSetDice(d1,d2);
+
+                            prev_index=text.indexOf("*");
+                            s_leave_opp=Integer.parseInt(text.substring(prev_index-1,prev_index));
+                            last_index=text.lastIndexOf("*");
+                            if (prev_index!=last_index) {
+                                sub_str = text.substring(prev_index + 1, last_index).split("\\*");
+                                for (int i = 0; i < s_leave_opp; i++) {
+                                    s_table_opp[i] = Integer.parseInt(sub_str[i]);
+                                }
+                                setTable(s_leave_opp, s_table_opp);
+                                tableActionOpp(s_leave_opp);
+                            }
                         /*
                         prev_index=text.indexOf("dice");
                         d1=Integer.parseInt(text.substring(prev_index+4,prev_index+5));
                         d2=Integer.parseInt(text.substring(prev_index+5,prev_index+6));
                         fooSetDice(d1,d2);
                                               */
-                        //((TextView)findViewById(R.id.test)).setText(text);
-                        Toast.makeText(PlayActivity.this,text.replace("host:",""),Toast.LENGTH_SHORT).show();
+                            //((TextView)findViewById(R.id.test)).setText(text);
+                            Toast.makeText(PlayActivity.this,text.replace("host:",""),Toast.LENGTH_SHORT).show();
+                        }
+                    }catch (NullPointerException e){}
+                }
+                try{
+                    if(dataSnapshot.getValue(String.class).contains("exit")){
+                        Toast.makeText(PlayActivity.this,text.replace("Игра закончена, противник вышел из игры",""),Toast.LENGTH_SHORT).show();
+                        removeDataFromDatabase();
+                        Intent i = new Intent(PlayActivity.this, StartActivity.class);
+                        startActivity(i);
                     }
+                }catch (NullPointerException e){}
             }
-            }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 messageRef.setValue(message);
@@ -641,7 +654,8 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     public void gotoMenu(View view) {
-       removeDataFromDatabase();
+        removeDataFromDatabase();
+        messageRef.setValue("exit");
         Intent i = new Intent(PlayActivity.this, StartActivity.class);
         startActivity(i);
         this.finish();
