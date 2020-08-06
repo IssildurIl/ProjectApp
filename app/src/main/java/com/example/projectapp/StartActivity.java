@@ -2,7 +2,9 @@ package com.example.projectapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.graphics.Typeface;
@@ -15,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 import java.util.Timer;
@@ -38,6 +41,9 @@ public class StartActivity extends AppCompatActivity {
     private Handler handler =new Handler();
     private Timer timer = new Timer();
     private Timer spelltime = new Timer();
+    public static final String APP_PREFERENCES = "mysettings";
+    public static final String APP_PREFERENCES_CB="lesson";
+    SharedPreferences mSettings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +54,6 @@ public class StartActivity extends AppCompatActivity {
 //        cst.loadText();
         FontTexts();
         startService(new Intent(this, commonplayer.class));
-
-
 
         ///
         imagefire=(ImageView)findViewById(R.id.element1);
@@ -144,12 +148,20 @@ public class StartActivity extends AppCompatActivity {
     public void onBackPressed(View view) {
         moveTaskToBack(true); android.os.Process.killProcess(android.os.Process.myPid()); System.exit(1);
         stopService(new Intent(this, commonplayer.class));
+        stopService(new Intent(StartActivity.this, battleplayer.class));
+        stopService(new Intent(StartActivity.this, commonplayer.class));
     }
     //Кнопка "играть"
     public void goTogames(View view){
-        Intent i = new Intent(StartActivity.this, Deckofcards.class);
-        startActivity(i);
-
+        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        String less = mSettings.getString(APP_PREFERENCES_CB, "0");
+        Toast.makeText(StartActivity.this,""+less,Toast.LENGTH_LONG).show();
+        Intent j = new Intent(StartActivity.this, LessonActivity.class);
+        startActivity(j);
+        if(less.equals("0")) {
+            Intent i = new Intent(StartActivity.this, Deckofcards.class);
+            startActivity(i);
+        }
     }
     public void ToNet(View view){
         Intent i = new Intent(StartActivity.this, LogInActivity.class);

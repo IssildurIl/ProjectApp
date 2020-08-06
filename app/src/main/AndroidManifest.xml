@@ -13,6 +13,7 @@
         <activity android:name=".LogInActivity" />
         <activity android:name=".PlayActivity" />
         <activity android:name=".ListOfPlayer" />
+        <activity android:name=".LessonActivity"/>
         <activity android:name=".ResPasActivity"/>
         <activity android:name=".SignUpActivity"/>
         <activity android:name=".Deckofcards"/>

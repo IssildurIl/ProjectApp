@@ -9,13 +9,18 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
@@ -33,9 +38,11 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
     public static final String APP_PREFERENCES = "mysettings";
     public static final String APP_PREFERENCES_NAME = "Nickname"; // имя кота
     public static final String APP_PREFERENCES_ICONE="0";
+    public static final String APP_PREFERENCES_CB="lesson";
     SharedPreferences mSettings;
     EditText StrNick;
     int foto;
+    private CheckBox checklesson;
 //
 
     int position = 0;
@@ -52,7 +59,7 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.customactivity);
-//
+        checklesson = (CheckBox)findViewById(R.id.checklesson);
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         FontTexts();
 //
@@ -72,13 +79,11 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
         mGestureDetector = new GestureDetector(this, this);
         loadText();
 
+
     }
     private void FontTexts(){
         final TextView title = (TextView)findViewById(R.id.title);
         title.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
-        final TextView tv2 = (TextView)findViewById(R.id.tv2);
-        tv2.setTypeface(Typeface.createFromAsset(
                 getAssets(), "fonts/JurassicPark-BL48.ttf"));
         final TextView tv1 = (TextView)findViewById(R.id.tv1);
         tv1.setTypeface(Typeface.createFromAsset(
@@ -163,15 +168,17 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
     public void gotoMenu(View view) {
         saveText();
         Intent i = new Intent(Customization.this, StartActivity.class);
-        i.putExtra("mnick",StrNick.getText().toString());
-        i.putExtra("I1",Integer.toString(mIcone[foto]));
         startActivity(i);
         this.finish();
-        Toast.makeText(Customization.this,""+ foto,Toast.LENGTH_LONG).show();
+        Toast.makeText(Customization.this,""+ mSettings.getString(APP_PREFERENCES_CB, ""),Toast.LENGTH_LONG).show();
     }
     void saveText() {
         StrNick = (EditText)findViewById(R.id.inputNick);
         SharedPreferences.Editor ed = mSettings.edit();
+        if(checklesson.isChecked())
+            ed.putString(APP_PREFERENCES_CB,"1");
+        else
+            ed.putString(APP_PREFERENCES_CB,"0");
         ed.putString(APP_PREFERENCES_NAME, StrNick.getText().toString());
         ed.putString(APP_PREFERENCES_ICONE, String.valueOf(foto));
         ed.commit();
@@ -181,10 +188,11 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
         StrNick = (EditText)findViewById(R.id.inputNick);
         String savedText = mSettings.getString(APP_PREFERENCES_NAME, "");
         String savedFoto=mSettings.getString(APP_PREFERENCES_ICONE,"0");
+        String chk = mSettings.getString(APP_PREFERENCES_CB,"0");
+        if(chk.equals("1"))checklesson.setChecked(true);
         foto = Integer.parseInt(savedFoto);
         mIconeSwicher.setImageResource(mIcone[Integer.parseInt(savedFoto)]);
         StrNick.setText(savedText);
     }
-
 
 }

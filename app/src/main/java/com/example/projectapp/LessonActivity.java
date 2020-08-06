@@ -47,7 +47,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Deckofcards extends AppCompatActivity{
+public class LessonActivity extends AppCompatActivity{
     ImageButton Click;
     ImageButton rollDicesButton;
     TextView nick;
@@ -80,33 +80,38 @@ public class Deckofcards extends AppCompatActivity{
     //звуки в игре
 
     private SoundPool soundPool;
-    private int sound1, secretsound, sound3, sound4,darknesssound,firesound,naturesound,illusionsound ;
+    private SoundPool less;
+    private int sound1, secretsound, sound3, sound4,darknesssound,firesound,naturesound,illusionsound,hellosp,hintcardsp,hintplayersp,finallysp,dicetablesp ;
 
     //анимация
     //
     //голосовое
     private TextView result_tv;
-    private Button startlisten,stoplisten,mute,hintbtn;
+    private Button startlisten,stoplisten,mute;
+    private ImageButton hintbtn;
     private SpeechRecognizerManager mSpeechManager;
     //обучение
-    TextView hintopp,hintdice,hintplayer,hinttable,hintcard,hintcardhelp,hintfinal;
+    TextView hintopp,hintdice,hintplayer,hinttable,hintcard,hintcardhelp,hintfinal,hello;
     //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.deckofcards);
-
-
-
+        setContentView(R.layout.trainactivity);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
         //голосовые команды
         //общие звуки
-        stopService(new Intent(Deckofcards.this, commonplayer.class));
-        startService(new Intent(Deckofcards.this, battleplayer.class));
+        stopService(new Intent(LessonActivity.this, commonplayer.class));
+        //startService(new Intent(LessonActivity.this, battleplayer.class));
         //местные звуки
         soundPool = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
+        less= new SoundPool(6,AudioManager.STREAM_MUSIC,0);
+        hellosp= less.load(this, R.raw.hello, 1);
+        hintcardsp = less.load(this, R.raw.hintcard, 1);
+        hintplayersp= less.load(this, R.raw.hintplayer, 1);
+        finallysp= less.load(this, R.raw.soundend,1);
+        dicetablesp= less.load(this, R.raw.dicetable, 1);
 
         sound1 = soundPool.load(this, R.raw.givecards, 1);
         secretsound = soundPool.load(this, R.raw.dropcard, 1);
@@ -127,7 +132,9 @@ public class Deckofcards extends AppCompatActivity{
         hintcard =findViewById(R.id.hintcard);
         hintcardhelp=findViewById(R.id.hintcardhelp);
         hintfinal=findViewById(R.id.hintfinal);
-    //
+        hello=findViewById(R.id.hello);
+        //
+        trainnxt();
         final TextView textnick = (TextView)findViewById(R.id.playerNick);
         textnick .setTypeface(Typeface.createFromAsset(
                 getAssets(), "fonts/JurassicPark-BL48.ttf"));
@@ -180,14 +187,14 @@ public class Deckofcards extends AppCompatActivity{
         createArrayListOfSecret(secret_mas);
         //shuffle the cards
         Collections.shuffle(main_cards);
-
+        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         PlayerIcon = findViewById(R.id.playerIcon);
         nick = findViewById(R.id.playerNick);
         spells = (FrameLayout) findViewById(R.id.spells);
         hand = (FrameLayout) findViewById(R.id.hand);
         //
-        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+
         getText();
         //
         iv_deck = findViewById(R.id.iv_deck);
@@ -305,7 +312,7 @@ public class Deckofcards extends AppCompatActivity{
                 drawable = getDrawable(R.drawable.magic_back);
                 //drawable = iv_deck.getDrawable();
         }
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(Deckofcards.this, R.style.CustomDialog);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(LessonActivity.this, R.style.CustomDialog);
         final ImageView image = new ImageView(this);
         image.setImageDrawable(drawable);
         alertDialog.setView(image);
@@ -375,7 +382,7 @@ public class Deckofcards extends AppCompatActivity{
                         //cardAction(detectCard(get_im));
                         card_table[leave_card - 1] = detectCard(get_im);
                         int symb=whatSymbol(card_table[leave_card - 1],leave_card-1);
-                        Toast.makeText(Deckofcards.this,""+symb,Toast.LENGTH_LONG).show();
+                        Toast.makeText(LessonActivity.this,""+symb,Toast.LENGTH_LONG).show();
                         //19.07 воспроизведение звука по символу
                         switch (symb){
                             case 1:
@@ -434,7 +441,7 @@ public class Deckofcards extends AppCompatActivity{
         else
         if (illusion_mas.contains(cardtable)){
             countSymbol[num]=3;
-            }
+        }
         else
         if (nature_mas.contains(cardtable)){
             countSymbol[num]=4;
@@ -449,17 +456,17 @@ public class Deckofcards extends AppCompatActivity{
         int num = 1;
         for (int i = 0; i < countSymbol.length; i++)
         {
-          if (countSymbol[i]==symbol){
-              num+=1;
-          }
+            if (countSymbol[i]==symbol){
+                num+=1;
+            }
         }
         return num;
     }
     public int CouNumSymb(){
         int counter=0;
-       if (countSymbol[0]!=0){counter++;}
-       if (countSymbol[1]!=0 && countSymbol[0]!=countSymbol[1]){counter++;}
-       if(countSymbol[2]!=0 && countSymbol[1]!=countSymbol[2] && countSymbol[2]!=countSymbol[0]){counter++;}
+        if (countSymbol[0]!=0){counter++;}
+        if (countSymbol[1]!=0 && countSymbol[0]!=countSymbol[1]){counter++;}
+        if(countSymbol[2]!=0 && countSymbol[1]!=countSymbol[2] && countSymbol[2]!=countSymbol[0]){counter++;}
         return counter;
     }
     //11.05.2020 16:48 проверка свободно ли место на столе
@@ -508,7 +515,7 @@ public class Deckofcards extends AppCompatActivity{
         return 0;
     }
     public void gotoMenu(View view) {
-        Intent i = new Intent(Deckofcards.this, StartActivity.class);
+        Intent i = new Intent(LessonActivity.this, StartActivity.class);
         startActivity(i);
         this.finish();
     }
@@ -688,37 +695,37 @@ public class Deckofcards extends AppCompatActivity{
         switch (card) {
             //Смэрт
             case R.drawable.d_darkness_1:
-               switch (NumSymbol(countSymbol,1)){
-                   case 1:
+                switch (NumSymbol(countSymbol,1)){
+                    case 1:
                         switch (value1)
                         {
-                       case 2: case 3: case 4:
-                           return new int[]{-1, 0};
+                            case 2: case 3: case 4:
+                            return new int[]{-1, 0};
                             case 5:case 6:
-                           return new int[]{-2, 0};
+                            return new int[]{-2, 0};
                         }
-                       break;
-                   case 2:
-                       switch (value1+value2){
-                           case 2: case 3:case 4:
-                               return new int[]{-1, 0};
-                           case 5: case 6: case 7: case 8: case 9:
-                               return new int[]{-2, 0};
-                           case 10: case 11: case 12:
-                               return new int[]{-6, 0};
-                       }
-                       break;
-                   case 3:
-                       switch (value1+value2+value3){
-                           case 2: case 3:case 4:
-                               return new int[]{-1, 0};
-                           case 5: case 6: case 7: case 8: case 9:
-                               return new int[]{-2, 0};
-                           case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
-                               return new int[]{-6, 0};
-                       }
-                       break;
-            }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-2, 0};
+                            case 10: case 11: case 12:
+                                return new int[]{-6, 0};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-2, 0};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-6, 0};
+                        }
+                        break;
+                }
                 break;
             case R.drawable.d_darkness_2:
                 switch (NumSymbol(countSymbol,1)){
@@ -819,36 +826,36 @@ public class Deckofcards extends AppCompatActivity{
             //Стихия
             case R.drawable.d_element_1:
                 switch (NumSymbol(countSymbol,2)){
-                        case 1:
-                            switch (value1){
-                                case 2: case 3: case 4:
-                                    return new int[]{-1, 0};
-                                case 5:case 6:
-                                    return new int[]{-2, 0};
-                            }
-                            break;
-                        case 2:
-                            switch (value1+value2){
-                                case 2: case 3:case 4:
-                                    return new int[]{-1, 0};
-                                case 5: case 6: case 7: case 8: case 9:
-                                    return new int[]{-2, 0};
-                                case 10: case 11: case 12:
-                                    return new int[]{-4, 0};
-                            }
-                            break;
-                        case 3:
-                            switch (value1+value2+value3){
-                                case 2: case 3:case 4:
-                                    return new int[]{-1, 0};
-                                case 5: case 6: case 7: case 8: case 9:
-                                    return new int[]{-2, 0};
-                                case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
-                                    return new int[]{-4, 0};
-                            }
-                            break;
-                    }
-                    break;
+                    case 1:
+                        switch (value1){
+                            case 2: case 3: case 4:
+                                return new int[]{-1, 0};
+                            case 5:case 6:
+                                return new int[]{-2, 0};
+                        }
+                        break;
+                    case 2:
+                        switch (value1+value2){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-2, 0};
+                            case 10: case 11: case 12:
+                                return new int[]{-4, 0};
+                        }
+                        break;
+                    case 3:
+                        switch (value1+value2+value3){
+                            case 2: case 3:case 4:
+                                return new int[]{-1, 0};
+                            case 5: case 6: case 7: case 8: case 9:
+                                return new int[]{-2, 0};
+                            case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                                return new int[]{-4, 0};
+                        }
+                        break;
+                }
+                break;
             case R.drawable.d_element_2:
                 switch (NumSymbol(countSymbol,2)){
                     case 1:
@@ -1243,10 +1250,10 @@ public class Deckofcards extends AppCompatActivity{
                 }
                 break;
             case R.drawable.k_darkness_4:
-             return new int[]{-2*NumSymbol(countSymbol,1),0};
+                return new int[]{-2*NumSymbol(countSymbol,1),0};
 
             case R.drawable.k_element_1:
-             return new int[]{-NumSymbol(countSymbol,2),0};
+                return new int[]{-NumSymbol(countSymbol,2),0};
             case R.drawable.k_element_2:
                 switch (NumSymbol(countSymbol,2)){
                     case 1:
@@ -1316,9 +1323,9 @@ public class Deckofcards extends AppCompatActivity{
                 }
                 break;
             case R.drawable.k_nature_3:
-             return new int[]{-2*CouNumSymb(),0};
+                return new int[]{-2*CouNumSymb(),0};
             case R.drawable.k_nature_4:
-              return new int[]{-5, 0};
+                return new int[]{-5, 0};
             case R.drawable.k_nature_5:
                 return new int[]{-2, 0};
         }
@@ -1356,7 +1363,7 @@ public class Deckofcards extends AppCompatActivity{
         for (int i=0; i<3; i++){
             aaa+=" "+countSymbol[i];
         }
-        Toast.makeText(Deckofcards.this,aaa,Toast.LENGTH_SHORT).show();
+        Toast.makeText(LessonActivity.this,aaa,Toast.LENGTH_SHORT).show();
     }
 
 
@@ -1394,19 +1401,19 @@ public class Deckofcards extends AppCompatActivity{
             } else {
                 ((TextView) findViewById(R.id.dead2)).setText("3");
                 ((TextView) findViewById(R.id.hp2)).setText("0");
-                AlertDialog alertDialog = new AlertDialog.Builder(Deckofcards.this).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(LessonActivity.this).create();
                 alertDialog.setTitle("Игра окончена");
                 alertDialog.setMessage("Вы победили!");
                 alertDialog.setIcon(R.drawable.end_win);
                 alertDialog.setButton("Back", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent i = new Intent(Deckofcards.this, StartActivity.class);
+                        Intent i = new Intent(LessonActivity.this, StartActivity.class);
                         startActivity(i);
                     }
                 });
                 alertDialog.show();
-                stopService(new Intent(Deckofcards.this, battleplayer.class));
-                startService(new Intent(Deckofcards.this, commonplayer.class));
+                stopService(new Intent(LessonActivity.this, battleplayer.class));
+                startService(new Intent(LessonActivity.this, commonplayer.class));
             }
         } else {
             ((TextView) findViewById(R.id.hp2)).setText(Integer.toString(hp));
@@ -1427,19 +1434,19 @@ public class Deckofcards extends AppCompatActivity{
             } else {
                 ((TextView) findViewById(R.id.dead)).setText("3");
                 ((TextView) findViewById(R.id.hp)).setText("0");
-                AlertDialog alertDialog = new AlertDialog.Builder(Deckofcards.this).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(LessonActivity.this).create();
                 alertDialog.setTitle("Игра окончена");
                 alertDialog.setMessage("Вы проиграли! Не отчаивайтесь, это не конец света, есть же некромантия!");
                 alertDialog.setIcon(R.drawable.end_dead);
                 alertDialog.setButton("Back", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent i = new Intent(Deckofcards.this, StartActivity.class);
+                        Intent i = new Intent(LessonActivity.this, StartActivity.class);
                         startActivity(i);
                     }
                 });
                 alertDialog.show();
-                stopService(new Intent(Deckofcards.this, battleplayer.class));
-                startService(new Intent(Deckofcards.this, commonplayer.class));
+                stopService(new Intent(LessonActivity.this, battleplayer.class));
+                startService(new Intent(LessonActivity.this, commonplayer.class));
             }
         } else {
             ((TextView) findViewById(R.id.hp)).setText(Integer.toString(hp));
@@ -1633,9 +1640,73 @@ public class Deckofcards extends AppCompatActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(new Intent(Deckofcards.this, battleplayer.class));
-        startService(new Intent(Deckofcards.this, commonplayer.class));
+        stopService(new Intent(LessonActivity.this, battleplayer.class));
+        startService(new Intent(LessonActivity.this, commonplayer.class));
         soundPool.release();
         soundPool = null;
+    }
+    public void trainnxt(){
+        hello.setText("Добро пожаловать в обучение! Нажмите кнопку ниже, чтобы начать");
+        less.play(hellosp, 1, 1, 0, 0, 1);
+        hello.setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+        hintplayer.setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+        hintopp.setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+
+        hinttable.setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+
+        hintcard.setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+
+        hintcardhelp.setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+
+        hintfinal.setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+
+        hintdice.setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+
+        hintbtn.setOnClickListener(new View.OnClickListener() {
+            int i=0;
+            @Override
+            public void onClick(View v) {
+                i++;
+                if (i == 1) {
+                    hello.setVisibility(View.INVISIBLE);
+                    hintplayer.setText("Здесь находятся данные о Вашем персонаже:\n" + "Его здоровье, красным цветом, и оставшиеся его жизни - черным");
+                    hintopp.setText("Здесь находятся данные о персонаже противника:\n" + "Его здоровье, красным цветом, и оставшиеся его жизни - черным");
+                    less.play(hintplayersp, 1, 1, 0, 0, 1);
+                } else if (i == 2) {
+                    hintopp.setVisibility(View.INVISIBLE);
+                    hintplayer.setVisibility(View.INVISIBLE);
+                    hinttable.setText("Чтобы раздать карты, нажмите на колоду");
+                    hintdice.setText("Эти кубики определят силу Могучего броска вашего заклинания");
+                    less.play(dicetablesp, 1, 1, 0, 0, 1);
+                } else if (i == 3) {
+                    hinttable.setVisibility(View.INVISIBLE);
+                    hintdice.setVisibility(View.INVISIBLE);
+                    hintcard.setText("Это Ваши заклинания.\nОни раздаются случайно. Нажмите на карту и потяните, чтобы переместить:\n"
+                            +"Карта 'Источник' в желтый слот.\n"
+                            +"Карта 'Качество' в Оранжевый слот.\n"
+                            +"Карта 'Действие' в Малиновый слот.");
+                    hintcardhelp.setText("Чтобы узнать больше информации, нажмите на карту.");
+                    less.play(hintcardsp, 1, 1, 0, 0, 1);
+                }
+                else if(i==4){
+                    hintcard.setVisibility(View.INVISIBLE);
+                    hintcardhelp.setVisibility(View.INVISIBLE);
+                    hintfinal.setText("Как только заклинание будет готово, нажмите ROLL. Дождитесь выпадения значений на кубиках и нажмите END OF TURN.\nВаша цель - убить противника заклинаниями. Удачи!");
+                    less.play(finallysp, 1, 1, 0, 0, 1);
+                }
+                else if(i==5){
+                    hintfinal.setVisibility(View.INVISIBLE);
+                    hintbtn.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 }

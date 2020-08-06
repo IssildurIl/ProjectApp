@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Customization"
-    android:background="@drawable/view_with_background_all">
+    android:background="@drawable/view_with_background_all"
+    tools:context=".Customization">
 
     <TextView
         android:id="@+id/title"
@@ -25,14 +25,14 @@
         android:id="@+id/IconeSwither"
         android:layout_width="129dp"
         android:layout_height="128dp"
-        android:layout_marginTop="73dp"
+        android:layout_marginTop="114dp"
         android:layout_marginBottom="195dp"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/backb1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.688"
         app:layout_constraintStart_toEndOf="@+id/tv1"
-        app:layout_constraintTop_toBottomOf="@+id/inputNick">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
     </ImageSwitcher>
 
@@ -41,14 +41,12 @@
         style="@style/otherActivity"
         android:layout_width="189dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
         android:layout_marginBottom="226dp"
         android:gravity="center"
         android:text="Choose an incone: "
         app:layout_constraintBottom_toTopOf="@+id/backb1"
         app:layout_constraintEnd_toStartOf="@+id/imageSwitcher"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv2" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/backb1"
@@ -65,31 +63,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/tv2"
-        style="@style/otherActivity"
-        android:layout_width="187dp"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="144dp"
-        android:gravity="center"
-        android:text="Enter your name:"
-        app:layout_constraintBottom_toBottomOf="@+id/inputNick"
-        app:layout_constraintEnd_toStartOf="@+id/imageSwitcher"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
-
-    <EditText
-        android:id="@+id/inputNick"
-        android:layout_width="187dp"
-        android:layout_height="89dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="132dp"
-        android:layout_marginBottom="73dp"
-        android:text=""
-        android:textSize="45dp"
-        app:layout_constraintBottom_toTopOf="@+id/IconeSwither"
+        android:layout_marginTop="73dp"
+        android:hint="Enter your name"
+        android:textColorHint="#ffffc4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv2"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputNick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:imeOptions="actionDone"
+            android:inputType="textPersonName"
+            android:textSize="36sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
+    <CheckBox
+        android:id="@+id/checklesson"
+        android:layout_width="173dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="82dp"
+        android:text="Включить обучение?"
+        app:layout_constraintBottom_toTopOf="@+id/backb1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
