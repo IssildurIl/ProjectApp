@@ -1704,6 +1704,10 @@ public class LessonActivity extends AppCompatActivity{
                 }
                 else if(i==5){
                     hintfinal.setVisibility(View.INVISIBLE);
+                    hintcard.setText("Если вы хотите закончить обучение, перейдите в Customization и уберите галочку");
+                }
+                else if(i==6){
+                    hintfinal.setVisibility(View.INVISIBLE);
                     hintbtn.setVisibility(View.GONE);
                 }
             }
