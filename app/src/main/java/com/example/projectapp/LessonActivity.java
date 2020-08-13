@@ -1719,6 +1719,7 @@ public class LessonActivity extends AppCompatActivity{
                         hintcard.setText("Если вы хотите закончить обучение, перейдите в Customization и уберите галочку");
                         break;
                     case 6:
+                        
                         hintcard.setVisibility(View.INVISIBLE);
                         hintbtn.setVisibility(View.GONE);
                         break;
