@@ -1646,7 +1646,7 @@ public class LessonActivity extends AppCompatActivity{
         soundPool = null;
     }
     public void trainnxt(){
-        hello.setText("Добро пожаловать в обучение! Нажмите кнопку ниже, чтобы начать");
+        hello.setText("Добро пожаловать\n в обучение!\nНажмите кнопку ниже, чтобы начать");
         less.play(hellosp, 1, 1, 0, 0, 1);
         hello.setTypeface(Typeface.createFromAsset(
                 getAssets(), "fonts/JurassicPark-BL48.ttf"));
@@ -1675,40 +1675,54 @@ public class LessonActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 i++;
-                if (i == 1) {
-                    hello.setVisibility(View.INVISIBLE);
-                    hintplayer.setText("Здесь находятся данные о Вашем персонаже:\n" + "Его здоровье, красным цветом, и оставшиеся его жизни - черным");
-                    hintopp.setText("Здесь находятся данные о персонаже противника:\n" + "Его здоровье, красным цветом, и оставшиеся его жизни - черным");
-                    less.play(hintplayersp, 1, 1, 0, 0, 1);
-                } else if (i == 2) {
-                    hintopp.setVisibility(View.INVISIBLE);
-                    hintplayer.setVisibility(View.INVISIBLE);
-                    hinttable.setText("Чтобы раздать карты, нажмите на колоду");
-                    hintdice.setText("Эти кубики определят силу Могучего броска вашего заклинания");
-                    less.play(dicetablesp, 1, 1, 0, 0, 1);
-                } else if (i == 3) {
-                    hinttable.setVisibility(View.INVISIBLE);
-                    hintdice.setVisibility(View.INVISIBLE);
-                    hintcard.setText("Это Ваши заклинания.\nОни раздаются случайно. Нажмите на карту и потяните, чтобы переместить:\n"
-                            +"Карта 'Источник' в желтый слот.\n"
-                            +"Карта 'Качество' в Оранжевый слот.\n"
-                            +"Карта 'Действие' в Малиновый слот.");
-                    hintcardhelp.setText("Чтобы узнать больше информации, нажмите на карту.");
-                    less.play(hintcardsp, 1, 1, 0, 0, 1);
-                }
-                else if(i==4){
-                    hintcard.setVisibility(View.INVISIBLE);
-                    hintcardhelp.setVisibility(View.INVISIBLE);
-                    hintfinal.setText("Как только заклинание будет готово, нажмите ROLL. Дождитесь выпадения значений на кубиках и нажмите END OF TURN.\nВаша цель - убить противника заклинаниями. Удачи!");
-                    less.play(finallysp, 1, 1, 0, 0, 1);
-                }
-                else if(i==5){
-                    hintfinal.setVisibility(View.INVISIBLE);
-                    hintcard.setText("Если вы хотите закончить обучение, перейдите в Customization и уберите галочку");
-                }
-                else if(i==6){
-                    hintfinal.setVisibility(View.INVISIBLE);
-                    hintbtn.setVisibility(View.GONE);
+                //12.08 22:18
+                switch (i){
+                    case 1:
+                        hello.setVisibility(View.INVISIBLE);
+                        hintopp.setVisibility(View.VISIBLE);
+                        hintplayer.setVisibility(View.VISIBLE);
+                        hintplayer.setText("Здесь находятся данные о Вашем персонаже:\n" + "Его здоровье - черным цветом, и оставшиеся жизни - красным");
+                        hintopp.setText("Здесь находятся данные о персонаже противника:\n" + "Его здоровье - черным цветом, и оставшиеся жизни - красным");
+                        less.play(hintplayersp, 1, 1, 0, 0, 1);
+                        break;
+                    case 2:
+                        hintopp.setVisibility(View.INVISIBLE);
+                        hintplayer.setVisibility(View.INVISIBLE);
+                        hinttable.setVisibility(View.VISIBLE);
+                        hintdice.setVisibility(View.VISIBLE);
+                        hinttable.setText("Чтобы раздать карты, нажмите на колоду");
+                        hintdice.setText("Эти кубики определят силу Могучего броска вашего заклинания");
+                        less.play(dicetablesp, 1, 1, 0, 0, 1);
+                        break;
+                    case 3:
+                        hinttable.setVisibility(View.INVISIBLE);
+                        hintdice.setVisibility(View.INVISIBLE);
+                        hintcard.setVisibility(View.VISIBLE);
+                        hintcardhelp.setVisibility(View.VISIBLE);
+                        hintcard.setText("Это Ваши заклинания.\nОни раздаются случайно. Нажмите на карту и потяните, чтобы переместить:\n"
+                                +"Карта 'Источник' в желтый слот,\n"
+                                +"'Качество' - в Оранжевый.\n"
+                                +"'Действие' - в Малиновый слот.");
+                        hintcardhelp.setText("Чтобы узнать больше информации, нажмите\n на карту.");
+                        less.play(hintcardsp, 1, 1, 0, 0, 1);
+                        break;
+                    case 4:
+                        hintcard.setVisibility(View.INVISIBLE);
+                        hintcardhelp.setVisibility(View.INVISIBLE);
+                        hintfinal.setVisibility(View.VISIBLE);
+                        hintfinal.setText("Как только заклинание будет готово, нажмите ROLL. Дождитесь выпадения значений на кубиках\n и нажмите END OF TURN.\nВаша цель - убить противника заклинаниями. Удачи!");
+                        less.play(finallysp, 1, 1, 0, 0, 1);
+                        break;
+                    case 5:
+                        hintfinal.setVisibility(View.INVISIBLE);
+                        hintcard.setVisibility(View.VISIBLE);
+                        hintcard.setText("Если вы хотите закончить обучение, перейдите в Customization и уберите галочку");
+                        break;
+                    case 6:
+                        hintcard.setVisibility(View.INVISIBLE);
+                        hintbtn.setVisibility(View.GONE);
+                        break;
+                    default:
                 }
             }
         });

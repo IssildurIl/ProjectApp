@@ -86,7 +86,8 @@ public class Deckofcards extends AppCompatActivity{
     //
     //голосовое
     private TextView result_tv;
-    private Button startlisten,stoplisten,mute,hintbtn;
+    private Button startlisten,stoplisten,mute;
+    private ImageButton hintbtn;
     private SpeechRecognizerManager mSpeechManager;
     //обучение
     TextView hintopp,hintdice,hintplayer,hinttable,hintcard,hintcardhelp,hintfinal;
