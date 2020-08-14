@@ -81,7 +81,7 @@ public class LessonActivity extends AppCompatActivity{
 
     private SoundPool soundPool;
     private SoundPool less;
-    private int sound1, secretsound, sound3, sound4,darknesssound,firesound,naturesound,illusionsound,hellosp,hintcardsp,hintplayersp,finallysp,dicetablesp ;
+    private int sound1, secretsound, sound3, sound4,darknesssound,firesound,naturesound,illusionsound,hellosp,hintcardsp,hintplayersp,finallysp,dicetablesp,customsp ;
 
     //анимация
     //
@@ -106,13 +106,13 @@ public class LessonActivity extends AppCompatActivity{
         //startService(new Intent(LessonActivity.this, battleplayer.class));
         //местные звуки
         soundPool = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
-        less= new SoundPool(6,AudioManager.STREAM_MUSIC,0);
+        less= new SoundPool(7,AudioManager.STREAM_MUSIC,0);
         hellosp= less.load(this, R.raw.hello, 1);
         hintcardsp = less.load(this, R.raw.hintcard, 1);
         hintplayersp= less.load(this, R.raw.hintplayer, 1);
         finallysp= less.load(this, R.raw.soundend,1);
         dicetablesp= less.load(this, R.raw.dicetable, 1);
-
+        customsp= less.load(this,R.raw.custom,1);
         sound1 = soundPool.load(this, R.raw.givecards, 1);
         secretsound = soundPool.load(this, R.raw.dropcard, 1);
         sound3 = soundPool.load(this, R.raw.takedmg, 1);
@@ -1679,10 +1679,12 @@ public class LessonActivity extends AppCompatActivity{
                 switch (i){
                     case 1:
                         hello.setVisibility(View.INVISIBLE);
+                        hintdice.setVisibility(View.INVISIBLE);
                         hintopp.setVisibility(View.VISIBLE);
                         hintplayer.setVisibility(View.VISIBLE);
-                        hintplayer.setText("Здесь находятся данные о Вашем персонаже:\n" + "Его здоровье - черным цветом, и оставшиеся жизни - красным");
-                        hintopp.setText("Здесь находятся данные о персонаже противника:\n" + "Его здоровье - черным цветом, и оставшиеся жизни - красным");
+                        hintcard.setVisibility(View.INVISIBLE);
+                        hintplayer.setText("здесь находятся данные о Вашем персонаже:\n" + "Его здоровье - черным цветом, и оставшиеся жизни - красным");
+                        hintopp.setText("здесь находятся данные о персонаже противника:\n" + "Его здоровье - черным цветом, и оставшиеся жизни - красным");
                         less.play(hintplayersp, 1, 1, 0, 0, 1);
                         break;
                     case 2:
@@ -1691,7 +1693,7 @@ public class LessonActivity extends AppCompatActivity{
                         hinttable.setVisibility(View.VISIBLE);
                         hintdice.setVisibility(View.VISIBLE);
                         hinttable.setText("Чтобы раздать карты, нажмите на колоду");
-                        hintdice.setText("Эти кубики определят силу Могучего броска вашего заклинания");
+                        hintdice.setText("Эти кубики определят силу\n 'Могучего броска' вашего заклинания");
                         less.play(dicetablesp, 1, 1, 0, 0, 1);
                         break;
                     case 3:
@@ -1699,7 +1701,7 @@ public class LessonActivity extends AppCompatActivity{
                         hintdice.setVisibility(View.INVISIBLE);
                         hintcard.setVisibility(View.VISIBLE);
                         hintcardhelp.setVisibility(View.VISIBLE);
-                        hintcard.setText("Это Ваши заклинания.\nОни раздаются случайно. Нажмите на карту и потяните, чтобы переместить:\n"
+                        hintcard.setText("это ваши заклинания. они раздаются\n случайно. Нажмите на карту и потяните, чтобы переместить:\n"
                                 +"Карта 'Источник' в желтый слот,\n"
                                 +"'Качество' - в Оранжевый.\n"
                                 +"'Действие' - в Малиновый слот.");
@@ -1714,12 +1716,11 @@ public class LessonActivity extends AppCompatActivity{
                         less.play(finallysp, 1, 1, 0, 0, 1);
                         break;
                     case 5:
-                        hintfinal.setVisibility(View.INVISIBLE);
-                        hintcard.setVisibility(View.VISIBLE);
-                        hintcard.setText("Если вы хотите закончить обучение, перейдите в Customization и уберите галочку");
+                        hintfinal.setText("     Если вы хотите закончить обучение, перейдите в\n Customization и уберите галочку");
+                        less.play(customsp, 1, 1, 0, 0, 1);
                         break;
                     case 6:
-                        hintcard.setVisibility(View.INVISIBLE);
+                        hintfinal.setVisibility(View.INVISIBLE);
                         hintbtn.setVisibility(View.GONE);
                         break;
                     default:
