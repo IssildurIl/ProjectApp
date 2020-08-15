@@ -1646,6 +1646,7 @@ public class LessonActivity extends AppCompatActivity{
         soundPool = null;
     }
     public void trainnxt(){
+        final int[] stream1 = new int[5];
         hello.setText("Добро пожаловать\n в обучение!\nНажмите кнопку ниже, чтобы начать");
         less.play(hellosp, 1, 1, 0, 0, 1);
         hello.setTypeface(Typeface.createFromAsset(
@@ -1683,43 +1684,47 @@ public class LessonActivity extends AppCompatActivity{
                         hintopp.setVisibility(View.VISIBLE);
                         hintplayer.setVisibility(View.VISIBLE);
                         hintcard.setVisibility(View.INVISIBLE);
-                        hintplayer.setText("здесь находятся данные о Вашем персонаже:\n" + "Его здоровье - черным цветом, и оставшиеся жизни - красным");
-                        hintopp.setText("здесь находятся данные о персонаже противника:\n" + "Его здоровье - черным цветом, и оставшиеся жизни - красным");
-                        less.play(hintplayersp, 1, 1, 0, 0, 1);
+                        hintplayer.setText("Здесь находятся данные о Вашем персонаже:\n" + "Его здоровье - черным цветом, и оставшиеся жизни - красным");
+                        hintopp.setText("Здесь находятся данные о персонаже противника:\n" + "Его здоровье - черным цветом, и оставшиеся жизни - красным");
+                        stream1[0] =less.play(hintplayersp, 1, 1, 0, 0, 1);
                         break;
                     case 2:
+                        less.stop(stream1[0]);
                         hintopp.setVisibility(View.INVISIBLE);
                         hintplayer.setVisibility(View.INVISIBLE);
                         hinttable.setVisibility(View.VISIBLE);
                         hintdice.setVisibility(View.VISIBLE);
                         hinttable.setText("Чтобы раздать карты, нажмите на колоду");
                         hintdice.setText("Эти кубики определят силу\n 'Могучего броска' вашего заклинания");
-                        less.play(dicetablesp, 1, 1, 0, 0, 1);
+                        stream1[1]=less.play(dicetablesp, 1, 1, 0, 0, 1);
                         break;
                     case 3:
+                        less.stop(stream1[1]);
                         hinttable.setVisibility(View.INVISIBLE);
                         hintdice.setVisibility(View.INVISIBLE);
                         hintcard.setVisibility(View.VISIBLE);
                         hintcardhelp.setVisibility(View.VISIBLE);
-                        hintcard.setText("это ваши заклинания. они раздаются\n случайно. Нажмите на карту и потяните, чтобы переместить:\n"
+                        hintcard.setText("Это ваши заклинания. они раздаются\n случайно. Нажмите на карту и потяните, чтобы переместить:\n"
                                 +"Карта 'Источник' в желтый слот,\n"
-                                +"'Качество' - в Оранжевый.\n"
-                                +"'Действие' - в Малиновый слот.");
+                                +"'Качество' - в Оранжевый,\n 'Действие' - в Малиновый.");
                         hintcardhelp.setText("Чтобы узнать больше информации, нажмите\n на карту.");
-                        less.play(hintcardsp, 1, 1, 0, 0, 1);
+                        stream1[2]=less.play(hintcardsp, 1, 1, 0, 0, 1);
                         break;
                     case 4:
+                        less.stop(stream1[2]);
                         hintcard.setVisibility(View.INVISIBLE);
                         hintcardhelp.setVisibility(View.INVISIBLE);
                         hintfinal.setVisibility(View.VISIBLE);
                         hintfinal.setText("Как только заклинание будет готово, нажмите ROLL. Дождитесь выпадения значений на кубиках\n и нажмите END OF TURN.\nВаша цель - убить противника заклинаниями. Удачи!");
-                        less.play(finallysp, 1, 1, 0, 0, 1);
+                        stream1[3]=less.play(finallysp, 1, 1, 0, 0, 1);
                         break;
                     case 5:
+                        less.stop(stream1[3]);
                         hintfinal.setText("     Если вы хотите закончить обучение, перейдите в\n Customization и уберите галочку");
-                        less.play(customsp, 1, 1, 0, 0, 1);
+                        stream1[4]=less.play(customsp, 1, 1, 0, 0, 1);
                         break;
                     case 6:
+                        less.stop(stream1[4]);
                         hintfinal.setVisibility(View.INVISIBLE);
                         hintbtn.setVisibility(View.GONE);
                         break;
