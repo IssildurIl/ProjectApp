@@ -521,34 +521,6 @@ public class PlayActivity extends AppCompatActivity {
                     }
                     // 12.05.2020 13:35 смещение карт в руке
                     if (flag){
-                        //РАЗБАНЬ МЕНЯ
-                        //РАЗБАНЬ МЕНЯ
-                        //РАЗБАНЬ МЕНЯ
-                        /*int symb=whatSymbol(card_table[leave_card - 1],leave_card-1);
-                        switch (symb){
-                            case 1:
-                                soundPool.play(darknesssound, 1, 1, 0, 0, 1);
-                                break;
-                            case 2:
-                                soundPool.play(firesound, 1, 1, 0, 0, 1);
-                                break;
-                            case 3:
-                                soundPool.play(illusionsound, 1, 1, 0, 0, 1);
-                                break;
-                            case 4:
-                                soundPool.play(naturesound, 1, 1, 0, 0, 1);
-                                break;
-                            case 5:
-                                soundPool.play(secretsound,1,1,0,0,1);
-                                break;
-                        }
-
-                         */
-                        //РАЗБАНЬ МЕНЯ
-                        //РАЗБАНЬ МЕНЯ
-                        //РАЗБАНЬ МЕНЯ
-
-
 
                         //cardAction(detectCard(get_im));
                         //card_table[leave_card-1]=detectCard(get_im);

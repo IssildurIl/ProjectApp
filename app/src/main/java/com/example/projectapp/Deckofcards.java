@@ -426,7 +426,7 @@ public class Deckofcards extends AppCompatActivity{
             return true;
         }
     };
-
+    //whatSymbol(card_table[leave_opp],leave_opp);
     public int whatSymbol(int cardtable, int num){
         if (darkness_mas.contains(cardtable)){
             countSymbol[num]=1;
@@ -447,6 +447,7 @@ public class Deckofcards extends AppCompatActivity{
         if (secret_mas.contains(cardtable)){
             countSymbol[num]=5;
         }
+
         return countSymbol[num];
     }
     public int NumSymbol(int countSymbol[], int symbol){
@@ -637,7 +638,7 @@ public class Deckofcards extends AppCompatActivity{
         }
     }
     public void opp_turn() {
-        leave_opp = 0;
+        leave_opp = 0;//1
         int num;
         for (num = 0; num < card_opp.length; num++) {
             if (cards_i.indexOf(card_opp[num]) > -1) {

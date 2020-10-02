@@ -134,7 +134,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginEnd="4dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="60dp"
         android:scaleType="centerInside"
         android:src="@drawable/magic_back_cards"
         app:layout_constraintBottom_toTopOf="@+id/end"
@@ -324,7 +324,7 @@
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginEnd="4dp"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/hand"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/brick_end_of_turn" />
@@ -334,6 +334,7 @@
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginEnd="4dp"
+        android:layout_marginBottom="56dp"
         app:layout_constraintBottom_toBottomOf="@+id/end"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/brick_roll" />
