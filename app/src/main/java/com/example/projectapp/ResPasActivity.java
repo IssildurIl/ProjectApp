@@ -28,7 +28,7 @@ public class ResPasActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     SharedPreferences mSettings;
     public static final String APP_PREFERENCES = "mysettings";
-    public static final String APP_PREFERENCES_EMAIL = "mail"; // имя кота
+    public static final String APP_PREFERENCES_EMAIL = "mail";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

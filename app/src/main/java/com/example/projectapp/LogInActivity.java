@@ -44,7 +44,10 @@ public class LogInActivity extends AppCompatActivity {
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
         Toast.makeText(LogInActivity.this,"зашел",Toast.LENGTH_LONG).show();
-
+        if (auth.getCurrentUser() != null) {
+            startActivity(new Intent(LogInActivity.this, ListOfPlayer.class));
+            finish();
+        }
         setContentView(R.layout.activity_log_in);
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         inputEmail = (EditText) findViewById(R.id.email);

@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,12 +29,12 @@ import java.util.List;
 
 public class ListOfPlayer extends AppCompatActivity {
     ListView playerlist;
-    Button createroom,chngacc;
+    Button createroom,chngacc,gotomenu;
     TextView nick;
     List<String> roomsList;
     String playerName= "";
     String roomName= "";
-
+    private FirebaseAuth auth;
     FirebaseDatabase database;
     DatabaseReference roomRef;
     DatabaseReference roomsRef;
@@ -49,7 +50,7 @@ public class ListOfPlayer extends AppCompatActivity {
         Typeface typeBold = Typeface.createFromAsset(getAssets(),"fonts/JurassicPark-BL48.ttf");
         database = FirebaseDatabase.getInstance();
 
-
+        auth = FirebaseAuth.getInstance();
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         playerName = mSettings.getString(APP_PREFERENCES_NETNAME,"default player");
         roomName=playerName;
@@ -57,12 +58,22 @@ public class ListOfPlayer extends AppCompatActivity {
         playerlist = findViewById(R.id.playerlist);
         createroom= findViewById(R.id.createroom);
         chngacc =findViewById(R.id.changeacc);
+        gotomenu = findViewById(R.id.gotomenu);
         nick = findViewById(R.id.usernick);
         nick.setText("Игрок: "+playerName);
         //all exiting available rooms
+        gotomenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListOfPlayer.this, StartActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         chngacc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                auth.signOut();
                 Intent intent = new Intent(ListOfPlayer.this, LogInActivity.class);
                 startActivity(intent);
                 finish();
@@ -150,6 +161,10 @@ public class ListOfPlayer extends AppCompatActivity {
         final Button btn2 = (Button) findViewById(R.id.changeacc);
         btn2.setTypeface(Typeface.createFromAsset(
                 getAssets(), "fonts/JurassicPark-BL48.ttf"));
+        final Button btn3 = (Button) findViewById(R.id.gotomenu);
+        btn3.setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+
     }
 
 }
