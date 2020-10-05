@@ -43,7 +43,7 @@ public class LogInActivity extends AppCompatActivity {
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
-        Toast.makeText(LogInActivity.this,"зашел",Toast.LENGTH_LONG).show();
+        //Toast.makeText(LogInActivity.this,"зашел",Toast.LENGTH_LONG).show();
         if (auth.getCurrentUser() != null) {
             startActivity(new Intent(LogInActivity.this, ListOfPlayer.class));
             finish();
@@ -79,7 +79,7 @@ public class LogInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
-                Toast.makeText(LogInActivity.this,"зашел"+email,Toast.LENGTH_LONG).show();
+                //Toast.makeText(LogInActivity.this,"зашел"+email,Toast.LENGTH_LONG).show();
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Введите Еmail адрес!", Toast.LENGTH_SHORT).show();
                     return;
@@ -116,7 +116,7 @@ public class LogInActivity extends AppCompatActivity {
                                     SharedPreferences.Editor ed = mSettings.edit();
                                     ed.putString(APP_PREFERENCES_NETNAME,email.substring(0,email.indexOf("@")));
                                     ed.commit();
-                                    Toast.makeText(LogInActivity.this, email.substring(0,email.indexOf("@")), Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(LogInActivity.this, email.substring(0,email.indexOf("@")), Toast.LENGTH_LONG).show();
                                     saveText(email,password);
                                     Intent intent = new Intent(LogInActivity.this, ListOfPlayer.class);
                                     startActivity(intent);
@@ -137,7 +137,7 @@ public class LogInActivity extends AppCompatActivity {
         ed.putString(APP_PREFERENCES_EMAIL, email);
         ed.putString(APP_PREFERENCES_PASS, pass);
         ed.commit();
-        Toast.makeText(LogInActivity.this,"зашел преференсы" + APP_PREFERENCES_EMAIL+" "+ APP_PREFERENCES_PASS,Toast.LENGTH_LONG).show();
+        //Toast.makeText(LogInActivity.this,"зашел преференсы" + APP_PREFERENCES_EMAIL+" "+ APP_PREFERENCES_PASS,Toast.LENGTH_LONG).show();
     }
 
     public void loadText() {
@@ -145,7 +145,7 @@ public class LogInActivity extends AppCompatActivity {
         //inputPassword = (EditText) findViewById(R.id.password);
         String savedMail = mSettings.getString(APP_PREFERENCES_EMAIL, "");
         String savedPas= mSettings.getString(APP_PREFERENCES_PASS,"");
-        Toast.makeText(LogInActivity.this,"загрузил преференсы" + savedMail ,Toast.LENGTH_LONG).show();
+        //Toast.makeText(LogInActivity.this,"загрузил преференсы" + savedMail ,Toast.LENGTH_LONG).show();
         inputEmail.setText(savedMail);
         inputPassword.setText(savedPas);
     }

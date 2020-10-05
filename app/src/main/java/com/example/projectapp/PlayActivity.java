@@ -288,6 +288,7 @@ public class PlayActivity extends AppCompatActivity {
         rollDicesButton.setEnabled(false); //
         mLeftImageView = (ImageView) findViewById(R.id.imageview_left);
         mRightImageView = (ImageView) findViewById(R.id.imageview_right);
+        mMidImageView =(ImageView) findViewById(R.id.imageview_mid);
         rollDicesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -357,7 +358,7 @@ public class PlayActivity extends AppCompatActivity {
                                                 */
                             Click.setEnabled(true);
                             //((TextView)findViewById(R.id.test)).setText(text);
-                            Toast.makeText(PlayActivity.this, text.replace("guest:", ""), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(PlayActivity.this, text.replace("guest:", ""), Toast.LENGTH_SHORT).show();
                         }
                     }catch (NullPointerException e){}
                 }else if(role.equals("guest")){
@@ -388,7 +389,7 @@ public class PlayActivity extends AppCompatActivity {
                         fooSetDice(d1,d2);
                                               */
                             //((TextView)findViewById(R.id.test)).setText(text);
-                            Toast.makeText(PlayActivity.this,text.replace("host:",""),Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(PlayActivity.this,text.replace("host:",""),Toast.LENGTH_SHORT).show();
                         }
                     }catch (NullPointerException e){}
                 }

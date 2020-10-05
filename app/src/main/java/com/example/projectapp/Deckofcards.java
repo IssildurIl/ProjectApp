@@ -379,7 +379,7 @@ public class Deckofcards extends AppCompatActivity{
                         //cardAction(detectCard(get_im));
                         card_table[leave_card - 1] = detectCard(get_im);
                         int symb=whatSymbol(card_table[leave_card - 1],leave_card-1);
-                        Toast.makeText(Deckofcards.this,""+symb,Toast.LENGTH_LONG).show();
+                        //Toast.makeText(Deckofcards.this,""+symb,Toast.LENGTH_LONG).show();
                         //19.07 воспроизведение звука по символу
                         switch (symb){
                             case 1:
@@ -725,7 +725,7 @@ public class Deckofcards extends AppCompatActivity{
                        }
                        break;
                    default:
-                       Toast.makeText(Deckofcards.this,""+"d_darkness_1",Toast.LENGTH_SHORT).show();
+                       //Toast.makeText(Deckofcards.this,""+"d_darkness_1",Toast.LENGTH_SHORT).show();
             }
                 break;
             case R.drawable.d_darkness_2:
@@ -759,7 +759,7 @@ public class Deckofcards extends AppCompatActivity{
                         }
                         break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"d_darkness_2",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Deckofcards.this,""+"d_darkness_2",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.drawable.d_darkness_3:
@@ -793,7 +793,7 @@ public class Deckofcards extends AppCompatActivity{
                         }
                         break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"d_darkness_3",Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(Deckofcards.this,""+"d_darkness_3",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.drawable.d_darkness_4:
@@ -827,7 +827,7 @@ public class Deckofcards extends AppCompatActivity{
                         }
                         break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"d_darkness_4",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Deckofcards.this,""+"d_darkness_4",Toast.LENGTH_SHORT).show();
                 }
                 break;
             //Стихия
@@ -862,7 +862,7 @@ public class Deckofcards extends AppCompatActivity{
                             }
                             break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"d_element_1",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Deckofcards.this,""+"d_element_1",Toast.LENGTH_SHORT).show();
                     }
                     break;
             case R.drawable.d_element_2:
@@ -896,7 +896,7 @@ public class Deckofcards extends AppCompatActivity{
                         }
                         break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"d_element_2",Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(Deckofcards.this,""+"d_element_2",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.drawable.d_element_3:
@@ -930,7 +930,7 @@ public class Deckofcards extends AppCompatActivity{
                         }
                         break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"d_element_3",Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(Deckofcards.this,""+"d_element_3",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.drawable.d_element_4:
@@ -964,7 +964,7 @@ public class Deckofcards extends AppCompatActivity{
                         }
                         break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"d_element_4",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Deckofcards.this,""+"d_element_4",Toast.LENGTH_SHORT).show();
                 }
                 break;
 
@@ -1000,7 +1000,7 @@ public class Deckofcards extends AppCompatActivity{
                         }
                         break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"d_illusion_4",Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(Deckofcards.this,""+"d_illusion_4",Toast.LENGTH_SHORT).show();
                 }
                 break;
 
@@ -1036,7 +1036,7 @@ public class Deckofcards extends AppCompatActivity{
                         }
                         break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"d_nature_1",Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(Deckofcards.this,""+"d_nature_1",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.drawable.d_nature_2:
@@ -1070,7 +1070,7 @@ public class Deckofcards extends AppCompatActivity{
                         }
                         break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"d_nature_2",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Deckofcards.this,""+"d_nature_2",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.drawable.d_nature_3:
@@ -1104,7 +1104,7 @@ public class Deckofcards extends AppCompatActivity{
                         }
                         break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"d_nature_3",Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(Deckofcards.this,""+"d_nature_3",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.drawable.d_nature_4:
@@ -1138,7 +1138,7 @@ public class Deckofcards extends AppCompatActivity{
                         }
                         break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"d_nature_4",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Deckofcards.this,""+"d_nature_4",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.drawable.d_nature_5:
@@ -1172,7 +1172,7 @@ public class Deckofcards extends AppCompatActivity{
                         }
                         break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"d_nature_5",Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(Deckofcards.this,""+"d_nature_5",Toast.LENGTH_SHORT).show();
                 }
                 break;
             // ДЕЛАЙ СЕКРЕТ
@@ -1185,7 +1185,7 @@ public class Deckofcards extends AppCompatActivity{
                     case 4: case 5: case 6:
                         return new int[]{0,value1};
                     default:
-                        Toast.makeText(Deckofcards.this,""+"i_darkness_1",Toast.LENGTH_SHORT).show();
+                   //     Toast.makeText(Deckofcards.this,""+"i_darkness_1",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.drawable.i_darkness_3:
@@ -1223,7 +1223,7 @@ public class Deckofcards extends AppCompatActivity{
                             case 5:case 6:
                                 return new int[]{-4, -1};
                             default:
-                                Toast.makeText(Deckofcards.this,""+"k_darkness_1 1",Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(Deckofcards.this,""+"k_darkness_1 1",Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case 2:
@@ -1235,7 +1235,7 @@ public class Deckofcards extends AppCompatActivity{
                             case 10: case 11: case 12:
                                 return new int[]{-5, -2};
                             default:
-                                Toast.makeText(Deckofcards.this,""+"k_darkness_1 2",Toast.LENGTH_SHORT).show();
+                              //  Toast.makeText(Deckofcards.this,""+"k_darkness_1 2",Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case 3:
@@ -1247,11 +1247,11 @@ public class Deckofcards extends AppCompatActivity{
                             case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
                                 return new int[]{-5, -2};
                             default:
-                                Toast.makeText(Deckofcards.this,""+"k_darkness_1 3",Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(Deckofcards.this,""+"k_darkness_1 3",Toast.LENGTH_SHORT).show();
                         }
                         break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"k_darkness_1",Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(Deckofcards.this,""+"k_darkness_1",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.drawable.k_darkness_2:
@@ -1263,7 +1263,7 @@ public class Deckofcards extends AppCompatActivity{
                             case 5:case 6:
                                 return new int[]{-3, 0};
                             default:
-                                Toast.makeText(Deckofcards.this,""+"k_darkness_2 1",Toast.LENGTH_SHORT).show();
+                           //     Toast.makeText(Deckofcards.this,""+"k_darkness_2 1",Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case 2:
@@ -1275,7 +1275,7 @@ public class Deckofcards extends AppCompatActivity{
                             case 10: case 11: case 12:
                                 return new int[]{-5, 0};
                             default:
-                                Toast.makeText(Deckofcards.this,""+"k_darkness_2 2",Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(Deckofcards.this,""+"k_darkness_2 2",Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case 3:
@@ -1287,11 +1287,11 @@ public class Deckofcards extends AppCompatActivity{
                             case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
                                 return new int[]{-5, 0};
                             default:
-                                Toast.makeText(Deckofcards.this,""+"k_darkness_2 3",Toast.LENGTH_SHORT).show();
+                              //  Toast.makeText(Deckofcards.this,""+"k_darkness_2 3",Toast.LENGTH_SHORT).show();
                         }
                         break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"k_darkness_2",Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(Deckofcards.this,""+"k_darkness_2",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.drawable.k_darkness_4:
@@ -1308,7 +1308,7 @@ public class Deckofcards extends AppCompatActivity{
                             case 5:case 6:
                                 return new int[]{-3, -1};
                             default:
-                                Toast.makeText(Deckofcards.this,""+"k_element_2 1",Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(Deckofcards.this,""+"k_element_2 1",Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case 2:
@@ -1320,7 +1320,7 @@ public class Deckofcards extends AppCompatActivity{
                             case 10: case 11: case 12:
                                 return new int[]{-5, 0};
                             default:
-                                Toast.makeText(Deckofcards.this,""+"k_element_2 2",Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(Deckofcards.this,""+"k_element_2 2",Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case 3:
@@ -1332,11 +1332,11 @@ public class Deckofcards extends AppCompatActivity{
                             case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
                                 return new int[]{-5, 0};
                             default:
-                                Toast.makeText(Deckofcards.this,""+"k_element_2 2",Toast.LENGTH_SHORT).show();
+                              // Toast.makeText(Deckofcards.this,""+"k_element_2 2",Toast.LENGTH_SHORT).show();
                         }
                         break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"k_element_2",Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(Deckofcards.this,""+"k_element_2",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.drawable.k_element_3:
@@ -1352,7 +1352,7 @@ public class Deckofcards extends AppCompatActivity{
                             case 5:case 6:
                                 return new int[]{-1, 1};
                             default:
-                                Toast.makeText(Deckofcards.this,""+"k_nature_1 1",Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(Deckofcards.this,""+"k_nature_1 1",Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case 2:
@@ -1364,7 +1364,7 @@ public class Deckofcards extends AppCompatActivity{
                             case 10: case 11: case 12:
                                 return new int[]{-3, 3};
                             default:
-                                Toast.makeText(Deckofcards.this,""+"k_nature_1 2",Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(Deckofcards.this,""+"k_nature_1 2",Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case 3:
@@ -1376,11 +1376,11 @@ public class Deckofcards extends AppCompatActivity{
                             case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
                                 return new int[]{-3, 3};
                             default:
-                                Toast.makeText(Deckofcards.this,""+"k_nature_1 3",Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(Deckofcards.this,""+"k_nature_1 3",Toast.LENGTH_SHORT).show();
                         }
                         break;
                     default:
-                        Toast.makeText(Deckofcards.this,""+"k_nature_1",Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(Deckofcards.this,""+"k_nature_1",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.drawable.k_nature_3:
@@ -1424,7 +1424,7 @@ public class Deckofcards extends AppCompatActivity{
         for (int i=0; i<3; i++){
             aaa+=" "+countSymbol[i];
         }
-        Toast.makeText(Deckofcards.this,aaa,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(Deckofcards.this,aaa,Toast.LENGTH_SHORT).show();
     }
 
 

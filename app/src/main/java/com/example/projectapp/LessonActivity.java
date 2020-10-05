@@ -382,7 +382,7 @@ public class LessonActivity extends AppCompatActivity{
                         //cardAction(detectCard(get_im));
                         card_table[leave_card - 1] = detectCard(get_im);
                         int symb=whatSymbol(card_table[leave_card - 1],leave_card-1);
-                        Toast.makeText(LessonActivity.this,""+symb,Toast.LENGTH_LONG).show();
+                        //Toast.makeText(LessonActivity.this,""+symb,Toast.LENGTH_LONG).show();
                         //19.07 воспроизведение звука по символу
                         switch (symb){
                             case 1:
@@ -453,7 +453,7 @@ public class LessonActivity extends AppCompatActivity{
         return countSymbol[num];
     }
     public int NumSymbol(int countSymbol[], int symbol){
-        int num = 1;
+        int num = 0;
         for (int i = 0; i < countSymbol.length; i++)
         {
             if (countSymbol[i]==symbol){
@@ -1363,7 +1363,7 @@ public class LessonActivity extends AppCompatActivity{
         for (int i=0; i<3; i++){
             aaa+=" "+countSymbol[i];
         }
-        Toast.makeText(LessonActivity.this,aaa,Toast.LENGTH_SHORT).show();
+       // Toast.makeText(LessonActivity.this,aaa,Toast.LENGTH_SHORT).show();
     }
 
 

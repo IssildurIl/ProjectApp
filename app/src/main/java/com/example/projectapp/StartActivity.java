@@ -155,7 +155,7 @@ public class StartActivity extends AppCompatActivity {
     public void goTogames(View view){
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         String less = mSettings.getString(APP_PREFERENCES_CB, "0");
-        Toast.makeText(StartActivity.this,""+less,Toast.LENGTH_LONG).show();
+        //Toast.makeText(StartActivity.this,""+less,Toast.LENGTH_LONG).show();
         Intent j = new Intent(StartActivity.this, LessonActivity.class);
         startActivity(j);
         if(less.equals("0")) {

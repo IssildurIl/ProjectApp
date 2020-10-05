@@ -170,7 +170,7 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
         Intent i = new Intent(Customization.this, StartActivity.class);
         startActivity(i);
         this.finish();
-        Toast.makeText(Customization.this,""+ mSettings.getString(APP_PREFERENCES_CB, ""),Toast.LENGTH_LONG).show();
+        //Toast.makeText(Customization.this,""+ mSettings.getString(APP_PREFERENCES_CB, ""),Toast.LENGTH_LONG).show();
     }
     void saveText() {
         StrNick = (EditText)findViewById(R.id.inputNick);
