@@ -20,25 +20,23 @@ import android.widget.Toast;
 
 import static com.example.projectapp.Constants.*;
 import androidx.appcompat.app.AppCompatActivity;
-
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class LessonActivity extends AppCompatActivity{
+public class DeckOfCards extends AppCompatActivity{
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.trainactivity);
+        setContentView(R.layout.deckofcards);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
         conferment();
-        traintxt();
-        stopService(new Intent(LessonActivity.this, CommonPlayer.class));
-        startService(new Intent(LessonActivity.this, BattlePlayer.class));
+        stopService(new Intent(DeckOfCards.this, CommonPlayer.class));
+        startService(new Intent(DeckOfCards.this, BattlePlayer.class));
         APP_PREFERENCE_DECKOFCARDS_ROLL_DICES.setEnabled(false);
         APP_PREFERENCE_DECKOFCARDS_CLICK_END.setVisibility(View.INVISIBLE);
         APP_PREFERENCE_DECKOFCARDS_CLICK_END.setEnabled(false);
@@ -104,8 +102,10 @@ public class LessonActivity extends AppCompatActivity{
                 getAssets(), "fonts/JurassicPark-BL48.ttf"));
     }
     public void conferment(){
-        final TextView textnick = findViewById(R.id.playerNick);
-        final TextView textnick2 = findViewById(R.id.playerNick2);
+        final TextView textnick = (TextView)findViewById(R.id.playerNick);
+        final TextView textnick2 = (TextView)findViewById(R.id.playerNick2);
+        ex_FONT(textnick);
+        ex_FONT(textnick2);
         //местные звуки
         APP_PREFERENCE_DECKOFCARDS_SOUNDPOOL = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
         APP_PREFERENCE_DECKOFCARDS_SOUND_GIVE_CARDS = APP_PREFERENCE_DECKOFCARDS_SOUNDPOOL.load(this, R.raw.givecards, 1);
@@ -116,13 +116,6 @@ public class LessonActivity extends AppCompatActivity{
         APP_PREFERENCE_DECKOFCARDS_SOUND_FIRE = APP_PREFERENCE_DECKOFCARDS_SOUNDPOOL.load(this, R.raw.fire, 1);
         APP_PREFERENCE_DECKOFCARDS_SOUND_NATURE = APP_PREFERENCE_DECKOFCARDS_SOUNDPOOL.load(this, R.raw.nature, 1);
         APP_PREFERENCE_DECKOFCARDS_SOUND_ILLUSION = APP_PREFERENCE_DECKOFCARDS_SOUNDPOOL.load(this, R.raw.illusion,1);
-        APP_PREFERENCE_LESSONACTIVITY_LESS = new SoundPool(7,AudioManager.STREAM_MUSIC,0);
-        APP_PREFERENCE_LESSONACTIVITY_SOUNDPOOL_HELLO = APP_PREFERENCE_LESSONACTIVITY_LESS.load(this, R.raw.hello, 1);
-        APP_PREFERENCE_LESSONACTIVITY_SOUNDPOOL_HINTCARD = APP_PREFERENCE_LESSONACTIVITY_LESS.load(this, R.raw.hintcard, 1);
-        APP_PREFERENCE_LESSONACTIVITY_SOUNDPOOL_HINTPLAYER = APP_PREFERENCE_LESSONACTIVITY_LESS.load(this, R.raw.hintplayer, 1);
-        APP_PREFERENCE_LESSONACTIVITY_SOUNDPOOL_FINALLY = APP_PREFERENCE_LESSONACTIVITY_LESS.load(this, R.raw.soundend,1);
-        APP_PREFERENCE_LESSONACTIVITY_SOUNDPOOL_DICETABLE = APP_PREFERENCE_LESSONACTIVITY_LESS.load(this, R.raw.dicetable, 1);
-        APP_PREFERENCE_LESSONACTIVITY_SOUNDPOOL_CUSTOM = APP_PREFERENCE_LESSONACTIVITY_LESS.load(this,R.raw.custom,1);
         APP_PREFERENCE_DECKOFCARDS_CARDS_MAIN = new ArrayList<>();
         APP_PREFERENCE_DECKOFCARDS_CARDS_ISTOCHNIK = new ArrayList<>();
         APP_PREFERENCE_DECKOFCARDS_CARDS_KACHESTVO = new ArrayList<>();
@@ -160,25 +153,7 @@ public class LessonActivity extends AppCompatActivity{
         mLeftImageView = findViewById(R.id.imageview_left);
         mRightImageView = findViewById(R.id.imageview_right);
         mMidImageView =findViewById(R.id.imageview_mid);
-        APP_PREFERENCE_LESSONACTIVITY_HINT_HELLO = findViewById(R.id.hello);
-        APP_PREFERENCE_LESSONACTIVITY_HINT_DICE =findViewById(R.id.hintdice);
-        APP_PREFERENCE_LESSONACTIVITY_HINT_OPP =findViewById(R.id.hintopp);
-        APP_PREFERENCE_LESSONACTIVITY_HINT_PLAYER =findViewById(R.id.hintplayer);
-        APP_PREFERENCE_LESSONACTIVITY_HINT_TABLE =findViewById(R.id.hinttable);
-        APP_PREFERENCE_LESSONACTIVITY_HINT_CARD =findViewById(R.id.hintcard);
-        APP_PREFERENCE_LESSONACTIVITY_HINT_CARD_HELP =findViewById(R.id.hintcardhelp);
-        APP_PREFERENCE_LESSONACTIVITY_HINT_FINAL =findViewById(R.id.hintfinal);
-        APP_PREFERENCE_LESSONACTIVITY_HINT_BUTTON =findViewById(R.id.NextHint);
-        ex_FONT(textnick);
-        ex_FONT(textnick2);
-        ex_FONT(APP_PREFERENCE_LESSONACTIVITY_HINT_HELLO);
-        ex_FONT(APP_PREFERENCE_LESSONACTIVITY_HINT_DICE);
-        ex_FONT(APP_PREFERENCE_LESSONACTIVITY_HINT_OPP);
-        ex_FONT(APP_PREFERENCE_LESSONACTIVITY_HINT_PLAYER);
-        ex_FONT(APP_PREFERENCE_LESSONACTIVITY_HINT_TABLE);
-        ex_FONT(APP_PREFERENCE_LESSONACTIVITY_HINT_CARD);
-        ex_FONT(APP_PREFERENCE_LESSONACTIVITY_HINT_CARD_HELP);
-        ex_FONT(APP_PREFERENCE_LESSONACTIVITY_HINT_FINAL);
+        APP_PREFERENCE_DECKOFCARDS_NICK_NAME = findViewById(R.id.playerNick);
     }
     public void getText() {
         String savedText = APP_PREFERENCES_SETTINGS.getString(APP_PREFERENCES_NAME, "");
@@ -232,7 +207,7 @@ public class LessonActivity extends AppCompatActivity{
             default:
                 drawable = getDrawable(R.drawable.magic_back);
         }
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(LessonActivity.this, R.style.CustomDialog);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(DeckOfCards.this, R.style.CustomDialog);
         final ImageView image = new ImageView(this);
         image.setImageDrawable(drawable);
         alertDialog.setView(image);
@@ -353,7 +328,7 @@ public class LessonActivity extends AppCompatActivity{
         else
         if (APP_PREFERENCE_DECKOFCARDS_MASSIVE_ILLUSION.contains(cardtable)){
             APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[num]=3;
-        }
+            }
         else
         if (APP_PREFERENCE_DECKOFCARDS_MASSIVE_NATURE.contains(cardtable)){
             APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[num]=4;
@@ -369,17 +344,17 @@ public class LessonActivity extends AppCompatActivity{
         int num = 0;
         for (int i = 0; i < countSymbol.length; i++)
         {
-            if (countSymbol[i]==symbol){
-                num++;
-            }
+          if (countSymbol[i]==symbol){
+              num++;
+          }
         }
         return num;
     }
     public int CouNumSymb(){
         int counter=1;
-        if (APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[0]!=0){counter++;}
-        if (APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[1]!=0 && APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[0]!= APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[1]){counter++;}
-        if(APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[2]!=0 && APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[1]!= APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[2] && APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[2]!= APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[0]){counter++;}
+       if (APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[0]!=0){counter++;}
+       if (APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[1]!=0 && APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[0]!= APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[1]){counter++;}
+       if(APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[2]!=0 && APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[1]!= APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[2] && APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[2]!= APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[0]){counter++;}
         return counter;
     }
     //11.05.2020 16:48 проверка свободно ли место на столе
@@ -428,7 +403,7 @@ public class LessonActivity extends AppCompatActivity{
         return 0;
     }
     public void deckOfCardsGoToMenu(View view) {
-        Intent i = new Intent(LessonActivity.this, StartActivity.class);
+        Intent i = new Intent(DeckOfCards.this, StartActivity.class);
         startActivity(i);
         this.finish();
     }
@@ -599,43 +574,43 @@ public class LessonActivity extends AppCompatActivity{
     public int[] partCardAction(int symbol,int c1,int c2,int c3,int c4,int c5,int c6){
         int val[]=new int[2];
         switch (NumSymbol(APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS,symbol)){
-            case 1:
-                switch (APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_1)
-                {
-                    case 2: case 3: case 4:
-                    val= new int[]{c1, c2};
-                    case 5:case 6:
-                    val = new int[]{c3, c4};
-                }
-                Toast.makeText(LessonActivity.this,"я нанес 1"+val,Toast.LENGTH_SHORT).show();
-                break;
-            case 2:
-                switch (APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_1 + APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_2){
-                    case 2: case 3:case 4:
-                        val = new int[]{c1, c2};
-                    case 5: case 6: case 7: case 8: case 9:
-                        val = new int[]{c3, c4};
-                    case 10: case 11: case 12:
-                        val = new int[]{c5, c6};
-                }
-                Toast.makeText(LessonActivity.this,"я нанес 2"+val,Toast.LENGTH_SHORT).show();
-                break;
-            case 3:
-                switch (APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_1 + APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_2 + APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_3){
-                    case 2: case 3:case 4:
-                        val = new int[]{c1, c2};
-                    case 5: case 6: case 7: case 8: case 9:
-                        val = new int[]{c3, c4};
-                    case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
-                        val = new int[]{c5, c6};
-                }
-                Toast.makeText(LessonActivity.this,"я нанес 3"+val,Toast.LENGTH_SHORT).show();
-                break;
+       case 1:
+           switch (APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_1)
+           {
+               case 2: case 3: case 4:
+               val= new int[]{c1, c2};
+               case 5:case 6:
+               val = new int[]{c3, c4};
+           }
+           Toast.makeText(DeckOfCards.this,"я нанес 1"+val,Toast.LENGTH_SHORT).show();
+           break;
+       case 2:
+           switch (APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_1 + APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_2){
+               case 2: case 3:case 4:
+                   val = new int[]{c1, c2};
+               case 5: case 6: case 7: case 8: case 9:
+                   val = new int[]{c3, c4};
+               case 10: case 11: case 12:
+                   val = new int[]{c5, c6};
+           }
+           Toast.makeText(DeckOfCards.this,"я нанес 2"+val,Toast.LENGTH_SHORT).show();
+           break;
+       case 3:
+           switch (APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_1 + APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_2 + APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_3){
+               case 2: case 3:case 4:
+                   val = new int[]{c1, c2};
+               case 5: case 6: case 7: case 8: case 9:
+                   val = new int[]{c3, c4};
+               case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
+                   val = new int[]{c5, c6};
+           }
+           Toast.makeText(DeckOfCards.this,"я нанес 3"+val,Toast.LENGTH_SHORT).show();
+           break;
             default:
-                Toast.makeText(LessonActivity.this,"я не сработал",Toast.LENGTH_SHORT).show();
+                Toast.makeText(DeckOfCards.this,"я не сработал",Toast.LENGTH_SHORT).show();
 
-        }
-        return val;
+   }
+       return val;
     }
 
     public int[] cardAction(int card) {
@@ -690,7 +665,7 @@ public class LessonActivity extends AppCompatActivity{
                     case 4: case 5: case 6:
                         return new int[]{0, APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_1};
                     default:
-                        //     Toast.makeText(Deckofcards.this,""+"i_darkness_1",Toast.LENGTH_SHORT).show();
+                   //     Toast.makeText(Deckofcards.this,""+"i_darkness_1",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.drawable.i_darkness_3:
@@ -725,9 +700,9 @@ public class LessonActivity extends AppCompatActivity{
                 partCardAction(1,0,-3,-3,0,-5,0);
                 break;
             case R.drawable.k_darkness_4:
-                return new int[]{(-2)*NumSymbol(APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS,1),0};
+             return new int[]{(-2)*NumSymbol(APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS,1),0};
             case R.drawable.k_element_1:
-                return new int[]{(-1)*NumSymbol(APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS,2),0};
+             return new int[]{(-1)*NumSymbol(APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS,2),0};
             case R.drawable.k_element_2:
                 partCardAction(2,-1,0,-3,-1,-5,0);
                 break;
@@ -739,9 +714,9 @@ public class LessonActivity extends AppCompatActivity{
                 partCardAction(4,-1,0,-1,1,-3,3);
                 break;
             case R.drawable.k_nature_3:
-                return new int[]{(-2)*CouNumSymb(),0};
+             return new int[]{(-2)*CouNumSymb(),0};
             case R.drawable.k_nature_4:
-                return new int[]{-5, 0};
+              return new int[]{-5, 0};
             case R.drawable.k_nature_5:
                 return new int[]{-2, 0};
         }
@@ -797,19 +772,19 @@ public class LessonActivity extends AppCompatActivity{
             } else {
                 ((TextView) findViewById(R.id.dead2)).setText("3");
                 ((TextView) findViewById(R.id.hp2)).setText("0");
-                AlertDialog alertDialog = new AlertDialog.Builder(LessonActivity.this).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(DeckOfCards.this).create();
                 alertDialog.setTitle("Игра окончена");
                 alertDialog.setMessage("Вы победили!");
                 alertDialog.setIcon(R.drawable.end_win);
                 alertDialog.setButton("Back", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent i = new Intent(LessonActivity.this, StartActivity.class);
+                        Intent i = new Intent(DeckOfCards.this, StartActivity.class);
                         startActivity(i);
                     }
                 });
                 alertDialog.show();
-                stopService(new Intent(LessonActivity.this, BattlePlayer.class));
-                startService(new Intent(LessonActivity.this, CommonPlayer.class));
+                stopService(new Intent(DeckOfCards.this, BattlePlayer.class));
+                startService(new Intent(DeckOfCards.this, CommonPlayer.class));
             }
         } else {
             ((TextView) findViewById(R.id.hp2)).setText(Integer.toString(hp));
@@ -830,19 +805,19 @@ public class LessonActivity extends AppCompatActivity{
             } else {
                 ((TextView) findViewById(R.id.dead)).setText("3");
                 ((TextView) findViewById(R.id.hp)).setText("0");
-                AlertDialog alertDialog = new AlertDialog.Builder(LessonActivity.this).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(DeckOfCards.this).create();
                 alertDialog.setTitle("Игра окончена");
                 alertDialog.setMessage("Вы проиграли! Не отчаивайтесь, это не конец света, есть же некромантия!");
                 alertDialog.setIcon(R.drawable.end_dead);
                 alertDialog.setButton("Back", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent i = new Intent(LessonActivity.this, StartActivity.class);
+                        Intent i = new Intent(DeckOfCards.this, StartActivity.class);
                         startActivity(i);
                     }
                 });
                 alertDialog.show();
-                stopService(new Intent(LessonActivity.this, BattlePlayer.class));
-                startService(new Intent(LessonActivity.this, CommonPlayer.class));
+                stopService(new Intent(DeckOfCards.this, BattlePlayer.class));
+                startService(new Intent(DeckOfCards.this, CommonPlayer.class));
             }
         } else {
             ((TextView) findViewById(R.id.hp)).setText(Integer.toString(hp));
@@ -1032,81 +1007,13 @@ public class LessonActivity extends AppCompatActivity{
         }
         APP_PREFERENCE_DECKOFCARDS_LEAVE_PLAYER_CARD = 0;
     }
-    public void trainGoToMenu(View view) {
-        Intent i = new Intent(LessonActivity.this, StartActivity.class);
-        startActivity(i);
-        this.finish();
-    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(new Intent(LessonActivity.this, BattlePlayer.class));
-        startService(new Intent(LessonActivity.this, CommonPlayer.class));
+        stopService(new Intent(DeckOfCards.this, BattlePlayer.class));
+        startService(new Intent(DeckOfCards.this, CommonPlayer.class));
         APP_PREFERENCE_DECKOFCARDS_SOUNDPOOL.release();
         APP_PREFERENCE_DECKOFCARDS_SOUNDPOOL = null;
-    }
-
-    public void traintxt(){
-        APP_PREFERENCE_LESSONACTIVITY_HINT_HELLO.setText(APP_PREFERENCE_LESSONACTIVITY_HINT_FST_TEXT);
-        APP_PREFERENCE_LESSONACTIVITY_LESS.play(APP_PREFERENCE_LESSONACTIVITY_SOUNDPOOL_HELLO, 1, 1, 0, 0, 1);
-        APP_PREFERENCE_LESSONACTIVITY_HINT_BUTTON.setOnClickListener(new View.OnClickListener() {
-            int i=0;
-            @Override
-            public void onClick(View v) {
-                i++;
-                //12.08 22:18
-                switch (i){
-                    case 1:
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_HELLO.setVisibility(View.INVISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_DICE.setVisibility(View.INVISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_OPP.setVisibility(View.VISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_PLAYER.setVisibility(View.VISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_CARD.setVisibility(View.INVISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_PLAYER.setText(APP_PREFERENCE_LESSONACTIVITY_HINT_SEC_TEXT);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_OPP.setText(APP_PREFERENCE_LESSONACTIVITY_HINT_THRD_TEXT);
-                        APP_PREFERENCE_LESSONACTIVITY_STREAM[0] = APP_PREFERENCE_LESSONACTIVITY_LESS.play(APP_PREFERENCE_LESSONACTIVITY_SOUNDPOOL_HINTPLAYER, 1, 1, 0, 0, 1);
-                        break;
-                    case 2:
-                        APP_PREFERENCE_LESSONACTIVITY_LESS.stop(APP_PREFERENCE_LESSONACTIVITY_STREAM[0]);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_OPP.setVisibility(View.INVISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_PLAYER.setVisibility(View.INVISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_TABLE.setVisibility(View.VISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_DICE.setVisibility(View.VISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_TABLE.setText(APP_PREFERENCE_LESSONACTIVITY_HINT_FRTH_TEXT);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_DICE.setText(APP_PREFERENCE_LESSONACTIVITY_HINT_FIFTH_TEXT);
-                        APP_PREFERENCE_LESSONACTIVITY_STREAM[1]= APP_PREFERENCE_LESSONACTIVITY_LESS.play(APP_PREFERENCE_LESSONACTIVITY_SOUNDPOOL_DICETABLE, 1, 1, 0, 0, 1);
-                        break;
-                    case 3:
-                        APP_PREFERENCE_LESSONACTIVITY_LESS.stop(APP_PREFERENCE_LESSONACTIVITY_STREAM[1]);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_TABLE.setVisibility(View.INVISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_DICE.setVisibility(View.INVISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_CARD.setVisibility(View.VISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_CARD_HELP.setVisibility(View.VISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_CARD.setText(APP_PREFERENCE_LESSONACTIVITY_HINT_SIXTH_TEXT);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_CARD_HELP.setText(APP_PREFERENCE_LESSONACTIVITY_HINT_SEVENTH_TEXT);
-                        APP_PREFERENCE_LESSONACTIVITY_STREAM[2]= APP_PREFERENCE_LESSONACTIVITY_LESS.play(APP_PREFERENCE_LESSONACTIVITY_SOUNDPOOL_HINTCARD, 1, 1, 0, 0, 1);
-                        break;
-                    case 4:
-                        APP_PREFERENCE_LESSONACTIVITY_LESS.stop(APP_PREFERENCE_LESSONACTIVITY_STREAM[2]);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_CARD.setVisibility(View.INVISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_CARD_HELP.setVisibility(View.INVISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_FINAL.setVisibility(View.VISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_FINAL.setText(APP_PREFERENCE_LESSONACTIVITY_HINT_EIGTH_TEXT);
-                        APP_PREFERENCE_LESSONACTIVITY_STREAM[3]= APP_PREFERENCE_LESSONACTIVITY_LESS.play(APP_PREFERENCE_LESSONACTIVITY_SOUNDPOOL_FINALLY, 1, 1, 0, 0, 1);
-                        break;
-                    case 5:
-                        APP_PREFERENCE_LESSONACTIVITY_LESS.stop(APP_PREFERENCE_LESSONACTIVITY_STREAM[3]);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_FINAL.setText(APP_PREFERENCE_LESSONACTIVITY_HINT_NINGTH_TEXT);
-                        APP_PREFERENCE_LESSONACTIVITY_STREAM[4]= APP_PREFERENCE_LESSONACTIVITY_LESS.play(APP_PREFERENCE_LESSONACTIVITY_SOUNDPOOL_CUSTOM, 1, 1, 0, 0, 1);
-                        break;
-                    case 6:
-                        APP_PREFERENCE_LESSONACTIVITY_LESS.stop(APP_PREFERENCE_LESSONACTIVITY_STREAM[4]);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_FINAL.setVisibility(View.INVISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_BUTTON.setVisibility(View.GONE);
-                        break;
-                    default:
-                }
-            }
-        });
     }
 }

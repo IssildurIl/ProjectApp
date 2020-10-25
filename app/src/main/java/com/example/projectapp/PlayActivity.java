@@ -1,43 +1,26 @@
 package com.example.projectapp;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ClipData;
-import android.content.ClipDescription;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.graphics.PointF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
-import android.media.Image;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.DragEvent;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import static com.example.projectapp.Constants.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -48,12 +31,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class PlayActivity extends AppCompatActivity {
     ImageButton Click;
@@ -77,10 +57,6 @@ public class PlayActivity extends AppCompatActivity {
     int countSymbol[] = new int[3];
     //
     private SharedPreferences mSettings;
-    public static final String APP_PREFERENCES = "mysettings";
-    public static final String APP_PREFERENCES_NAME = "Nickname";
-    public static final String APP_PREFERENCES_ICONE = "0";
-    public static final String APP_PREFERENCES_NETNAME = "net player name";
     private int[] mIcone = { R.drawable.icon_enchanter, R.drawable.icon_genie,
             R.drawable.icon_hogshouse, R.drawable.icon_krazztar, R.drawable.icon_lady,
             R.drawable.icon_princess, R.drawable.icon_spiritmaster,R.drawable.icon_wizard};
@@ -108,8 +84,8 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
-        stopService(new Intent(PlayActivity.this, commonplayer.class));
-        startService(new Intent(PlayActivity.this, battleplayer.class));
+        stopService(new Intent(PlayActivity.this, CommonPlayer.class));
+        startService(new Intent(PlayActivity.this, BattlePlayer.class));
         //местные звуки
         soundPool = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
 

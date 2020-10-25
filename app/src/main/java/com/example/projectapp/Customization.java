@@ -4,108 +4,72 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.GestureDetector;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
-
+import static com.example.projectapp.Constants.*;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Customization extends AppCompatActivity implements ViewSwitcher.ViewFactory, GestureDetector.OnGestureListener {
-    private ImageSwitcher mIconeSwicher;
-//
-
-    public static final String APP_PREFERENCES = "mysettings";
-    public static final String APP_PREFERENCES_NAME = "Nickname"; // имя кота
-    public static final String APP_PREFERENCES_ICONE="0";
-    public static final String APP_PREFERENCES_CB="lesson";
-    SharedPreferences mSettings;
-    EditText StrNick;
-    int foto;
-    private CheckBox checklesson;
-//
-
-    int position = 0;
-    private int[] mIcone = { R.drawable.icon_enchanter, R.drawable.icon_genie,
-            R.drawable.icon_hogshouse, R.drawable.icon_krazztar, R.drawable.icon_lady,
-            R.drawable.icon_princess, R.drawable.icon_spiritmaster,R.drawable.icon_wizard};
-    private GestureDetector mGestureDetector;
-    private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPE_MAX_OFF_PATH = 250;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.customactivity);
-        checklesson = (CheckBox)findViewById(R.id.checklesson);
-        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        FontTexts();
-//
-        Animation inAnimation = new AlphaAnimation(0, 1);
-        inAnimation.setDuration(2000);
-        Animation outAnimation = new AlphaAnimation(1, 0);
-        outAnimation.setDuration(2000);
+        findViewById();
+        APP_PREFERENCES_SETTINGS = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        APP_PREFERENCE_CUSTOMIZATION_IN_ANIMATION = new AlphaAnimation(APP_PREFERENCES_INT_ZERO,APP_PREFERENCES_INT_ONE);
+        APP_PREFERENCE_CUSTOMIZATION_IN_ANIMATION.setDuration(2000);
+        APP_PREFERENCE_CUSTOMIZATION_OUT_ANIMATION = new AlphaAnimation(APP_PREFERENCES_INT_ONE, APP_PREFERENCES_INT_ZERO);
+        APP_PREFERENCE_CUSTOMIZATION_OUT_ANIMATION.setDuration(2000);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        mIconeSwicher = (ImageSwitcher)findViewById(R.id.IconeSwither);
-        mIconeSwicher.setFactory(this);
-        mIconeSwicher.setInAnimation(inAnimation);
-        mIconeSwicher.setOutAnimation(outAnimation);
-        mIconeSwicher.setImageResource(mIcone[0]);
-
-        foto = Integer.parseInt(APP_PREFERENCES_ICONE);
-        FontTexts();
-        mGestureDetector = new GestureDetector(this, this);
+        APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER.setFactory(this);
+        APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER.setInAnimation(APP_PREFERENCE_CUSTOMIZATION_IN_ANIMATION);
+        APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER.setOutAnimation(APP_PREFERENCE_CUSTOMIZATION_OUT_ANIMATION);
+        APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER.setImageResource(APP_PREFERENCES_CUSTOMIZATION_MASS_ICONE[0]);
+        APP_PREFERENCES_CUSTOMIZATION_NEW_ICONE_POSITION = Integer.parseInt(APP_PREFERENCES_ICONE);
+        APP_PREFERENCES_CUSTOMIZATION_GESTURE_DESTRUCTOR = new GestureDetector(this, this);
         loadText();
-
-
+        FontTexts();
+    }
+    private void ex_FONT(TextView textView){
+        textView.setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+    }
+    private void findViewById(){
+        APP_PREFERENCES_CUSTOMIZATION_TITLE = findViewById(R.id.title);
+        APP_PREFERENCES_CUSTOMIZATION_HINT = findViewById(R.id.hint);
+        APP_PREFERENCES_CUSTOMIZATION_BUTTON_BACK = findViewById(R.id.deckOfCards_BackButton);
+        APP_PREFERENCES_CUSTOMIZATION_NICK = findViewById(R.id.inputNick);
+        APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER = findViewById(R.id.IconeSwither);
+        APP_PREFERENCES_CUSTOMIZATION_CHECK_LESSON = findViewById(R.id.checklesson);
     }
     private void FontTexts(){
-        final TextView title = (TextView)findViewById(R.id.title);
-        title.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
-        final TextView tv1 = (TextView)findViewById(R.id.tv1);
-        tv1.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
-        final TextView backb1 = (TextView)findViewById(R.id.backb1);
-        backb1.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
-        final EditText nick = (EditText)findViewById(R.id.inputNick);
-        nick.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+        ex_FONT(APP_PREFERENCES_CUSTOMIZATION_TITLE);
+        ex_FONT(APP_PREFERENCES_CUSTOMIZATION_HINT);
+        ex_FONT(APP_PREFERENCES_CUSTOMIZATION_BUTTON_BACK);
+        ex_FONT(APP_PREFERENCES_CUSTOMIZATION_NICK);
     }
-    public void setPositiontoIcone() {
-        position++;
-        if (position > mIcone.length - 1) {
-            position = 0;
+    public void setPositionToIcone() {
+        APP_PREFERENCES_CUSTOMIZATION_MICONE_POSITION++;
+        if (APP_PREFERENCES_CUSTOMIZATION_MICONE_POSITION > APP_PREFERENCES_CUSTOMIZATION_MASS_ICONE.length - APP_PREFERENCES_INT_ONE) {
+            APP_PREFERENCES_CUSTOMIZATION_MICONE_POSITION = APP_PREFERENCES_INT_ZERO;
         }
     }
-
     public void setPositionPrevIcone() {
-        position--;
-        if (position < 0) {
-            position = mIcone.length - 1;
+        APP_PREFERENCES_CUSTOMIZATION_MICONE_POSITION--;
+        if (APP_PREFERENCES_CUSTOMIZATION_MICONE_POSITION < APP_PREFERENCES_INT_ZERO) {
+            APP_PREFERENCES_CUSTOMIZATION_MICONE_POSITION = APP_PREFERENCES_CUSTOMIZATION_MASS_ICONE.length - APP_PREFERENCES_INT_ONE;
         }
     }
     public View makeView() {
@@ -119,7 +83,7 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return mGestureDetector.onTouchEvent(event);
+        return APP_PREFERENCES_CUSTOMIZATION_GESTURE_DESTRUCTOR.onTouchEvent(event);
     }
     @Override
     public boolean onDown(MotionEvent e) {
@@ -143,18 +107,18 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 
         try {
-            if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+            if (Math.abs(e1.getY() - e2.getY()) > APP_PREFERENCES_CUSTOMIZATION_SWIPE_MAX_OFF_PATH)
                 return false;
 // справа налево
-            if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
-                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                setPositiontoIcone();
-                mIconeSwicher.setImageResource(mIcone[position]);
-            } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
-                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+            if (e1.getX() - e2.getX() > APP_PREFERENCES_CUSTOMIZATION_SWIPE_MIN_DISTANCE
+                    && Math.abs(velocityX) > APP_PREFERENCES_CUSTOMIZATION_SWIPE_THRESHOLD_VELOCITY) {
+                setPositionToIcone();
+                APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER.setImageResource(APP_PREFERENCES_CUSTOMIZATION_MASS_ICONE[APP_PREFERENCES_CUSTOMIZATION_MICONE_POSITION]);
+            } else if (e2.getX() - e1.getX() > APP_PREFERENCES_CUSTOMIZATION_SWIPE_MIN_DISTANCE
+                    && Math.abs(velocityX) > APP_PREFERENCES_CUSTOMIZATION_SWIPE_THRESHOLD_VELOCITY) {
 // слева направо
                 setPositionPrevIcone();
-                mIconeSwicher.setImageResource(mIcone[position]);
+                APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER.setImageResource(APP_PREFERENCES_CUSTOMIZATION_MASS_ICONE[APP_PREFERENCES_CUSTOMIZATION_MICONE_POSITION]);
 
             }
         }
@@ -162,37 +126,32 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
 // nothing
             return true;
         }
-        foto = position;
+        APP_PREFERENCES_CUSTOMIZATION_NEW_ICONE_POSITION = APP_PREFERENCES_CUSTOMIZATION_MICONE_POSITION;
         return true;
     }
-    public void gotoMenu(View view) {
+    void saveText() {
+        SharedPreferences.Editor ed = APP_PREFERENCES_SETTINGS.edit();
+        if(APP_PREFERENCES_CUSTOMIZATION_CHECK_LESSON.isChecked())
+            ed.putString(APP_PREFERENCES_CB, APP_PREFERENCES_STRING_ONE);
+        else
+            ed.putString(APP_PREFERENCES_CB, APP_PREFERENCES_STRING_ZERO);
+        ed.putString(APP_PREFERENCES_NAME, APP_PREFERENCES_CUSTOMIZATION_NICK.getText().toString());
+        ed.putString(APP_PREFERENCES_ICONE, String.valueOf(APP_PREFERENCES_CUSTOMIZATION_NEW_ICONE_POSITION));
+        ed.commit();
+    }
+    public void loadText() {
+        APP_PREFERENCES_CUSTOMIZATION_SAVED_TEXT = APP_PREFERENCES_SETTINGS.getString(APP_PREFERENCES_NAME, "");
+        APP_PREFERENCES_CUSTOMIZATION_SAVED_FOTO = APP_PREFERENCES_SETTINGS.getString(APP_PREFERENCES_ICONE, APP_PREFERENCES_STRING_ZERO);
+        APP_PREFERENCES_CUSTOMIZATION_CHECK = APP_PREFERENCES_SETTINGS.getString(APP_PREFERENCES_CB, APP_PREFERENCES_STRING_ZERO);
+        if(APP_PREFERENCES_CUSTOMIZATION_CHECK.equals(APP_PREFERENCES_STRING_ONE)) APP_PREFERENCES_CUSTOMIZATION_CHECK_LESSON.setChecked(true);
+        APP_PREFERENCES_CUSTOMIZATION_NEW_ICONE_POSITION = Integer.parseInt(APP_PREFERENCES_CUSTOMIZATION_SAVED_FOTO);
+        APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER.setImageResource(APP_PREFERENCES_CUSTOMIZATION_MASS_ICONE[Integer.parseInt(APP_PREFERENCES_CUSTOMIZATION_SAVED_FOTO)]);
+        APP_PREFERENCES_CUSTOMIZATION_NICK.setText(APP_PREFERENCES_CUSTOMIZATION_SAVED_TEXT);
+    }
+    public void goToMenu(View view) {
         saveText();
         Intent i = new Intent(Customization.this, StartActivity.class);
         startActivity(i);
         this.finish();
-        //Toast.makeText(Customization.this,""+ mSettings.getString(APP_PREFERENCES_CB, ""),Toast.LENGTH_LONG).show();
     }
-    void saveText() {
-        StrNick = (EditText)findViewById(R.id.inputNick);
-        SharedPreferences.Editor ed = mSettings.edit();
-        if(checklesson.isChecked())
-            ed.putString(APP_PREFERENCES_CB,"1");
-        else
-            ed.putString(APP_PREFERENCES_CB,"0");
-        ed.putString(APP_PREFERENCES_NAME, StrNick.getText().toString());
-        ed.putString(APP_PREFERENCES_ICONE, String.valueOf(foto));
-        ed.commit();
-    }
-
-    public void loadText() {
-        StrNick = (EditText)findViewById(R.id.inputNick);
-        String savedText = mSettings.getString(APP_PREFERENCES_NAME, "");
-        String savedFoto=mSettings.getString(APP_PREFERENCES_ICONE,"0");
-        String chk = mSettings.getString(APP_PREFERENCES_CB,"0");
-        if(chk.equals("1"))checklesson.setChecked(true);
-        foto = Integer.parseInt(savedFoto);
-        mIconeSwicher.setImageResource(mIcone[Integer.parseInt(savedFoto)]);
-        StrNick.setText(savedText);
-    }
-
 }

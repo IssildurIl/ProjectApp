@@ -15,12 +15,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import static com.example.projectapp.Constants.*;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -29,11 +28,7 @@ public class LogInActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset;
-    SharedPreferences mSettings;
-    public static final String APP_PREFERENCES = "mysettings";
-    public static final String APP_PREFERENCES_EMAIL = "mail"; // имя кота
-    public static final String APP_PREFERENCES_PASS="pass";
-    public static final String APP_PREFERENCES_NETNAME="net player name";
+    SharedPreferences APP_PREFERENCES_SETTINGS;
     FirebaseDatabase database;
     DatabaseReference playerRef;
     String playerName="";
@@ -49,7 +44,7 @@ public class LogInActivity extends AppCompatActivity {
             finish();
         }
         setContentView(R.layout.activity_log_in);
-        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        APP_PREFERENCES_SETTINGS = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -113,7 +108,7 @@ public class LogInActivity extends AppCompatActivity {
                                         Toast.makeText(LogInActivity.this, getString(R.string.auth_fail), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
-                                    SharedPreferences.Editor ed = mSettings.edit();
+                                    SharedPreferences.Editor ed = APP_PREFERENCES_SETTINGS.edit();
                                     ed.putString(APP_PREFERENCES_NETNAME,email.substring(0,email.indexOf("@")));
                                     ed.commit();
                                     //Toast.makeText(LogInActivity.this, email.substring(0,email.indexOf("@")), Toast.LENGTH_LONG).show();
@@ -133,7 +128,7 @@ public class LogInActivity extends AppCompatActivity {
     public void saveText(String email, String pass) {
         //inputEmail = (EditText) findViewById(R.id.email);
         //inputPassword = (EditText) findViewById(R.id.password);
-        SharedPreferences.Editor ed = mSettings.edit();
+        SharedPreferences.Editor ed = APP_PREFERENCES_SETTINGS.edit();
         ed.putString(APP_PREFERENCES_EMAIL, email);
         ed.putString(APP_PREFERENCES_PASS, pass);
         ed.commit();
@@ -143,8 +138,8 @@ public class LogInActivity extends AppCompatActivity {
     public void loadText() {
         //inputEmail = (EditText) findViewById(R.id.email);
         //inputPassword = (EditText) findViewById(R.id.password);
-        String savedMail = mSettings.getString(APP_PREFERENCES_EMAIL, "");
-        String savedPas= mSettings.getString(APP_PREFERENCES_PASS,"");
+        String savedMail = APP_PREFERENCES_SETTINGS.getString(APP_PREFERENCES_EMAIL, "");
+        String savedPas= APP_PREFERENCES_SETTINGS.getString(APP_PREFERENCES_PASS,"");
         //Toast.makeText(LogInActivity.this,"загрузил преференсы" + savedMail ,Toast.LENGTH_LONG).show();
         inputEmail.setText(savedMail);
         inputPassword.setText(savedPas);

@@ -5,21 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Display;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -53,7 +48,7 @@ public class StartActivity extends AppCompatActivity {
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 //        cst.loadText();
         FontTexts();
-        startService(new Intent(this, commonplayer.class));
+        startService(new Intent(this, CommonPlayer.class));
 
         ///
         imagefire=(ImageView)findViewById(R.id.element1);
@@ -147,9 +142,9 @@ public class StartActivity extends AppCompatActivity {
     //Кнопка "выход"
     public void onBackPressed(View view) {
         moveTaskToBack(true); android.os.Process.killProcess(android.os.Process.myPid()); System.exit(1);
-        stopService(new Intent(this, commonplayer.class));
-        stopService(new Intent(StartActivity.this, battleplayer.class));
-        stopService(new Intent(StartActivity.this, commonplayer.class));
+        stopService(new Intent(this, CommonPlayer.class));
+        stopService(new Intent(StartActivity.this, BattlePlayer.class));
+        stopService(new Intent(StartActivity.this, CommonPlayer.class));
     }
     //Кнопка "играть"
     public void goTogames(View view){
@@ -159,7 +154,7 @@ public class StartActivity extends AppCompatActivity {
         Intent j = new Intent(StartActivity.this, LessonActivity.class);
         startActivity(j);
         if(less.equals("0")) {
-            Intent i = new Intent(StartActivity.this, Deckofcards.class);
+            Intent i = new Intent(StartActivity.this, DeckOfCards.class);
             startActivity(i);
         }
     }

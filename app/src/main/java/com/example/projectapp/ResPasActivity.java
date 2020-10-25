@@ -14,10 +14,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import static com.example.projectapp.Constants.*;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ResPasActivity extends AppCompatActivity {
@@ -27,8 +26,7 @@ public class ResPasActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     SharedPreferences mSettings;
-    public static final String APP_PREFERENCES = "mysettings";
-    public static final String APP_PREFERENCES_EMAIL = "mail";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

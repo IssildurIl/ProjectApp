@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/view_with_background_all"
-    tools:context=".Deckofcards"
+    tools:context=".LessonActivity"
     tools:ignore="MissingDefaultResource">
 
     <TextView
@@ -20,7 +20,7 @@
         android:shadowDx="2.5"
         android:shadowDy="2.3"
         android:shadowRadius="2.6"
-        android:text="20"
+        android:text="@string/hp"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="30sp"
@@ -57,7 +57,7 @@
         android:shadowDx="2.5"
         android:shadowDy="2.3"
         android:shadowRadius="2.6"
-        android:text="5"
+        android:text="@string/trainhp"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="30sp"
@@ -281,7 +281,7 @@
         <ImageView
             android:id="@+id/fstcard"
             android:layout_width="91dp"
-            android:layout_height="139dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="1dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
@@ -305,7 +305,7 @@
     </FrameLayout>
 
     <ImageView
-        android:id="@+id/backb1"
+        android:id="@+id/deckOfCards_BackButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
@@ -313,7 +313,7 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/exit_door"
         android:clickable="true"
-        android:onClick="gotoMenu"
+        android:onClick="trainGoToMenu"
         android:text="@string/back_button"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -325,7 +325,7 @@
         android:layout_height="50dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="76dp"
-        app:layout_constraintBottom_toTopOf="@+id/backb1"
+        app:layout_constraintBottom_toTopOf="@+id/deckOfCards_BackButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/brick_end_of_turn" />
 

@@ -3,7 +3,6 @@ package com.example.projectapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
@@ -19,7 +18,6 @@ public class SplashScreenLayout extends AppCompatActivity {
                 .withFullScreen()
                 .withTargetActivity(StartActivity.class)
                 .withSplashTimeOut(1000)
-                //.withBackgroundColor(Color.parseColor("#8093A4"))
                 .withBackgroundResource(R.drawable.intro3);
         View easySplashScreen = config.create();
         setContentView(easySplashScreen);

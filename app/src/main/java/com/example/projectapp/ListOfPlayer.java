@@ -23,7 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+import static com.example.projectapp.Constants.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +39,6 @@ public class ListOfPlayer extends AppCompatActivity {
     DatabaseReference roomRef;
     DatabaseReference roomsRef;
     private SharedPreferences mSettings;
-    public static final String APP_PREFERENCES = "mysettings";
-    public static final String APP_PREFERENCES_NETNAME = "net player name";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

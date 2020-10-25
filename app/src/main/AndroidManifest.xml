@@ -16,7 +16,7 @@
         <activity android:name=".LessonActivity"/>
         <activity android:name=".ResPasActivity"/>
         <activity android:name=".SignUpActivity"/>
-        <activity android:name=".Deckofcards"/>
+        <activity android:name=".DeckOfCards"/>
         <activity android:name=".Customization"/>
         <activity android:name=".SplashScreenLayout">
             <intent-filter>
@@ -33,10 +33,10 @@
             android:parentActivityName=".StartActivity" />
 
         <service
-            android:name=".commonplayer"
+            android:name=".CommonPlayer"
             android:enabled="true" />
         <service
-            android:name=".battleplayer"
+            android:name=".BattlePlayer"
             android:enabled="true" />
     </application>
 

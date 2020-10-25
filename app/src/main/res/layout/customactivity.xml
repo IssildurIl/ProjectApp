@@ -28,35 +28,35 @@
         android:layout_marginTop="114dp"
         android:layout_marginBottom="195dp"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@+id/backb1"
+        app:layout_constraintBottom_toTopOf="@+id/deckOfCards_BackButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.688"
-        app:layout_constraintStart_toEndOf="@+id/tv1"
+        app:layout_constraintStart_toEndOf="@+id/hint"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
     </ImageSwitcher>
 
     <TextView
-        android:id="@+id/tv1"
+        android:id="@+id/hint"
         style="@style/otherActivity"
         android:layout_width="189dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="226dp"
         android:gravity="center"
         android:text="Choose an incone: "
-        app:layout_constraintBottom_toTopOf="@+id/backb1"
+        app:layout_constraintBottom_toTopOf="@+id/deckOfCards_BackButton"
         app:layout_constraintEnd_toStartOf="@+id/imageSwitcher"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/backb1"
+        android:id="@+id/deckOfCards_BackButton"
         style="@style/otherActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="16dp"
         android:clickable="true"
-        android:onClick="gotoMenu"
+        android:onClick="goToMenu"
         android:text="@string/back_button"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -90,7 +90,7 @@
         android:layout_height="80dp"
         android:layout_marginBottom="82dp"
         android:text="Включить обучение?"
-        app:layout_constraintBottom_toTopOf="@+id/backb1"
+        app:layout_constraintBottom_toTopOf="@+id/deckOfCards_BackButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
