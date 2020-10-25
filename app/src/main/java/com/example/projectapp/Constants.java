@@ -2,20 +2,29 @@ package com.example.projectapp;
 
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.view.GestureDetector;
 import android.view.View;
 import android.view.animation.Animation;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Constants {
@@ -32,12 +41,9 @@ public class Constants {
     public static String APP_PREFERENCES_STRING_ONE ="1";
     public static int APP_PREFERENCES_INT_ZERO=0;
     public static int APP_PREFERENCES_INT_ONE=1;
-
+    public static FirebaseAuth APP_PREFERENCE_FIREBASE_AUTHENTIFICATION;
     //BattlePlayer/CommonPlayer
-    public static MediaPlayer APP_PREFERENCES_MEDIA_PLAYER;
-    public static final int[] APP_PREFERENCES_BATTLE_MUSIC ={R.raw.battle, R.raw.battle2, R.raw.battle3};
-    public static final int[] APP_PREFERENCES_COMMON_MUSIC ={R.raw.theme0, R.raw.theme2, R.raw.music3};
-    public static int APP_PREFERENCE_PLAYER_POSITION;
+
 
     //Customization
     public static String APP_PREFERENCES_CUSTOMIZATION_SAVED_TEXT;
@@ -78,7 +84,6 @@ public class Constants {
             APP_PREFERENCE_DECKOFCARDS_MASSIVE_DARKNESS, APP_PREFERENCE_DECKOFCARDS_MASSIVE_ELEMENT, APP_PREFERENCE_DECKOFCARDS_MASSIVE_ILLUSION, APP_PREFERENCE_DECKOFCARDS_MASSIVE_NATURE, APP_PREFERENCE_DECKOFCARDS_MASSIVE_SECRET;
     public static FrameLayout APP_PREFERENCE_DECKOFCARDS_FRAMELAYOUT_SPELLS, APP_PREFERENCE_DECKOFCARDS_FRAMELAYOUT_HAND;
     public static SoundPool APP_PREFERENCE_DECKOFCARDS_SOUNDPOOL;
-
     //LessonActivity
     public static TextView APP_PREFERENCE_LESSONACTIVITY_HINT_OPP, APP_PREFERENCE_LESSONACTIVITY_HINT_DICE, APP_PREFERENCE_LESSONACTIVITY_HINT_PLAYER,
             APP_PREFERENCE_LESSONACTIVITY_HINT_TABLE, APP_PREFERENCE_LESSONACTIVITY_HINT_CARD, APP_PREFERENCE_LESSONACTIVITY_HINT_CARD_HELP, APP_PREFERENCE_LESSONACTIVITY_HINT_FINAL, APP_PREFERENCE_LESSONACTIVITY_HINT_HELLO;
@@ -96,13 +101,24 @@ public class Constants {
     public static final String APP_PREFERENCE_LESSONACTIVITY_HINT_EIGTH_TEXT = "Как только заклинание будет готово, нажмите ROLL. Дождитесь выпадения значений на кубиках\n и нажмите END OF TURN.\nВаша цель - убить противника заклинаниями. Удачи!";
     public static final String APP_PREFERENCE_LESSONACTIVITY_HINT_NINGTH_TEXT = "     Если вы хотите закончить обучение, перейдите в\n Customization и уберите галочку";
     //ListOfPlayer
-
+    public static final String APP_PREFERENCE_LISTOFPLAYER_DEFAULT_PLAYER="default player";
+    public static ListView APP_PREFERENCE_LISTOFPLAYER_PLAYER_LIST;
+    public static Button createroom,chngacc,gotomenu;
+    public static TextView nick;
+    public static List<String> roomsList;
+    public static String playerName= "", roomName= "";
+    public static FirebaseDatabase APP_PREFERENCE_FIREBASE_DATABASE;
+    public static DatabaseReference roomRef, roomsRef;
     //LogInActivity
-
+    public static EditText APP_PREFERENCE_LOGINACTIVITY_INPUT_EMAIL, APP_PREFERENCE_LOGINACTIVITY_INPUT_PASSWORD;
+    public static ProgressBar APP_PREFERENCE_LOGINACTIVITY_PROGRESS_BAR;
+    public static Button APP_PREFERENCE_LOGINACTIVITY_BUTTON_SIGN_UP, APP_PREFERENCE_LOGINACTIVITY_BUTTON_LOG_IN, APP_PREFERENCE_LOGINACTIVITY_BUTTON_RESET;
     //PlayActivity
 
     //ResPas
-
+    public static EditText inputEmail;
+    public static Button btnReset, btnBack;
+    public static ProgressBar progressBar;
     //StartActivity
 
 }

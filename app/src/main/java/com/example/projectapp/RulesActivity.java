@@ -52,7 +52,15 @@ public class RulesActivity extends AppCompatActivity implements ViewSwitcher.Vie
         mImageSwitcher.setImageResource(mImageIds[0]);
 
         mGestureDetector = new GestureDetector(this, this);
-
+        TextView backToMenu= findViewById(R.id.backb);
+        backToMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(RulesActivity.this, StartActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     public void setPositionNext() {

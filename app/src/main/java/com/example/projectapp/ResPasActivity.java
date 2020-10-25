@@ -4,14 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import static com.example.projectapp.Constants.*;
@@ -21,73 +18,61 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ResPasActivity extends AppCompatActivity {
 
-    private EditText inputEmail;
-    private Button btnReset, btnBack;
-    private FirebaseAuth auth;
-    private ProgressBar progressBar;
-    SharedPreferences mSettings;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
-
-        inputEmail = (EditText) findViewById(R.id.email);
-        btnReset = (Button) findViewById(R.id.btn_res_pas);
-        btnBack = (Button) findViewById(R.id.btn_back);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         fonttext();
-        auth = FirebaseAuth.getInstance();
-        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        inputEmail.setText(mSettings.getString(APP_PREFERENCES_EMAIL,""));
+        APP_PREFERENCE_FIREBASE_AUTHENTIFICATION = FirebaseAuth.getInstance();
+        APP_PREFERENCES_SETTINGS = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        inputEmail.setText(APP_PREFERENCES_SETTINGS.getString(APP_PREFERENCES_EMAIL,""));
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String email = inputEmail.getText().toString().trim();
-
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplication(), "Введите email, который указывали при регистрации ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), R.string.regemail, Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 progressBar.setVisibility(View.VISIBLE);
-                auth.sendPasswordResetEmail(email)
+                APP_PREFERENCE_FIREBASE_AUTHENTIFICATION.sendPasswordResetEmail(email)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(ResPasActivity.this, "Мы отправили вам инструкции для смены пароля!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ResPasActivity.this, R.string.sendInst, Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(ResPasActivity.this, "Ошибка при смене пароля!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ResPasActivity.this, R.string.errorpas, Toast.LENGTH_SHORT).show();
                                 }
-
                                 progressBar.setVisibility(View.GONE);
                             }
                         });
             }
         });
     }
+    private void ex_FONT(TextView textView){
+        textView.setTypeface(Typeface.createFromAsset(
+                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+    }
     public void fonttext() {
-        final TextView txt1 = (android.widget.TextView)findViewById(R.id.hint);
-        txt1.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
-        final TextView txt2 = (TextView)findViewById(R.id.email);
-        txt2.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
-        final Button btn1 = (Button) findViewById(R.id.btn_res_pas);
-        btn1.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
-        final Button btn2 = (Button) findViewById(R.id.btn_back);
-        btn2.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+        inputEmail =  findViewById(R.id.email);
+        btnReset = findViewById(R.id.btn_res_pas);
+        btnBack = findViewById(R.id.btn_back);
+        progressBar = findViewById(R.id.progressBar);
+        final TextView txt1 = findViewById(R.id.hint);
+        final TextView txt2 = findViewById(R.id.email);
+        final Button btn1 = findViewById(R.id.btn_res_pas);
+        final Button btn2 = findViewById(R.id.btn_back);
+        ex_FONT(txt1);
+        ex_FONT(txt2);
+        ex_FONT(btn1);
+        ex_FONT(btn2);
     }
 
 }

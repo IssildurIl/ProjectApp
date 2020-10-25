@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import static com.example.projectapp.Constants.*;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
@@ -35,7 +38,6 @@ public class DeckOfCards extends AppCompatActivity{
         setContentView(R.layout.deckofcards);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
         conferment();
-        stopService(new Intent(DeckOfCards.this, CommonPlayer.class));
         startService(new Intent(DeckOfCards.this, BattlePlayer.class));
         APP_PREFERENCE_DECKOFCARDS_ROLL_DICES.setEnabled(false);
         APP_PREFERENCE_DECKOFCARDS_CLICK_END.setVisibility(View.INVISIBLE);
@@ -60,7 +62,6 @@ public class DeckOfCards extends AppCompatActivity{
                 tableActionOpp(APP_PREFERENCE_DECKOFCARDS_LEAVE_OPP_CARD);
             }
         });
-
         Collections.shuffle(APP_PREFERENCE_DECKOFCARDS_CARDS_MAIN);
         APP_PREFERENCES_SETTINGS = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         getText();
@@ -102,8 +103,8 @@ public class DeckOfCards extends AppCompatActivity{
                 getAssets(), "fonts/JurassicPark-BL48.ttf"));
     }
     public void conferment(){
-        final TextView textnick = (TextView)findViewById(R.id.playerNick);
-        final TextView textnick2 = (TextView)findViewById(R.id.playerNick2);
+        final TextView textnick = findViewById(R.id.playerNick);
+        final TextView textnick2 = findViewById(R.id.playerNick2);
         ex_FONT(textnick);
         ex_FONT(textnick2);
         //местные звуки
@@ -154,6 +155,21 @@ public class DeckOfCards extends AppCompatActivity{
         mRightImageView = findViewById(R.id.imageview_right);
         mMidImageView =findViewById(R.id.imageview_mid);
         APP_PREFERENCE_DECKOFCARDS_NICK_NAME = findViewById(R.id.playerNick);
+        ImageView backToMenu=findViewById(R.id.deckOfCards_BackButton);
+        backToMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Thread.sleep(5);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                stopService(new Intent(DeckOfCards.this, BattlePlayer.class));
+                Intent i = new Intent(DeckOfCards.this, StartActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
     public void getText() {
         String savedText = APP_PREFERENCES_SETTINGS.getString(APP_PREFERENCES_NAME, "");
@@ -402,11 +418,7 @@ public class DeckOfCards extends AppCompatActivity{
         }
         return 0;
     }
-    public void deckOfCardsGoToMenu(View view) {
-        Intent i = new Intent(DeckOfCards.this, StartActivity.class);
-        startActivity(i);
-        this.finish();
-    }
+
     public void fooRollOneDice() {
         APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_3 = randomDiceValue();
         mMidImageView.animate().setDuration(1000).rotationYBy(360f).start();
@@ -612,7 +624,6 @@ public class DeckOfCards extends AppCompatActivity{
    }
        return val;
     }
-
     public int[] cardAction(int card) {
         switch (card) {
             //Смэрт
@@ -722,7 +733,6 @@ public class DeckOfCards extends AppCompatActivity{
         }
         return new int[]{0, 0};
     }
-
     public void tableAction(int qnt) {
         int[] hp = {0, 0};
         for (int i = 0; i < qnt; i++) {
@@ -736,7 +746,6 @@ public class DeckOfCards extends AppCompatActivity{
         }
         //Toast.makeText(Deckofcards.this,aaa,Toast.LENGTH_SHORT).show();
     }
-
     public void tableActionOpp(int qnt) {
         fooRollDice();
         String aa="";
@@ -756,8 +765,6 @@ public class DeckOfCards extends AppCompatActivity{
         }
         //Toast.makeText(Deckofcards.this,aaa,Toast.LENGTH_SHORT).show();
     }
-
-
     public int getHP() {
         return Integer.parseInt(((TextView) findViewById(R.id.hp2)).getText().toString());
     }
@@ -790,11 +797,9 @@ public class DeckOfCards extends AppCompatActivity{
             ((TextView) findViewById(R.id.hp2)).setText(Integer.toString(hp));
         }
     }
-
     public int getSelfHP() {
         return Integer.parseInt(((TextView) findViewById(R.id.hp)).getText().toString());
     }
-
     public void setSelfHP(int hp) {
         int dead;
         if (hp <= 0) {
@@ -823,7 +828,6 @@ public class DeckOfCards extends AppCompatActivity{
             ((TextView) findViewById(R.id.hp)).setText(Integer.toString(hp));
         }
     }
-
     public void createArrayListOfCards(ArrayList main_cards) {
         main_cards.add(R.drawable.d_darkness_1);
         main_cards.add(R.drawable.d_darkness_2);
@@ -1008,12 +1012,4 @@ public class DeckOfCards extends AppCompatActivity{
         APP_PREFERENCE_DECKOFCARDS_LEAVE_PLAYER_CARD = 0;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        stopService(new Intent(DeckOfCards.this, BattlePlayer.class));
-        startService(new Intent(DeckOfCards.this, CommonPlayer.class));
-        APP_PREFERENCE_DECKOFCARDS_SOUNDPOOL.release();
-        APP_PREFERENCE_DECKOFCARDS_SOUNDPOOL = null;
-    }
 }

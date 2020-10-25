@@ -51,12 +51,15 @@ public class OptionActivity extends AppCompatActivity {
 
             }
         });
-
+        TextView backToMenu= findViewById(R.id.backtomenu);
+        backToMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(OptionActivity.this, StartActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
-    public void gotoMenu(View view) {
-        Intent i = new Intent(OptionActivity.this, StartActivity.class);
-        startActivity(i);
-        this.finish();
-    }
 }

@@ -19,7 +19,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class StartActivity extends AppCompatActivity {
-    TextView textView;
     private int screenWidth;
     private int screenHeight;
 
@@ -30,9 +29,6 @@ public class StartActivity extends AppCompatActivity {
     private float imagefireY;
     private float imagelightX;
     private float imagelightY;
-    Customization cst =new Customization();
-
-
     private Handler handler =new Handler();
     private Timer timer = new Timer();
     private Timer spelltime = new Timer();
@@ -72,8 +68,8 @@ public class StartActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         cangePos();
-                        //imagefire.setVisibility(View.VISIBLE);
-                        //imagelight.setVisibility(View.VISIBLE);
+                        imagefire.setVisibility(View.VISIBLE);
+                        imagelight.setVisibility(View.VISIBLE);
 
                     }
                 });
@@ -147,7 +143,10 @@ public class StartActivity extends AppCompatActivity {
         stopService(new Intent(StartActivity.this, CommonPlayer.class));
     }
     //Кнопка "играть"
-    public void goTogames(View view){
+    public void goTogames(View view) throws InterruptedException {
+        Thread.sleep(5);
+        stopService(new Intent(StartActivity.this, CommonPlayer.class));
+
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         String less = mSettings.getString(APP_PREFERENCES_CB, "0");
         //Toast.makeText(StartActivity.this,""+less,Toast.LENGTH_LONG).show();

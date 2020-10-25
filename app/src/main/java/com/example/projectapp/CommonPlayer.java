@@ -4,12 +4,11 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import java.util.Random;
-import static com.example.projectapp.Constants.APP_PREFERENCES_MEDIA_PLAYER;
-import static com.example.projectapp.Constants.APP_PREFERENCES_COMMON_MUSIC;
-import static com.example.projectapp.Constants.APP_PREFERENCE_PLAYER_POSITION;
 
 public class CommonPlayer extends Service {
-
+    public static MediaPlayer APP_PREFERENCES_MEDIA_PLAYER;
+    public static final int[] APP_PREFERENCES_COMMON_MUSIC ={R.raw.theme0, R.raw.theme2, R.raw.music3};
+    public static int APP_PREFERENCE_PLAYER_POSITION;
 
     @Override
     public IBinder onBind(Intent intent) {
