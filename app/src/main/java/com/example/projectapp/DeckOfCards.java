@@ -160,7 +160,6 @@ public class DeckOfCards extends AppCompatActivity{
                 stopService(new Intent(DeckOfCards.this, BattlePlayer.class));
                 Intent i = new Intent(DeckOfCards.this, StartActivity.class);
                 startActivity(i);
-                finish();
             }
         });
     }

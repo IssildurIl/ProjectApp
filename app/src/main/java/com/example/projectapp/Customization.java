@@ -145,6 +145,5 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
         saveText();
         Intent i = new Intent(Customization.this, StartActivity.class);
         startActivity(i);
-        this.finish();
     }
 }

@@ -1022,7 +1022,6 @@ public class LessonActivity extends AppCompatActivity{
     public void trainGoToMenu(View view) {
         Intent i = new Intent(LessonActivity.this, StartActivity.class);
         startActivity(i);
-        this.finish();
     }
     @Override
     protected void onDestroy() {

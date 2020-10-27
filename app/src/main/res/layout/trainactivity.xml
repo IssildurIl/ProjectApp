@@ -305,7 +305,7 @@
     </FrameLayout>
 
     <ImageView
-        android:id="@+id/deckOfCards_BackButton"
+        android:id="@+id/TrainOfCards_BackButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"

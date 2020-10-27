@@ -1,12 +1,8 @@
 package com.example.projectapp;
 
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.view.GestureDetector;
-import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.CheckBox;
