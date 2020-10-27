@@ -40,12 +40,8 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
         APP_PREFERENCES_CUSTOMIZATION_NEW_ICONE_POSITION = Integer.parseInt(APP_PREFERENCES_ICONE);
         APP_PREFERENCES_CUSTOMIZATION_GESTURE_DESTRUCTOR = new GestureDetector(this, this);
         loadText();
-        FontTexts();
     }
-    private void ex_FONT(TextView textView){
-        textView.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
-    }
+
     private void findViewById(){
         APP_PREFERENCES_CUSTOMIZATION_TITLE = findViewById(R.id.title);
         APP_PREFERENCES_CUSTOMIZATION_HINT = findViewById(R.id.hint);
@@ -54,24 +50,21 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
         APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER = findViewById(R.id.IconeSwither);
         APP_PREFERENCES_CUSTOMIZATION_CHECK_LESSON = findViewById(R.id.checklesson);
     }
-    private void FontTexts(){
-        ex_FONT(APP_PREFERENCES_CUSTOMIZATION_TITLE);
-        ex_FONT(APP_PREFERENCES_CUSTOMIZATION_HINT);
-        ex_FONT(APP_PREFERENCES_CUSTOMIZATION_BUTTON_BACK);
-        ex_FONT(APP_PREFERENCES_CUSTOMIZATION_NICK);
-    }
+
     public void setPositionToIcone() {
         APP_PREFERENCES_CUSTOMIZATION_MICONE_POSITION++;
         if (APP_PREFERENCES_CUSTOMIZATION_MICONE_POSITION > APP_PREFERENCES_CUSTOMIZATION_MASS_ICONE.length - APP_PREFERENCES_INT_ONE) {
             APP_PREFERENCES_CUSTOMIZATION_MICONE_POSITION = APP_PREFERENCES_INT_ZERO;
         }
     }
+
     public void setPositionPrevIcone() {
         APP_PREFERENCES_CUSTOMIZATION_MICONE_POSITION--;
         if (APP_PREFERENCES_CUSTOMIZATION_MICONE_POSITION < APP_PREFERENCES_INT_ZERO) {
             APP_PREFERENCES_CUSTOMIZATION_MICONE_POSITION = APP_PREFERENCES_CUSTOMIZATION_MASS_ICONE.length - APP_PREFERENCES_INT_ONE;
         }
     }
+
     public View makeView() {
         ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);

@@ -143,10 +143,10 @@ public class RulesActivity extends AppCompatActivity implements ViewSwitcher.Vie
     private void FontTexts(){
         final TextView textRule = (TextView)findViewById(R.id.textView5);
         textRule.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+                getAssets(), "font/jurassic_park.ttf"));
         final TextView backb = (TextView)findViewById(R.id.backb);
         backb.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));}
+                getAssets(), "font/jurassic_park.ttf"));}
 
     public void gotoMenu(View view) {
         Intent i = new Intent(RulesActivity.this, StartActivity.class);

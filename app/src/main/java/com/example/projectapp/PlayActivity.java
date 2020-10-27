@@ -91,10 +91,10 @@ public class PlayActivity extends AppCompatActivity {
 
         final TextView textnick = (TextView)findViewById(R.id.playerNick);
         textnick .setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+                getAssets(), "font/jurassic_park.ttf"));
         final TextView textnick2 = (TextView)findViewById(R.id.playerNick2);
         textnick2.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+                getAssets(), "font/jurassic_park.ttf"));
         roomsList= new ArrayList<>();
         sound1 = soundPool.load(this, R.raw.givecards, 1);
         secretsound = soundPool.load(this, R.raw.dropcard, 1);

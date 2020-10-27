@@ -6,14 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -43,10 +41,8 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.mainmenu);
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 //        cst.loadText();
-        FontTexts();
         startService(new Intent(this, CommonPlayer.class));
 
-        ///
         imagefire=(ImageView)findViewById(R.id.element1);
         imagelight=(ImageView)findViewById(R.id.element2);
         WindowManager wm =getWindowManager();
@@ -97,27 +93,6 @@ public class StartActivity extends AppCompatActivity {
         imagefire.setY(imagefireY);
     }
 
-    //Стиль текста
-    private void FontTexts(){
-        final TextView start = (TextView)findViewById(R.id.start);
-        start.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
-        final TextView quick = (TextView)findViewById(R.id.quick);
-        quick.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
-        final TextView settings = (TextView)findViewById(R.id.settings);
-        settings.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
-        final TextView about = (TextView)findViewById(R.id.rules);
-        about.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
-        final TextView exit = (TextView)findViewById(R.id.exit);
-        exit.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
-        final TextView NetGame = (TextView)findViewById(R.id.Netgame);
-        NetGame.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
-    }
     //Переход в Правила
     public void goToRules(View view) {
         Intent i = new Intent(StartActivity.this, RulesActivity.class);

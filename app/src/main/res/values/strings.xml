@@ -18,4 +18,5 @@
     <string name="regemail">Введите email, который указывали при регистрации</string>
     <string name="sendInst">Мы отправили вам инструкции для смены пароля!</string>
     <string name="errorpas">Ошибка при смене пароля!</string>
+    <string name="menu_net_game">NetGame</string>
 </resources>

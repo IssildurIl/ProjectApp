@@ -99,10 +99,7 @@ public class LessonActivity extends AppCompatActivity{
         });
 
     }
-    private void ex_FONT(TextView textView){
-        textView.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
-    }
+
     public void conferment(){
         final TextView textnick = findViewById(R.id.playerNick);
         final TextView textnick2 = findViewById(R.id.playerNick2);
@@ -169,16 +166,6 @@ public class LessonActivity extends AppCompatActivity{
         APP_PREFERENCE_LESSONACTIVITY_HINT_CARD_HELP =findViewById(R.id.hintcardhelp);
         APP_PREFERENCE_LESSONACTIVITY_HINT_FINAL =findViewById(R.id.hintfinal);
         APP_PREFERENCE_LESSONACTIVITY_HINT_BUTTON =findViewById(R.id.NextHint);
-        ex_FONT(textnick);
-        ex_FONT(textnick2);
-        ex_FONT(APP_PREFERENCE_LESSONACTIVITY_HINT_HELLO);
-        ex_FONT(APP_PREFERENCE_LESSONACTIVITY_HINT_DICE);
-        ex_FONT(APP_PREFERENCE_LESSONACTIVITY_HINT_OPP);
-        ex_FONT(APP_PREFERENCE_LESSONACTIVITY_HINT_PLAYER);
-        ex_FONT(APP_PREFERENCE_LESSONACTIVITY_HINT_TABLE);
-        ex_FONT(APP_PREFERENCE_LESSONACTIVITY_HINT_CARD);
-        ex_FONT(APP_PREFERENCE_LESSONACTIVITY_HINT_CARD_HELP);
-        ex_FONT(APP_PREFERENCE_LESSONACTIVITY_HINT_FINAL);
     }
     public void getText() {
         String savedText = APP_PREFERENCES_SETTINGS.getString(APP_PREFERENCES_NAME, "");

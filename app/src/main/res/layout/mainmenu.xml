@@ -3,7 +3,6 @@
     xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:screenOrientation="landscape"
     android:background="@drawable/menu_fu"
     android:theme="@android:style/ThemeOverlay.Material.Dark">
@@ -11,10 +10,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="395dp"
-        android:layout_height="472dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="209dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp"
         fbutton:layout_constraintBottom_toBottomOf="parent"
@@ -27,7 +24,8 @@
             android:background="@android:color/transparent"
             android:clickable="true"
             android:onClick="goTogames"
-            android:text="@string/menu_start_game" />
+            android:text="@string/menu_start_game"
+            android:focusable="true" />
 
         <Button
             android:id="@+id/Netgame"
@@ -35,7 +33,8 @@
             android:background="@android:color/transparent"
             android:clickable="true"
             android:onClick="ToNet"
-            android:text="NetGame" />
+            android:text="@string/menu_net_game"
+            android:focusable="true" />
 
         <Button
             android:id="@+id/quick"
@@ -43,7 +42,8 @@
             android:background="@android:color/transparent"
             android:clickable="true"
             android:onClick="goToCustom"
-            android:text="@string/menu_quick_game" />
+            android:text="@string/menu_quick_game"
+            android:focusable="true" />
 
 
         <Button
@@ -52,7 +52,8 @@
             android:background="@android:color/transparent"
             android:clickable="true"
             android:onClick="goToOptions"
-            android:text="@string/menu_settings_game" />
+            android:text="@string/menu_settings_game"
+            android:focusable="true" />
 
         <Button
             android:id="@+id/rules"
@@ -60,7 +61,8 @@
             android:background="@android:color/transparent"
             android:clickable="true"
             android:onClick="goToRules"
-            android:text="@string/menu_rules" />
+            android:text="@string/menu_rules"
+            android:focusable="true" />
 
         <Button
             android:id="@+id/exit"
@@ -68,7 +70,8 @@
             android:background="@android:color/transparent"
             android:clickable="true"
             android:onClick="onBackPressed"
-            android:text="@string/menu_exit" />
+            android:text="@string/menu_exit"
+            android:focusable="true" />
     </LinearLayout>
 
     <pl.droidsonroids.gif.GifImageView

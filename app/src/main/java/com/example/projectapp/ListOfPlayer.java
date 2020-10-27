@@ -84,7 +84,7 @@ public class ListOfPlayer extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 createroom.setText("Create Room(Join)");
                 createroom.setEnabled(true);
-                Intent intent = new Intent(getApplicationContext(),PlayActivity.class);
+                Intent intent = new Intent(getApplicationContext(), PlayActivity.class);
                 intent.putExtra("roomName", roomName);
                 startActivity(intent);
             }
@@ -119,7 +119,7 @@ public class ListOfPlayer extends AppCompatActivity {
     }
     private void ex_FONT(TextView textView){
         textView.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+                getAssets(), "font/jurassic_park.ttf"));
     }
     public void fonttext() {
         final TextView txt1 = findViewById(R.id.usernick);

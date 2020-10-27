@@ -11,11 +11,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import static com.example.projectapp.Constants.*;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -123,6 +122,6 @@ public class LogInActivity extends AppCompatActivity {
    }
     private void ex_FONT(TextView textView){
         textView.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+                getAssets(), "font/jurassic_park.ttf"));
     }
 }

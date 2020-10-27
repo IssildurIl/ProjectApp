@@ -14,16 +14,14 @@ import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import static com.example.projectapp.Constants.*;
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
@@ -98,15 +96,10 @@ public class DeckOfCards extends AppCompatActivity{
         });
 
     }
-    private void ex_FONT(TextView textView){
-        textView.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
-    }
+
     public void conferment(){
         final TextView textnick = findViewById(R.id.playerNick);
         final TextView textnick2 = findViewById(R.id.playerNick2);
-        ex_FONT(textnick);
-        ex_FONT(textnick2);
         //местные звуки
         APP_PREFERENCE_DECKOFCARDS_SOUNDPOOL = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
         APP_PREFERENCE_DECKOFCARDS_SOUND_GIVE_CARDS = APP_PREFERENCE_DECKOFCARDS_SOUNDPOOL.load(this, R.raw.givecards, 1);

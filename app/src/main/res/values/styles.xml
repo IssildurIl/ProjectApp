@@ -25,6 +25,7 @@
         <item name="android:shadowDy">2.3</item>
         <item name="android:shadowRadius">2.6</item>
         <item name="android:layout_marginBottom">20dp</item>
+        <item name="fontFamily">@font/jurassic_park</item>
     </style>
 
     <style name="ExitFont">
@@ -41,7 +42,9 @@
         <item name="android:shadowDx">2.5</item>
         <item name="android:shadowDy">2.3</item>
         <item name="android:shadowRadius">2.6</item>
+        <item name="fontFamily">@font/jurassic_park</item>
     </style>
+
     <style name="otherActivity">
         <item name="android:textSize">30sp</item>
         <item name="android:textColor">#FFAB381D</item>
@@ -56,20 +59,23 @@
         <item name="android:shadowDx">2.5</item>
         <item name="android:shadowDy">2.3</item>
         <item name="android:shadowRadius">2.6</item>
+        <item name="fontFamily">@font/jurassic_park</item>
     </style>
+
     <style name="CustomDialog" parent="android:Theme.Dialog">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+
     <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/slide_right</item>
         <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
         <item name="android:activityCloseEnterAnimation">@anim/slide_left</item>
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
+
     <style name="ourFont">
-        <item name="android:fontFamily">@fonts/JurassicPark-BL48</item>
-        <item name="fontFamily">@fonts/JurassicPark-BL48</item>
+        <item name="fontFamily">@font/jurassic_park</item>
         <item name="android:textStyle">normal</item>
     </style>
 </resources>

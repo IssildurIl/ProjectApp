@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -110,19 +111,19 @@ public class SignUpActivity extends AppCompatActivity {
     public void fonttext() {
         final TextView txt1 = (android.widget.TextView)findViewById(R.id.email);
         txt1.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+                getAssets(), "font/jurassic_park.ttf"));
         final TextView txt2 = (TextView)findViewById(R.id.password);
         txt2.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+                getAssets(), "font/jurassic_park.ttf"));
         final Button btn1 = (Button) findViewById(R.id.sign_in_btn);
         btn1.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+                getAssets(), "font/jurassic_park.ttf"));
         final Button btn2 = (Button) findViewById(R.id.sign_up_btn);
         btn2.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+                getAssets(), "font/jurassic_park.ttf"));
         final Button btn3 = (Button) findViewById(R.id.btn_res_pas);
         btn3.setTypeface(Typeface.createFromAsset(
-                getAssets(), "fonts/JurassicPark-BL48.ttf"));
+                getAssets(), "font/jurassic_park.ttf"));
     }
 
 }
