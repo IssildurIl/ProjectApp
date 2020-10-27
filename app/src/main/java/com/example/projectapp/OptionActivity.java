@@ -25,11 +25,7 @@ public class OptionActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ///установка шрифта
         final TextView back = (TextView)findViewById(R.id.backtomenu);
-        back.setTypeface(Typeface.createFromAsset(
-                getAssets(), "font/jurassic_park.ttf"));
         final TextView mus = (TextView)findViewById(R.id.textMusic);
-        mus.setTypeface(Typeface.createFromAsset(
-                getAssets(), "font/jurassic_park.ttf"));
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         int curValue = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);

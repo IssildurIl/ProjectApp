@@ -41,7 +41,6 @@ public class SignUpActivity extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnResetPassword = (Button) findViewById(R.id.btn_res_pas);
-        fonttext();
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,24 +105,6 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         progressBar.setVisibility(View.GONE);
-    }
-
-    public void fonttext() {
-        final TextView txt1 = (android.widget.TextView)findViewById(R.id.email);
-        txt1.setTypeface(Typeface.createFromAsset(
-                getAssets(), "font/jurassic_park.ttf"));
-        final TextView txt2 = (TextView)findViewById(R.id.password);
-        txt2.setTypeface(Typeface.createFromAsset(
-                getAssets(), "font/jurassic_park.ttf"));
-        final Button btn1 = (Button) findViewById(R.id.sign_in_btn);
-        btn1.setTypeface(Typeface.createFromAsset(
-                getAssets(), "font/jurassic_park.ttf"));
-        final Button btn2 = (Button) findViewById(R.id.sign_up_btn);
-        btn2.setTypeface(Typeface.createFromAsset(
-                getAssets(), "font/jurassic_park.ttf"));
-        final Button btn3 = (Button) findViewById(R.id.btn_res_pas);
-        btn3.setTypeface(Typeface.createFromAsset(
-                getAssets(), "font/jurassic_park.ttf"));
     }
 
 }

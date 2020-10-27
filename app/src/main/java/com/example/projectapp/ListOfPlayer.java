@@ -117,19 +117,12 @@ public class ListOfPlayer extends AppCompatActivity {
         });
 
     }
-    private void ex_FONT(TextView textView){
-        textView.setTypeface(Typeface.createFromAsset(
-                getAssets(), "font/jurassic_park.ttf"));
-    }
+
     public void fonttext() {
         final TextView txt1 = findViewById(R.id.usernick);
         final Button btn1 = (Button) findViewById(R.id.createroom);
         final Button btn2 = (Button) findViewById(R.id.changeacc);
         final Button btn3 = (Button) findViewById(R.id.gotomenu);
-        ex_FONT(txt1);
-        ex_FONT(btn1);
-        ex_FONT(btn2);
-        ex_FONT(btn3);
         APP_PREFERENCE_LISTOFPLAYER_PLAYER_LIST = findViewById(R.id.playerlist);
         createroom= findViewById(R.id.createroom);
         chngacc =findViewById(R.id.changeacc);

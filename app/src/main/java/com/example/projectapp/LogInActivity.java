@@ -107,11 +107,6 @@ public class LogInActivity extends AppCompatActivity {
        final Button btn1 =  findViewById(R.id.login);
        final Button btn2 = findViewById(R.id.signup);
        final Button btn3 =  findViewById(R.id.reset_password);
-       ex_FONT(txt1);
-       ex_FONT(txt2);
-       ex_FONT(btn1);
-       ex_FONT(btn2);
-       ex_FONT(btn3);
        APP_PREFERENCES_SETTINGS = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
        APP_PREFERENCE_LOGINACTIVITY_INPUT_EMAIL = findViewById(R.id.email);
        APP_PREFERENCE_LOGINACTIVITY_INPUT_PASSWORD = findViewById(R.id.password);
@@ -120,8 +115,4 @@ public class LogInActivity extends AppCompatActivity {
        APP_PREFERENCE_LOGINACTIVITY_BUTTON_LOG_IN =  findViewById(R.id.login);
        APP_PREFERENCE_LOGINACTIVITY_BUTTON_RESET = findViewById(R.id.reset_password);
    }
-    private void ex_FONT(TextView textView){
-        textView.setTypeface(Typeface.createFromAsset(
-                getAssets(), "font/jurassic_park.ttf"));
-    }
 }

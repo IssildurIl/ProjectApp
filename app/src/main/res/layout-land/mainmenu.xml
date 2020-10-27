@@ -28,7 +28,8 @@
             android:background="@android:color/transparent"
             android:clickable="true"
             android:onClick="goTogames"
-            android:text="@string/menu_start_game" />
+            android:text="@string/menu_start_game"
+            android:focusable="true" />
 
         <Button
             android:id="@+id/Netgame"
@@ -36,7 +37,8 @@
             android:background="@android:color/transparent"
             android:clickable="true"
             android:onClick="ToNet"
-            android:text="NetGame" />
+            android:text="NetGame"
+            android:focusable="true" />
 
         <Button
             android:id="@+id/quick"
@@ -44,7 +46,8 @@
             android:background="@android:color/transparent"
             android:clickable="true"
             android:onClick="goToCustom"
-            android:text="@string/menu_quick_game" />
+            android:text="@string/menu_quick_game"
+            android:focusable="true" />
 
 
         <Button
@@ -53,7 +56,8 @@
             android:background="@android:color/transparent"
             android:clickable="true"
             android:onClick="goToOptions"
-            android:text="@string/menu_settings_game" />
+            android:text="@string/menu_settings_game"
+            android:focusable="true" />
 
         <Button
             android:id="@+id/rules"
@@ -61,7 +65,8 @@
             android:background="@android:color/transparent"
             android:clickable="true"
             android:onClick="goToRules"
-            android:text="@string/menu_rules" />
+            android:text="@string/menu_rules"
+            android:focusable="true" />
 
         <Button
             android:id="@+id/exit"
@@ -69,7 +74,8 @@
             android:background="@android:color/transparent"
             android:clickable="true"
             android:onClick="onBackPressed"
-            android:text="@string/menu_exit" />
+            android:text="@string/menu_exit"
+            android:focusable="true" />
     </LinearLayout>
 
     <pl.droidsonroids.gif.GifImageView
