@@ -24,6 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -121,5 +123,27 @@ public class Constants {
     public static ProgressBar progressBar;
     //StartActivity
 
+    //all Play
+    public static ArrayList<Integer> MAIN_CARDS  = new ArrayList<>(Arrays.asList(R.drawable.d_darkness_1, R.drawable.d_darkness_2, R.drawable.d_darkness_3, R.drawable.d_darkness_4, R.drawable.d_element_1, R.drawable.d_element_2, R.drawable.d_element_3, R.drawable.d_element_4, R.drawable.d_illusion_4, R.drawable.d_nature_1, R.drawable.d_nature_2, R.drawable.d_nature_3, R.drawable.d_nature_4, R.drawable.d_nature_5, R.drawable.i_darkness_1, R.drawable.i_darkness_3, R.drawable.i_darkness_4, R.drawable.i_element_1, R.drawable.i_element_2, R.drawable.i_element_3, R.drawable.i_element_4, R.drawable.i_nature_1, R.drawable.i_nature_2, R.drawable.i_nature_4, R.drawable.i_nature_5, R.drawable.k_darkness_1, R.drawable.k_darkness_2, R.drawable.k_darkness_4, R.drawable.k_element_1, R.drawable.k_element_2, R.drawable.k_element_3, R.drawable.k_nature_1, R.drawable.k_nature_3, R.drawable.k_nature_4, R.drawable.k_nature_5, R.drawable.k_secret_1));
+
+    public static HashSet<Integer> I_MAIN_CARDS = new HashSet<>(Arrays.asList(R.drawable.i_darkness_1, R.drawable.i_darkness_3, R.drawable.i_darkness_4, R.drawable.i_element_1, R.drawable.i_element_2, R.drawable.i_element_3, R.drawable.i_element_4, R.drawable.i_nature_1, R.drawable.i_nature_2, R.drawable.i_nature_4, R.drawable.i_nature_5));
+
+    public static HashSet<Integer> K_MAIN_CARDS  = new HashSet<>(Arrays.asList(R.drawable.k_darkness_1, R.drawable.k_darkness_2, R.drawable.k_darkness_4, R.drawable.k_element_1, R.drawable.k_element_2, R.drawable.k_element_3, R.drawable.k_nature_1, R.drawable.k_nature_3, R.drawable.k_nature_4, R.drawable.k_nature_5, R.drawable.k_secret_1));
+
+    public static HashSet<Integer> D_MAIN_CARDS  = new HashSet<>(Arrays.asList(R.drawable.d_darkness_1, R.drawable.d_darkness_2, R.drawable.d_darkness_3, R.drawable.d_darkness_4, R.drawable.d_element_1, R.drawable.d_element_2, R.drawable.d_element_3, R.drawable.d_element_4, R.drawable.d_illusion_4, R.drawable.d_nature_1, R.drawable.d_nature_2, R.drawable.d_nature_3, R.drawable.d_nature_4, R.drawable.d_nature_5));
+
+    public static HashSet<Integer> DARKNESS_MAS  = new HashSet<>(Arrays.asList(R.drawable.d_darkness_1, R.drawable.d_darkness_2, R.drawable.d_darkness_3, R.drawable.d_darkness_4, R.drawable.i_darkness_1, R.drawable.i_darkness_2, R.drawable.i_darkness_3, R.drawable.i_darkness_4, R.drawable.k_darkness_1, R.drawable.k_darkness_2, R.drawable.k_darkness_3, R.drawable.k_darkness_4));
+
+    public static HashSet<Integer> ELEMENT_MAS  = new HashSet<>(Arrays.asList(R.drawable.d_element_1, R.drawable.d_element_2, R.drawable.d_element_3, R.drawable.d_element_4, R.drawable.i_element_1, R.drawable.i_element_2, R.drawable.i_element_3, R.drawable.i_element_4, R.drawable.k_element_1, R.drawable.k_element_2, R.drawable.k_element_3, R.drawable.k_element_4));
+
+    public static HashSet<Integer> ILLUSION_MAS  = new HashSet<>(Arrays.asList(R.drawable.d_illusion_1, R.drawable.d_illusion_2, R.drawable.d_illusion_3, R.drawable.d_illusion_4, R.drawable.i_illusion_1, R.drawable.i_illusion_2, R.drawable.i_illusion_3, R.drawable.i_illusion_4, R.drawable.k_illusion_1, R.drawable.k_illusion_2, R.drawable.k_illusion_3, R.drawable.k_illusion_4));
+
+    public static HashSet<Integer> NATURE_MAS  = new HashSet<>(Arrays.asList(R.drawable.d_nature_1, R.drawable.d_nature_2, R.drawable.d_nature_3, R.drawable.d_nature_4, R.drawable.d_nature_5, R.drawable.i_nature_1, R.drawable.i_nature_2, R.drawable.i_nature_3, R.drawable.i_nature_4, R.drawable.i_nature_5, R.drawable.k_nature_1, R.drawable.k_nature_2, R.drawable.k_nature_3, R.drawable.k_nature_4, R.drawable.k_nature_5));
+
+    public static HashSet<Integer> SECRET_MAS  = new HashSet<>(Arrays.asList(R.drawable.d_secret_1, R.drawable.d_secret_2, R.drawable.d_secret_3, R.drawable.d_secret_4, R.drawable.i_secret_1, R.drawable.i_secret_2, R.drawable.i_secret_3, R.drawable.i_secret_4, R.drawable.k_secret_1, R.drawable.k_secret_2, R.drawable.k_secret_3, R.drawable.k_secret_4));
+
+    public static int I_CARD = R.drawable.i_card;
+    public static int K_CARD = R.drawable.k_card;
+    public static int D_CARD = R.drawable.d_card;
 }
 
