@@ -4,16 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -119,10 +115,6 @@ public class ListOfPlayer extends AppCompatActivity {
     }
 
     public void fonttext() {
-        final TextView txt1 = findViewById(R.id.usernick);
-        final Button btn1 = (Button) findViewById(R.id.createroom);
-        final Button btn2 = (Button) findViewById(R.id.changeacc);
-        final Button btn3 = (Button) findViewById(R.id.gotomenu);
         APP_PREFERENCE_LISTOFPLAYER_PLAYER_LIST = findViewById(R.id.playerlist);
         createroom= findViewById(R.id.createroom);
         chngacc =findViewById(R.id.changeacc);

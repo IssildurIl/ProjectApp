@@ -5,8 +5,6 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -34,7 +32,6 @@ public class DeckOfCards extends AppCompatActivity{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.deckofcards);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
         conferment();
         startService(new Intent(DeckOfCards.this, BattlePlayer.class));
         APP_PREFERENCE_DECKOFCARDS_ROLL_DICES.setEnabled(false);
@@ -98,8 +95,6 @@ public class DeckOfCards extends AppCompatActivity{
     }
 
     public void conferment(){
-        final TextView textnick = findViewById(R.id.playerNick);
-        final TextView textnick2 = findViewById(R.id.playerNick2);
         //местные звуки
         APP_PREFERENCE_DECKOFCARDS_SOUNDPOOL = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
         APP_PREFERENCE_DECKOFCARDS_SOUND_GIVE_CARDS = APP_PREFERENCE_DECKOFCARDS_SOUNDPOOL.load(this, R.raw.givecards, 1);
@@ -152,14 +147,15 @@ public class DeckOfCards extends AppCompatActivity{
         backToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Thread.sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(5);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
                 stopService(new Intent(DeckOfCards.this, BattlePlayer.class));
                 Intent i = new Intent(DeckOfCards.this, StartActivity.class);
                 startActivity(i);
+                finish();
             }
         });
     }
@@ -576,45 +572,53 @@ public class DeckOfCards extends AppCompatActivity{
         }
     }
     public int[] partCardAction(int symbol,int c1,int c2,int c3,int c4,int c5,int c6){
-        int val[]=new int[2];
+        int values[]=new int[2];
         switch (NumSymbol(APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS,symbol)){
        case 1:
            switch (APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_1)
            {
                case 2: case 3: case 4:
-               val= new int[]{c1, c2};
+               values= new int[]{c1, c2};
+               break;
                case 5:case 6:
-               val = new int[]{c3, c4};
+               values = new int[]{c3, c4};
+               break;
            }
-           Toast.makeText(DeckOfCards.this,"я нанес 1"+val,Toast.LENGTH_SHORT).show();
+           Toast.makeText(DeckOfCards.this,"я нанес 1"+values,Toast.LENGTH_SHORT).show();
            break;
        case 2:
            switch (APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_1 + APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_2){
                case 2: case 3:case 4:
-                   val = new int[]{c1, c2};
+                   values = new int[]{c1, c2};
+                   break;
                case 5: case 6: case 7: case 8: case 9:
-                   val = new int[]{c3, c4};
+                   values = new int[]{c3, c4};
+                   break;
                case 10: case 11: case 12:
-                   val = new int[]{c5, c6};
+                   values = new int[]{c5, c6};
+                   break;
            }
-           Toast.makeText(DeckOfCards.this,"я нанес 2"+val,Toast.LENGTH_SHORT).show();
+           Toast.makeText(DeckOfCards.this,"я нанес 2"+values,Toast.LENGTH_SHORT).show();
            break;
        case 3:
            switch (APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_1 + APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_2 + APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_3){
                case 2: case 3:case 4:
-                   val = new int[]{c1, c2};
+                   values = new int[]{c1, c2};
+                   break;
                case 5: case 6: case 7: case 8: case 9:
-                   val = new int[]{c3, c4};
+                   values = new int[]{c3, c4};
+                   break;
                case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
-                   val = new int[]{c5, c6};
+                   values = new int[]{c5, c6};
+                   break;
            }
-           Toast.makeText(DeckOfCards.this,"я нанес 3"+val,Toast.LENGTH_SHORT).show();
+           Toast.makeText(DeckOfCards.this,"я нанес 3"+values,Toast.LENGTH_SHORT).show();
            break;
             default:
                 Toast.makeText(DeckOfCards.this,"я не сработал",Toast.LENGTH_SHORT).show();
 
    }
-       return val;
+       return values;
     }
     public int[] cardAction(int card) {
         switch (card) {
@@ -673,16 +677,12 @@ public class DeckOfCards extends AppCompatActivity{
                 break;
             case R.drawable.i_darkness_3:
                 return new int[]{APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_1 *(-1) , APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_2 *(-1)};
-            case R.drawable.i_darkness_4:
+            case R.drawable.i_darkness_4: case R.drawable.k_nature_5:
                 return new int[]{-2,0};
             //Стихия
             case R.drawable.i_element_1:
                 return new int[]{CouNumSymb()*(-1),0};
-            case R.drawable.i_element_2:
-                return new int[]{-3,0};
-            case R.drawable.i_element_3:
-                return new int[]{-3,0};
-            case R.drawable.i_element_4:
+            case R.drawable.i_element_2: case R.drawable.i_element_3:case R.drawable.i_element_4:case R.drawable.i_nature_5:
                 return new int[]{-3,0};
             //Иллюзия
             //Природа
@@ -693,8 +693,7 @@ public class DeckOfCards extends AppCompatActivity{
                 return new int[]{0,CouNumSymb()};
             case R.drawable.i_nature_4:
                 return new int[]{0,2};
-            case R.drawable.i_nature_5:
-                return new int[]{-3,0};
+
             //Секрет
             case R.drawable.k_darkness_1:
                 partCardAction(1,-2,0,-4,-1,-5,-2);
@@ -720,8 +719,6 @@ public class DeckOfCards extends AppCompatActivity{
              return new int[]{(-2)*CouNumSymb(),0};
             case R.drawable.k_nature_4:
               return new int[]{-5, 0};
-            case R.drawable.k_nature_5:
-                return new int[]{-2, 0};
         }
         return new int[]{0, 0};
     }

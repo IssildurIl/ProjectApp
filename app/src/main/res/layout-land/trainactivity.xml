@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/view_with_background_all"
-    tools:context=".DeckOfCards"
+    tools:context=".LessonActivity"
     tools:ignore="MissingDefaultResource">
 
     <TextView
@@ -16,11 +16,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/heart_final2"
-        android:shadowColor="#A61720"
+        android:shadowColor="#9b2d30"
         android:shadowDx="2.5"
         android:shadowDy="2.3"
         android:shadowRadius="2.6"
-        android:text="20"
+        android:text="@string/hp"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="30sp"
@@ -40,7 +40,7 @@
         android:padding="2sp"
         android:paddingStart="8sp"
         android:paddingTop="12sp"
-        android:text="YourOpp"
+        android:text="Saruman"
         android:textColor="@color/design_default_color_on_secondary"
         android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/imageView2"
@@ -57,7 +57,7 @@
         android:shadowDx="2.5"
         android:shadowDy="2.3"
         android:shadowRadius="2.6"
-        android:text="20"
+        android:text="@string/trainhp"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="30sp"
@@ -113,7 +113,6 @@
         android:layout_marginEnd="11dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/skull_final2"
-
         android:shadowColor="#000000"
         android:shadowDx="2.5"
         android:shadowDy="2.3"
@@ -126,19 +125,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/hand"
         app:layout_constraintStart_toEndOf="@+id/hp" />
-
-    <ImageView
-        android:id="@+id/iv_deck"
-        android:layout_width="71dp"
-        android:layout_height="74dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="60dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/magic_back_cards"
-        app:layout_constraintBottom_toTopOf="@+id/end"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <FrameLayout
         android:id="@+id/hand"
@@ -229,6 +215,7 @@
             android:src="@drawable/magic_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </FrameLayout>
 
     <ImageView
@@ -261,7 +248,6 @@
         android:id="@+id/spells"
         android:layout_width="275dp"
         android:layout_height="138dp"
-
         android:layout_marginEnd="3dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/hand"
@@ -282,7 +268,7 @@
         <ImageView
             android:id="@+id/fstcard"
             android:layout_width="91dp"
-            android:layout_height="139dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="1dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
@@ -302,10 +288,11 @@
             android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </FrameLayout>
 
     <ImageView
-        android:id="@+id/deckOfCards_BackButton"
+        android:id="@+id/TrainOfCards_BackButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
@@ -313,7 +300,7 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/exit_door"
         android:clickable="true"
-        android:onClick="goToMenu"
+        android:onClick="trainGoToMenu"
         android:text="@string/back_button"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -323,20 +310,18 @@
         android:id="@+id/end"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/hand"
+        android:layout_marginTop="78dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_deck"
         app:srcCompat="@drawable/brick_end_of_turn" />
 
     <ImageButton
         android:id="@+id/Roll"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="56dp"
-        app:layout_constraintBottom_toBottomOf="@+id/end"
+        android:layout_marginTop="78dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_deck"
         app:srcCompat="@drawable/brick_roll" />
 
     <FrameLayout
@@ -384,6 +369,7 @@
             android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </FrameLayout>
 
     <FrameLayout
@@ -493,18 +479,18 @@
             android:src="@drawable/dice2" />
 
         <ImageView
-            android:id="@+id/imageview_right"
-            android:layout_width="47dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="96dp"
-            android:src="@drawable/dice6" />
-
-        <ImageView
             android:id="@+id/imageview_mid"
             android:layout_width="47dp"
             android:layout_height="48dp"
             android:layout_marginTop="48dp"
             android:src="@drawable/dice4" />
+
+        <ImageView
+            android:id="@+id/imageview_right"
+            android:layout_width="47dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="96dp"
+            android:src="@drawable/dice6" />
     </FrameLayout>
 
     <ImageView
@@ -515,4 +501,155 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ramka" />
+
+
+    <TextView
+        android:id="@+id/hintopp"
+        android:layout_width="315dp"
+        android:layout_height="163dp"
+        android:background="@drawable/parchment2"
+        android:paddingStart="37dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="27sp"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerNick2" />
+
+    <TextView
+        android:id="@+id/hintplayer"
+        android:layout_width="295dp"
+        android:layout_height="178dp"
+        android:background="@drawable/parchment2"
+        android:paddingStart="37dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="27sp"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/dead"
+        app:layout_constraintStart_toEndOf="@+id/spells2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/hintdice"
+        android:layout_width="195dp"
+        android:layout_height="120dp"
+        android:background="@drawable/parchment2"
+        android:paddingStart="37dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="27sp"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="16dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/spells"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.623"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/NextHint"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="150dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/playbt" />
+
+    <TextView
+        android:id="@+id/hintcard"
+        android:layout_width="340dp"
+        android:layout_height="158dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/parchment2"
+        android:paddingStart="30dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="25dp"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="16dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/hp"
+        app:layout_constraintEnd_toStartOf="@+id/hand" />
+
+    <TextView
+        android:id="@+id/hintcardhelp"
+        android:layout_width="249dp"
+        android:layout_height="90dp"
+        android:background="@drawable/parchment2"
+        android:paddingStart="30dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="25dp"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/hand"
+        app:layout_constraintEnd_toEndOf="@+id/end" />
+
+    <TextView
+        android:id="@+id/hintfinal"
+        android:layout_width="594dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/parchment2"
+        android:paddingStart="30dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="35dp"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="19dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/hello"
+        android:layout_width="303dp"
+        android:layout_height="134dp"
+        android:background="@drawable/parchment2"
+        android:paddingStart="37dp"
+        android:paddingTop="7dp"
+        android:paddingEnd="27sp"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/hinttable"
+        android:layout_width="203dp"
+        android:layout_height="90dp"
+        android:layout_marginEnd="2dp"
+        android:background="@drawable/parchment2"
+        android:paddingStart="37dp"
+        android:paddingTop="7dp"
+        android:paddingEnd="27sp"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="18dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/hintplayer"
+        app:layout_constraintEnd_toStartOf="@+id/hintopp" />
+
+    <ImageView
+        android:id="@+id/iv_deck"
+        android:layout_width="71dp"
+        android:layout_height="74dp"
+        android:layout_alignParentTop="false"
+        android:layout_centerHorizontal="false"
+        android:scaleType="centerInside"
+        android:src="@drawable/magic_back_cards"
+        tools:layout_editor_absoluteX="656dp"
+        tools:layout_editor_absoluteY="121dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

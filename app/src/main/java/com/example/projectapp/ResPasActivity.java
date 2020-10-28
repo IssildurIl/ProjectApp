@@ -57,23 +57,10 @@ public class ResPasActivity extends AppCompatActivity {
             }
         });
     }
-    private void ex_FONT(TextView textView){
-        textView.setTypeface(Typeface.createFromAsset(
-                getAssets(), "font/jurassic_park.ttf"));
-    }
     public void fonttext() {
         inputEmail =  findViewById(R.id.email);
         btnReset = findViewById(R.id.btn_res_pas);
         btnBack = findViewById(R.id.btn_back);
-        progressBar = findViewById(R.id.progressBar);
-        final TextView txt1 = findViewById(R.id.hint);
-        final TextView txt2 = findViewById(R.id.email);
-        final Button btn1 = findViewById(R.id.btn_res_pas);
-        final Button btn2 = findViewById(R.id.btn_back);
-        ex_FONT(txt1);
-        ex_FONT(txt2);
-        ex_FONT(btn1);
-        ex_FONT(btn2);
     }
 
 }

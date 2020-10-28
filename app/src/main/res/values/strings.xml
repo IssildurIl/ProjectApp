@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">BattleMages</string>
-    <string name="menu_start_game">Start Game</string>
-    <string name="menu_quick_game">Customization</string>
-    <string name="menu_settings_game">Options</string>
-    <string name="menu_rules">Rules</string>
-    <string name="menu_exit">Exit</string>
-    <string name="back_button">Back</string>
-    <string name="nick">Default Nickname</string>
+    <string name="menu_start_game">Начать игру</string>
+    <string name="menu_quick_game">Настройка игрового профиля</string>
+    <string name="menu_settings_game">Игровые настройки</string>
+    <string name="menu_rules">Правила</string>
+    <string name="menu_exit">Выход</string>
+    <string name="back_button">Назад</string>
+    <string name="nick">Игрок</string>
     <string name="action_settings">Settings</string>
     <string name="length_min_pas">Короткий пароль!</string>
     <string name="auth_fail">Ошибка аутентификации</string>
@@ -18,5 +18,18 @@
     <string name="regemail">Введите email, который указывали при регистрации</string>
     <string name="sendInst">Мы отправили вам инструкции для смены пароля!</string>
     <string name="errorpas">Ошибка при смене пароля!</string>
-    <string name="menu_net_game">NetGame</string>
+    <string name="menu_net_game">Игра по сети</string>
+    <string name="character">Выберите персонажа: </string>
+    <string name="icone">Выберите иконку: </string>
+    <string name="enter_name">Введите имя: </string>
+    <string name="ask">Включить обучение?</string>
+    <string name="email">Введите почтовый адрес</string>
+    <string name="pass">Введите пароль</string>
+    <string name="enterEmailsign">Введите Email адрес!</string>
+    <string name="enterPassign">Введите пароль!</string>
+    <string name="sixsignerr">Пароль слишком короткий. Он должен быть не менее 6 знаков!</string>
+    <string name="regsuccess">Регистрация прошла успешно!</string>
+    <string name="refailure">Ошибка регестрации</string>
+
+
 </resources>

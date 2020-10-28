@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:layout="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:layout="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/view_with_background_all"
     android:orientation="vertical"
     tools:context=".OptionActivity"
-    android:background="@drawable/view_with_background_all">
+    tools:ignore="MissingDefaultResource">
 
     <TextView
         android:id="@+id/backtomenu"
@@ -20,14 +21,16 @@
         android:textAlignment="center"
         layout:layout_constraintBottom_toBottomOf="parent"
         layout:layout_constraintEnd_toEndOf="parent"
+        layout:layout_constraintHorizontal_bias="1.0"
         layout:layout_constraintStart_toStartOf="parent"
-        layout:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        layout:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        layout:layout_constraintVertical_bias="1.0" />
 
     <SeekBar
         android:id="@+id/seekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="85dp"
+        android:layout_marginTop="20dp"
         layout:layout_constraintStart_toStartOf="parent"
         layout:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
@@ -46,7 +49,7 @@
             style="@style/otherActivity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Music Loud"
+            android:text="Громкость музыки"
             android:textAlignment="center" />
 
     </LinearLayout>

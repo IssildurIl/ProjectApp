@@ -14,7 +14,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class OptionActivity extends AppCompatActivity {
-    MediaPlayer mPlayer;
     SeekBar volumeControl;
     AudioManager audioManager;
     public void onCreate(Bundle savedInstanceState) {
@@ -22,10 +21,8 @@ public class OptionActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.options);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         ///установка шрифта
-        final TextView back = (TextView)findViewById(R.id.backtomenu);
-        final TextView mus = (TextView)findViewById(R.id.textMusic);
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         int curValue = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
@@ -51,8 +48,6 @@ public class OptionActivity extends AppCompatActivity {
         backToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(OptionActivity.this, StartActivity.class);
-                startActivity(i);
                 finish();
             }
         });

@@ -6,12 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 import static com.example.projectapp.Constants.*;
 
@@ -59,12 +56,10 @@ public class LogInActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), R.string.epass, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                APP_PREFERENCE_LOGINACTIVITY_PROGRESS_BAR.setVisibility(View.VISIBLE);
                 APP_PREFERENCE_FIREBASE_AUTHENTIFICATION.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(LogInActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                APP_PREFERENCE_LOGINACTIVITY_PROGRESS_BAR.setVisibility(View.GONE);
                                 if (!task.isSuccessful()) {
                                     if (password.length() < 6) {
                                         APP_PREFERENCE_LOGINACTIVITY_INPUT_PASSWORD.setError(getString(R.string.length_min_pas));
@@ -102,15 +97,9 @@ public class LogInActivity extends AppCompatActivity {
         APP_PREFERENCE_LOGINACTIVITY_INPUT_PASSWORD.setText(savedPas);
     }
    public void fonttext() {
-       final TextView txt1 = findViewById(R.id.email);
-       final TextView txt2 = findViewById(R.id.password);
-       final Button btn1 =  findViewById(R.id.login);
-       final Button btn2 = findViewById(R.id.signup);
-       final Button btn3 =  findViewById(R.id.reset_password);
        APP_PREFERENCES_SETTINGS = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
        APP_PREFERENCE_LOGINACTIVITY_INPUT_EMAIL = findViewById(R.id.email);
        APP_PREFERENCE_LOGINACTIVITY_INPUT_PASSWORD = findViewById(R.id.password);
-       APP_PREFERENCE_LOGINACTIVITY_PROGRESS_BAR = findViewById(R.id.progressBar);
        APP_PREFERENCE_LOGINACTIVITY_BUTTON_SIGN_UP = findViewById(R.id.signup);
        APP_PREFERENCE_LOGINACTIVITY_BUTTON_LOG_IN =  findViewById(R.id.login);
        APP_PREFERENCE_LOGINACTIVITY_BUTTON_RESET = findViewById(R.id.reset_password);

@@ -39,8 +39,6 @@ public class StartActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.mainmenu);
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-//        cst.loadText();
         startService(new Intent(this, CommonPlayer.class));
 
         imagefire=(ImageView)findViewById(R.id.element1);
@@ -97,18 +95,15 @@ public class StartActivity extends AppCompatActivity {
     public void goToRules(View view) {
         Intent i = new Intent(StartActivity.this, RulesActivity.class);
         startActivity(i);
-        this.finish();
     }
     //Переход в параметры
     public void goToOptions(View view) {
         Intent i = new Intent(StartActivity.this, OptionActivity.class);
         startActivity(i);
-        this.finish();
     }
     public void goToCustom(View view){
         Intent i = new Intent(StartActivity.this, Customization.class);
         startActivity(i);
-        this.finish();
     }
     //Кнопка "выход"
     public void onBackPressed(View view) {
@@ -119,12 +114,11 @@ public class StartActivity extends AppCompatActivity {
     }
     //Кнопка "играть"
     public void goTogames(View view) throws InterruptedException {
-        Thread.sleep(5);
+        //Thread.sleep(5);
         stopService(new Intent(StartActivity.this, CommonPlayer.class));
 
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         String less = mSettings.getString(APP_PREFERENCES_CB, "0");
-        //Toast.makeText(StartActivity.this,""+less,Toast.LENGTH_LONG).show();
         Intent j = new Intent(StartActivity.this, LessonActivity.class);
         startActivity(j);
         if(less.equals("0")) {
@@ -135,7 +129,6 @@ public class StartActivity extends AppCompatActivity {
     public void ToNet(View view){
         Intent i = new Intent(StartActivity.this, LogInActivity.class);
         startActivity(i);
-        this.finish();
     }
 
 }

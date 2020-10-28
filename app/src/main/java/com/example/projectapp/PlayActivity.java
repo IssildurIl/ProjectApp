@@ -83,7 +83,6 @@ public class PlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
         stopService(new Intent(PlayActivity.this, CommonPlayer.class));
         startService(new Intent(PlayActivity.this, BattlePlayer.class));
         //местные звуки
@@ -187,7 +186,15 @@ public class PlayActivity extends AppCompatActivity {
         createArrayListOfSecret(secret_mas);
         //shuffle the cards
         Collections.shuffle(main_cards);
-
+        ImageView backButton=findViewById(R.id.activity_play_BackButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    removeDataFromDatabase();
+                    messageRef.setValue("exit");
+                    finish();
+                }
+        });
         messageRef = database.getReference("rooms/"+ roomName+"/message");
         switch(role){
             case "host":
@@ -597,13 +604,7 @@ public class PlayActivity extends AppCompatActivity {
         return 0;
     }
 
-    public void gotoMenu(View view) {
-        removeDataFromDatabase();
-        messageRef.setValue("exit");
-        Intent i = new Intent(PlayActivity.this, StartActivity.class);
-        startActivity(i);
-        this.finish();
-    }
+
 
 
     public void fooSetDice(int d1, int d2){

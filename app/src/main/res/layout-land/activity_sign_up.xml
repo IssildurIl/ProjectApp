@@ -8,25 +8,23 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".LogInActivity">
+    tools:context=".SignUpActivity">
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:hint="Email"
         android:textColorHint="#ffffc4">
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textSize="36sp" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textSize="36sp" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:hint="Password"
         android:textColorHint="#ffffc4">
         <com.google.android.material.textfield.TextInputEditText
@@ -38,40 +36,31 @@
             android:textSize="36sp" />
     </com.google.android.material.textfield.TextInputLayout>
     <Button
-        android:id="@+id/login"
+        android:id="@+id/sign_in_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:background="@android:color/transparent"
-        android:text="Войти"
+        android:text="Уже зарегестрированны? Войдите!"
         android:textAllCaps="false"
         android:textSize="25sp" />
     <Button
-        android:id="@+id/signup"
+        android:id="@+id/sign_up_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:background="@android:color/transparent"
+        android:layout_marginTop="20dp"
         android:text="Регистрация"
         android:textAllCaps="false"
         android:textSize="25sp" />
-
     <Button
-        android:id="@+id/reset_password"
+        android:id="@+id/btn_res_pas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:background="@android:color/transparent"
         android:text="Забыли пароль?"
         android:textAllCaps="false"
         android:textSize="25sp" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center|bottom"
-        android:layout_marginBottom="20dp"
-        android:visibility="gone"
-        tools:ignore="MissingConstraints" />
 </LinearLayout>

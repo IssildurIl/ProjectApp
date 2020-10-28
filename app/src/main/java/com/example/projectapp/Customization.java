@@ -32,7 +32,6 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
         APP_PREFERENCE_CUSTOMIZATION_IN_ANIMATION.setDuration(2000);
         APP_PREFERENCE_CUSTOMIZATION_OUT_ANIMATION = new AlphaAnimation(APP_PREFERENCES_INT_ONE, APP_PREFERENCES_INT_ZERO);
         APP_PREFERENCE_CUSTOMIZATION_OUT_ANIMATION.setDuration(2000);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER.setFactory(this);
         APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER.setInAnimation(APP_PREFERENCE_CUSTOMIZATION_IN_ANIMATION);
         APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER.setOutAnimation(APP_PREFERENCE_CUSTOMIZATION_OUT_ANIMATION);
@@ -143,7 +142,6 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
     }
     public void goToMenu(View view) {
         saveText();
-        Intent i = new Intent(Customization.this, StartActivity.class);
-        startActivity(i);
+        finish();
     }
 }

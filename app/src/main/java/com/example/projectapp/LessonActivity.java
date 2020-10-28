@@ -34,7 +34,7 @@ public class LessonActivity extends AppCompatActivity{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.trainactivity);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
         conferment();
         traintxt();
         stopService(new Intent(LessonActivity.this, CommonPlayer.class));
@@ -1020,8 +1020,7 @@ public class LessonActivity extends AppCompatActivity{
         APP_PREFERENCE_DECKOFCARDS_LEAVE_PLAYER_CARD = 0;
     }
     public void trainGoToMenu(View view) {
-        Intent i = new Intent(LessonActivity.this, StartActivity.class);
-        startActivity(i);
+        finish();
     }
     @Override
     protected void onDestroy() {

@@ -9,14 +9,16 @@
 
     <ListView
         android:id="@+id/playerlist"
-        android:layout_width="411dp"
-        android:layout_height="556dp"
+        android:layout_width="722dp"
+        android:layout_height="316dp"
         android:layout_above="@id/createroom"
         android:layout_alignParentTop="true"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernick">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
     </ListView>
 
@@ -25,14 +27,12 @@
         android:layout_width="120dp"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="12dp"
         android:layout_marginEnd="9dp"
+        android:layout_marginBottom="16dp"
         android:text="Создать комнату"
         android:textAllCaps="false"
-        app:layout_constraintEnd_toStartOf="@+id/changeacc"
-        app:layout_constraintStart_toEndOf="@+id/gotomenu"
-        app:layout_constraintTop_toBottomOf="@+id/playerlist" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/changeacc" />
 
     <TextView
         android:id="@+id/usernick"
@@ -41,23 +41,24 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="16dp"
         android:text="TextView"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/playerlist"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gotomenu"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/gotomenu"
         android:layout_width="120dp"
         android:layout_height="60dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="9dp"
         android:layout_marginBottom="16dp"
         android:text="В меню"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/createroom" />
 
     <Button
         android:id="@+id/changeacc"

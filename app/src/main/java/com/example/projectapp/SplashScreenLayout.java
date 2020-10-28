@@ -13,7 +13,6 @@ public class SplashScreenLayout extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         EasySplashScreen config = new EasySplashScreen(SplashScreenLayout.this)
                 .withFullScreen()
                 .withTargetActivity(StartActivity.class)

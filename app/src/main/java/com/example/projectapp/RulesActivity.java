@@ -37,7 +37,6 @@ public class RulesActivity extends AppCompatActivity implements ViewSwitcher.Vie
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activityrules);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        FontTexts();
         mImageSwitcher = (ImageSwitcher)findViewById(R.id.imageSwitcher);
         mImageSwitcher.setFactory(this);
 
@@ -52,15 +51,13 @@ public class RulesActivity extends AppCompatActivity implements ViewSwitcher.Vie
         mImageSwitcher.setImageResource(mImageIds[0]);
 
         mGestureDetector = new GestureDetector(this, this);
-        TextView backToMenu= findViewById(R.id.backb);
-        backToMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(RulesActivity.this, StartActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
+//        TextView backToMenu= findViewById(R.id.rules_backbutton);
+//        backToMenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
     }
 
     public void setPositionNext() {
@@ -139,18 +136,5 @@ public class RulesActivity extends AppCompatActivity implements ViewSwitcher.Vie
             return true;
         }
         return true;
-    }
-    private void FontTexts(){
-        final TextView textRule = (TextView)findViewById(R.id.textView5);
-        textRule.setTypeface(Typeface.createFromAsset(
-                getAssets(), "font/jurassic_park.ttf"));
-        final TextView backb = (TextView)findViewById(R.id.backb);
-        backb.setTypeface(Typeface.createFromAsset(
-                getAssets(), "font/jurassic_park.ttf"));}
-
-    public void gotoMenu(View view) {
-        Intent i = new Intent(RulesActivity.this, StartActivity.class);
-        startActivity(i);
-        this.finish();
     }
 }

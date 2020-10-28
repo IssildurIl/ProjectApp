@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:screenOrientation="landscape"
     android:background="@drawable/menu_fu"
-    android:theme="@android:style/ThemeOverlay.Material.Dark">
+    android:theme="@android:style/ThemeOverlay.Material.Dark"
+    tools:ignore="MissingDefaultResource">
 
 
     <LinearLayout
@@ -37,7 +38,7 @@
             android:background="@android:color/transparent"
             android:clickable="true"
             android:onClick="ToNet"
-            android:text="NetGame"
+            android:text="@string/menu_net_game"
             android:focusable="true" />
 
         <Button

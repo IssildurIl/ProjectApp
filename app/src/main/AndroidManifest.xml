@@ -9,16 +9,16 @@
         android:roundIcon="@mipmap/myicone"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StartActivity"/>
-        <activity android:name=".LogInActivity" />
-        <activity android:name=".PlayActivity" />
-        <activity android:name=".ListOfPlayer" />
-        <activity android:name=".LessonActivity"/>
-        <activity android:name=".ResPasActivity"/>
-        <activity android:name=".SignUpActivity"/>
-        <activity android:name=".DeckOfCards"/>
-        <activity android:name=".Customization"/>
-        <activity android:name=".SplashScreenLayout">
+        <activity android:name=".StartActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".LogInActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".PlayActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".ListOfPlayer" android:screenOrientation="landscape"/>
+        <activity android:name=".LessonActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".ResPasActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".SignUpActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".DeckOfCards" android:screenOrientation="landscape"/>
+        <activity android:name=".Customization" android:screenOrientation="landscape"/>
+        <activity android:name=".SplashScreenLayout" android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,14 +27,17 @@
         </activity>
         <activity
             android:name=".OptionActivity"
-            android:parentActivityName=".StartActivity" />
+            android:parentActivityName=".StartActivity"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".RulesActivity"
-            android:parentActivityName=".StartActivity" />
+            android:parentActivityName=".StartActivity"
+            android:screenOrientation="landscape"/>
 
         <service
             android:name=".CommonPlayer"
-            android:enabled="true" />
+            android:enabled="true"
+            />
         <service
             android:name=".BattlePlayer"
             android:enabled="true" />
