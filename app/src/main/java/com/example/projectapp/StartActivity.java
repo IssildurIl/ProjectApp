@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,7 +11,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-
+import static com.example.projectapp.Constants.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -32,7 +31,6 @@ public class StartActivity extends AppCompatActivity {
     private Timer spelltime = new Timer();
     public static final String APP_PREFERENCES = "mysettings";
     public static final String APP_PREFERENCES_CB="lesson";
-    SharedPreferences mSettings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,8 +115,8 @@ public class StartActivity extends AppCompatActivity {
         //Thread.sleep(5);
         stopService(new Intent(StartActivity.this, CommonPlayer.class));
 
-        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        String less = mSettings.getString(APP_PREFERENCES_CB, "0");
+        APP_PREFERENCES_SETTINGS = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        String less = APP_PREFERENCES_SETTINGS.getString(APP_PREFERENCES_CB, "0");
         Intent j = new Intent(StartActivity.this, LessonActivity.class);
         startActivity(j);
         if(less.equals("0")) {
