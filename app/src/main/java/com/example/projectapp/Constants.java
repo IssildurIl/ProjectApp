@@ -113,6 +113,9 @@ public class Constants {
     public static Button APP_PREFERENCE_LOGINACTIVITY_BUTTON_SIGN_UP, APP_PREFERENCE_LOGINACTIVITY_BUTTON_LOG_IN, APP_PREFERENCE_LOGINACTIVITY_BUTTON_RESET;
     //PlayActivity
 
+
+
+
     //ResPas
     public static EditText inputEmail;
     public static Button btnReset, btnBack;
