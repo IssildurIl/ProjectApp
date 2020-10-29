@@ -302,24 +302,24 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageButton
+        android:id="@+id/end"
+        android:layout_width="97dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="64dp"
+        app:layout_constraintBottom_toTopOf="@+id/deckOfCards_BackButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/brick_end_of_turn" />
+
+    <ImageButton
         android:id="@+id/Roll"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginEnd="4dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/end"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/brick_roll" />
-
-    <ImageButton
-        android:id="@+id/end"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="224dp"
-        app:layout_constraintBottom_toTopOf="@+id/deckOfCards_BackButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/brick_end_of_turn" />
 
     <FrameLayout
         android:id="@+id/spells2"
