@@ -61,15 +61,6 @@
             android:focusable="true" />
 
         <Button
-            android:id="@+id/rules"
-            style="@style/MenuFont"
-            android:background="@android:color/transparent"
-            android:clickable="true"
-            android:onClick="goToRules"
-            android:text="@string/menu_rules"
-            android:focusable="true" />
-
-        <Button
             android:id="@+id/exit"
             style="@style/ExitFont"
             android:background="@android:color/transparent"

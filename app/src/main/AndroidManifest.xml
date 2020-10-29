@@ -29,10 +29,6 @@
             android:name=".OptionActivity"
             android:parentActivityName=".StartActivity"
             android:screenOrientation="landscape"/>
-        <activity
-            android:name=".RulesActivity"
-            android:parentActivityName=".StartActivity"
-            android:screenOrientation="landscape"/>
 
         <service
             android:name=".CommonPlayer"

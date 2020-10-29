@@ -34,6 +34,9 @@ public class DeckOfCards extends AppCompatActivity{
         setContentView(R.layout.deckofcards);
         conferment();
         startService(new Intent(DeckOfCards.this, BattlePlayer.class));
+        APP_PREFERENCE_DECKOFCARDS_LEAVE_PLAYER_CARD = 6;
+        APP_PREFERENCE_DECKOFCARDS_LEAVE_OPP_CARD = 6;
+        APP_PREFERENCE_DECKOFCARDS_CARD_NUM = 0;
         APP_PREFERENCE_DECKOFCARDS_ROLL_DICES.setEnabled(false);
         APP_PREFERENCE_DECKOFCARDS_CLICK_END.setVisibility(View.INVISIBLE);
         APP_PREFERENCE_DECKOFCARDS_CLICK_END.setEnabled(false);
@@ -92,6 +95,7 @@ public class DeckOfCards extends AppCompatActivity{
             }
         });
 
+
     }
 
     public void conferment(){
@@ -147,11 +151,7 @@ public class DeckOfCards extends AppCompatActivity{
         backToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                try {
-//                    Thread.sleep(5);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
+
                 stopService(new Intent(DeckOfCards.this, BattlePlayer.class));
                 Intent i = new Intent(DeckOfCards.this, StartActivity.class);
                 startActivity(i);

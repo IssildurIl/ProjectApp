@@ -34,7 +34,9 @@ public class LessonActivity extends AppCompatActivity{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.trainactivity);
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+        APP_PREFERENCE_DECKOFCARDS_LEAVE_PLAYER_CARD = 6;
+        APP_PREFERENCE_DECKOFCARDS_LEAVE_OPP_CARD = 6;
+        APP_PREFERENCE_DECKOFCARDS_CARD_NUM = 0;
         conferment();
         traintxt();
         stopService(new Intent(LessonActivity.this, CommonPlayer.class));
