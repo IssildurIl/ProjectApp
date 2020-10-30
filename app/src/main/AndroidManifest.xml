@@ -25,10 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".OptionActivity"
-            android:parentActivityName=".StartActivity"
-            android:screenOrientation="landscape"/>
 
         <service
             android:name=".CommonPlayer"

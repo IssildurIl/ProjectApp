@@ -50,16 +50,6 @@
             android:text="@string/menu_quick_game"
             android:focusable="true" />
 
-
-        <Button
-            android:id="@+id/settings"
-            style="@style/MenuFont"
-            android:background="@android:color/transparent"
-            android:clickable="true"
-            android:onClick="goToOptions"
-            android:text="@string/menu_settings_game"
-            android:focusable="true" />
-
         <Button
             android:id="@+id/exit"
             style="@style/ExitFont"

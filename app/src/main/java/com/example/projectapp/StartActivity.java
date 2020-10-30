@@ -89,11 +89,6 @@ public class StartActivity extends AppCompatActivity {
         imagefire.setY(imagefireY);
     }
 
-    //Переход в параметры
-    public void goToOptions(View view) {
-        Intent i = new Intent(StartActivity.this, OptionActivity.class);
-        startActivity(i);
-    }
     public void goToCustom(View view){
         Intent i = new Intent(StartActivity.this, Customization.class);
         startActivity(i);

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/view_with_background_all"
+    android:background="@drawable/menu_fu"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="20dp"
@@ -19,6 +19,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:hint="@string/email"
+        style="@style/ourFont"
         android:textColorHint="#ffffc4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,16 +30,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            style="@style/ourFont"
             android:inputType="textPersonName"
             android:textSize="36sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout4"
+        style="@style/ourFont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:hint="@string/pass"
         android:textColorHint="#ffffc4"
@@ -48,6 +50,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
+            style="@style/ourFont"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -57,10 +60,10 @@
 
     <Button
         android:id="@+id/login"
+        style="@style/ourFont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:background="@android:color/transparent"
         android:text="Войти"
@@ -72,10 +75,10 @@
 
     <Button
         android:id="@+id/signup"
+        style="@style/ourFont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:background="@android:color/transparent"
         android:text="Регистрация"
@@ -87,10 +90,10 @@
 
     <Button
         android:id="@+id/reset_password"
+        style="@style/ourFont"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:background="@android:color/transparent"
         android:text="Забыли пароль?"

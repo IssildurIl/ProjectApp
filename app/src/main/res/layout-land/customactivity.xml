@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/menu_fu"
     android:screenOrientation="landscape"
-    android:background="@drawable/view_with_background_all"
-    tools:ignore="MissingDefaultResource"
-    tools:context=".Customization">
+    tools:context=".Customization"
+    tools:ignore="MissingDefaultResource">
 
     <TextView
         android:id="@+id/title"
@@ -28,13 +28,9 @@
         android:id="@+id/IconeSwither"
         android:layout_width="129dp"
         android:layout_height="128dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="324dp"
         android:background="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.215"
-        app:layout_constraintStart_toEndOf="@+id/hint"
-        app:layout_constraintTop_toBottomOf="@+id/title">
+        app:layout_constraintStart_toEndOf="@+id/custom_hint"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
     </ImageSwitcher>
 
@@ -43,12 +39,14 @@
         style="@style/otherActivity"
         android:layout_width="189dp"
         android:layout_height="76dp"
-        android:layout_marginBottom="226dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginBottom="108dp"
         android:gravity="center"
         android:text="@string/icone"
         app:layout_constraintBottom_toTopOf="@+id/deckOfCards_BackButton"
-        app:layout_constraintEnd_toStartOf="@+id/imageSwitcher"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/deckOfCards_BackButton"
@@ -68,39 +66,41 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
-        android:layout_width="222dp"
-        android:layout_height="74dp"
-        android:layout_marginTop="87dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:hint="@string/enter_name"
-        android:textColorHint="#ffffc4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/custom_hint">
+        app:layout_constraintTop_toBottomOf="@+id/title">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputNick"
+            style="@style/ourFont"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:imeOptions="actionDone"
+            android:inputType="textPersonName"
+            android:textSize="36sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <CheckBox
         android:id="@+id/checklesson"
+        style="@style/ourFont"
         android:layout_width="129dp"
         android:layout_height="71dp"
-        android:layout_marginBottom="204dp"
+        android:layout_marginTop="36dp"
         android:text="@string/ask"
-        app:layout_constraintBottom_toTopOf="@+id/deckOfCards_BackButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.842"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.808"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/inputNick"
-        android:layout_width="437dp"
-        android:layout_height="76dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="72dp"
-        android:ems="10"
-        android:imeOptions="actionDone"
-        android:inputType="textPersonName"
-        android:textSize="36sp"
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/deckOfCards_BackButton"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
