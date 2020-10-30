@@ -9,6 +9,15 @@
     tools:context=".DeckOfCards"
     tools:ignore="MissingDefaultResource">
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="120sp"
+        android:layout_height="35sp"
+        android:background="@drawable/fire"
+        app:layout_constraintBottom_toTopOf="@+id/hp4"
+        app:layout_constraintEnd_toEndOf="@+id/playerNick"
+        app:layout_constraintStart_toStartOf="@+id/playerNick" />
+
     <TextView
         android:id="@+id/hp4"
         android:layout_width="25sp"
@@ -22,7 +31,6 @@
         android:id="@+id/imageview_left"
         android:layout_width="47dp"
         android:layout_height="48dp"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/dice2"
         app:layout_constraintStart_toStartOf="@+id/end"
@@ -114,15 +122,13 @@
         android:id="@+id/hp3"
         android:layout_width="25sp"
         android:layout_height="35sp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:background="@drawable/heart_final2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playerNick2" />
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <TextView
         android:id="@+id/dead2"
-        android:layout_width="30sp"
+        android:layout_width="25sp"
         android:layout_height="35sp"
         android:shadowColor="#000000"
         android:shadowDx="2.5"
@@ -149,7 +155,7 @@
 
     <TextView
         android:id="@+id/dead"
-        android:layout_width="30sp"
+        android:layout_width="25sp"
         android:layout_height="35sp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
@@ -167,14 +173,14 @@
 
     <ImageView
         android:id="@+id/iv_deck"
-        android:layout_width="71dp"
-        android:layout_height="74dp"
+        android:layout_width="75sp"
+        android:layout_height="60sp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:scaleType="centerInside"
-        android:src="@drawable/magic_back_cards"
+        android:background="@drawable/magic_back_cards"
         app:layout_constraintStart_toEndOf="@+id/hand2"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -184,9 +190,10 @@
         android:layout_height="96dp"
 
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/your_rounded_shape"
-        app:layout_constraintEnd_toStartOf="@+id/hp4"
-        tools:layout_editor_absoluteY="307dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/hp4">
 
         <ImageView
             android:id="@+id/iv_card6"
@@ -273,11 +280,10 @@
         android:id="@+id/playerIcon"
         android:layout_width="90sp"
         android:layout_height="80sp"
-        android:background="@drawable/icon_lady"
         android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/playerNick"
         app:layout_constraintEnd_toEndOf="@+id/playerNick"
-        app:layout_constraintStart_toStartOf="@+id/playerNick"
-        app:layout_constraintTop_toBottomOf="@+id/spells" />
+        app:layout_constraintStart_toStartOf="@+id/playerNick" />
 
     <TextView
         android:id="@+id/playerNick"
@@ -291,18 +297,18 @@
         android:text="Player"
         android:textColor="@color/design_default_color_on_secondary"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playerIcon" />
+        app:layout_constraintBottom_toTopOf="@+id/imageView4"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <FrameLayout
         android:id="@+id/spells"
         android:layout_width="275dp"
         android:layout_height="138dp"
 
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/deckOfCards_BackButton">
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/playerIcon"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/thirdcard"
@@ -357,8 +363,8 @@
 
     <ImageButton
         android:id="@+id/end"
-        android:layout_width="120sp"
-        android:layout_height="60sp"
+        android:layout_width="90sp"
+        android:layout_height="40sp"
         android:layout_marginTop="16dp"
         android:background="@drawable/brick_end_of_turn"
         app:layout_constraintEnd_toStartOf="@+id/spells"
@@ -367,8 +373,8 @@
 
     <ImageButton
         android:id="@+id/Roll"
-        android:layout_width="120sp"
-        android:layout_height="60sp"
+        android:layout_width="90sp"
+        android:layout_height="40sp"
         android:layout_marginTop="16dp"
         android:background="@drawable/brick_roll"
         app:layout_constraintEnd_toStartOf="@+id/spells"
@@ -379,8 +385,10 @@
         android:id="@+id/spells2"
         android:layout_width="275dp"
         android:layout_height="138dp"
-        app:layout_constraintTop_toBottomOf="@+id/hp3"
-        tools:layout_editor_absoluteX="20dp">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hp3">
 
         <ImageView
             android:id="@+id/thirdcard2"
@@ -422,17 +430,16 @@
 
     <FrameLayout
         android:id="@+id/hand2"
-        android:layout_width="175dp"
-        android:layout_height="70dp"
-        android:background="@drawable/your_rounded_shape"
+        android:layout_width="175sp"
+        android:layout_height="70sp"
         app:layout_constraintStart_toEndOf="@+id/playerNick2"
         app:layout_constraintTop_toTopOf="@+id/playerIcon2">
 
         <ImageView
             android:id="@+id/iv_card62"
-            android:layout_width="40dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="135dp"
+            android:layout_width="40sp"
+            android:layout_height="70sp"
+            android:layout_marginLeft="135sp"
             android:layout_marginTop="0dp"
             android:layout_marginRight="0dp"
             android:layout_weight="1"
@@ -444,9 +451,9 @@
 
         <ImageView
             android:id="@+id/iv_card52"
-            android:layout_width="40dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="105dp"
+            android:layout_width="40sp"
+            android:layout_height="70sp"
+            android:layout_marginLeft="105sp"
             android:layout_marginTop="0dp"
             android:layout_weight="1"
             android:onClick="onImClick"
@@ -457,9 +464,9 @@
 
         <ImageView
             android:id="@+id/iv_card42"
-            android:layout_width="40dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="75dp"
+            android:layout_width="40sp"
+            android:layout_height="70sp"
+            android:layout_marginLeft="75sp"
             android:layout_marginTop="0dp"
             android:layout_weight="1"
             android:onClick="onImClick"
@@ -470,9 +477,9 @@
 
         <ImageView
             android:id="@+id/iv_card32"
-            android:layout_width="40dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="45dp"
+            android:layout_width="40sp"
+            android:layout_height="70sp"
+            android:layout_marginLeft="45sp"
             android:layout_marginTop="0dp"
             android:layout_weight="1"
             android:onClick="onImClick"
@@ -483,9 +490,9 @@
 
         <ImageView
             android:id="@+id/iv_card22"
-            android:layout_width="40dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="25dp"
+            android:layout_width="40sp"
+            android:layout_height="70sp"
+            android:layout_marginLeft="25sp"
             android:layout_marginTop="0dp"
             android:layout_weight="1"
             android:onClick="onImClick"
@@ -496,8 +503,8 @@
 
         <ImageView
             android:id="@+id/iv_card12"
-            android:layout_width="40dp"
-            android:layout_height="70dp"
+            android:layout_width="40sp"
+            android:layout_height="70sp"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             android:layout_weight="1"
@@ -507,5 +514,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </FrameLayout>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="120sp"
+        android:layout_height="35sp"
+        android:background="@drawable/fire"
+        app:layout_constraintEnd_toEndOf="@+id/playerNick2"
+        app:layout_constraintStart_toStartOf="@+id/playerNick2"
+        app:layout_constraintTop_toBottomOf="@+id/playerNick2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
