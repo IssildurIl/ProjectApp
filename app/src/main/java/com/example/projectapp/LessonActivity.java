@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class LessonActivity extends AppCompatActivity{
+public class LessonActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +56,9 @@ public class LessonActivity extends AppCompatActivity{
                 iv_deck.setEnabled(true);
                 tableAction(APP_PREFERENCE_DECKOFCARDS_LEAVE_PLAYER_CARD);
                 takeCardOpp(APP_PREFERENCE_DECKOFCARDS_LEAVE_OPP_CARD);
-                for (int i=0; i<3; i++){
-                    APP_PREFERENCE_DECKOFCARDS_CARD_TABLE[i]=0;
-                    APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[i]=0;
+                for (int i = 0; i < 3; i++) {
+                    APP_PREFERENCE_DECKOFCARDS_CARD_TABLE[i] = 0;
+                    APP_PREFERENCE_DECKOFCARDS_COUNT_SYMBOLS[i] = 0;
                 }
                 opp_turn();
                 tableActionOpp(APP_PREFERENCE_DECKOFCARDS_LEAVE_OPP_CARD);
@@ -99,9 +99,14 @@ public class LessonActivity extends AppCompatActivity{
                 fooRollOneDice();
             }
         });
-
+        ImageView backButton = findViewById(R.id.TrainOfCards_BackButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
-
     public void conferment(){
         final TextView textnick = findViewById(R.id.playerNick);
         final TextView textnick2 = findViewById(R.id.playerNick2);
@@ -416,11 +421,7 @@ public class LessonActivity extends AppCompatActivity{
         }
         return 0;
     }
-    public void deckOfCardsGoToMenu(View view) {
-        Intent i = new Intent(LessonActivity.this, StartActivity.class);
-        startActivity(i);
-        this.finish();
-    }
+
     public void fooRollOneDice() {
         APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_3 = randomDiceValue();
         mMidImageView.animate().setDuration(1000).rotationYBy(360f).start();
@@ -792,8 +793,9 @@ public class LessonActivity extends AppCompatActivity{
                 alertDialog.setIcon(R.drawable.end_win);
                 alertDialog.setButton("Back", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent i = new Intent(LessonActivity.this, StartActivity.class);
-                        startActivity(i);
+//                        Intent i = new Intent(LessonActivity.this, StartActivity.class);
+//                        startActivity(i);
+                        finish();
                     }
                 });
                 alertDialog.show();
@@ -825,8 +827,9 @@ public class LessonActivity extends AppCompatActivity{
                 alertDialog.setIcon(R.drawable.end_dead);
                 alertDialog.setButton("Back", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent i = new Intent(LessonActivity.this, StartActivity.class);
-                        startActivity(i);
+//                        Intent i = new Intent(LessonActivity.this, StartActivity.class);
+//                        startActivity(i);
+                        finish();
                     }
                 });
                 alertDialog.show();
@@ -1067,7 +1070,7 @@ public class LessonActivity extends AppCompatActivity{
                         APP_PREFERENCE_LESSONACTIVITY_HINT_TABLE.setVisibility(View.INVISIBLE);
                         APP_PREFERENCE_LESSONACTIVITY_HINT_DICE.setVisibility(View.INVISIBLE);
                         APP_PREFERENCE_LESSONACTIVITY_HINT_CARD.setVisibility(View.VISIBLE);
-                        APP_PREFERENCE_LESSONACTIVITY_HINT_CARD_HELP.setVisibility(View.VISIBLE);
+                        APP_PREFERENCE_LESSONACTIVITY_HINT_CARD_HELP.setVisibility(View.INVISIBLE);
                         APP_PREFERENCE_LESSONACTIVITY_HINT_CARD.setText(APP_PREFERENCE_LESSONACTIVITY_HINT_SIXTH_TEXT);
                         APP_PREFERENCE_LESSONACTIVITY_HINT_CARD_HELP.setText(APP_PREFERENCE_LESSONACTIVITY_HINT_SEVENTH_TEXT);
                         APP_PREFERENCE_LESSONACTIVITY_STREAM[2]= APP_PREFERENCE_LESSONACTIVITY_LESS.play(APP_PREFERENCE_LESSONACTIVITY_SOUNDPOOL_HINTCARD, 1, 1, 0, 0, 1);

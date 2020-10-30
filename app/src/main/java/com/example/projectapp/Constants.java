@@ -90,11 +90,11 @@ public class Constants {
     public static ImageButton APP_PREFERENCE_LESSONACTIVITY_HINT_BUTTON;
     public static final int[] APP_PREFERENCE_LESSONACTIVITY_STREAM = new int[5];
     public static final String APP_PREFERENCE_LESSONACTIVITY_HINT_FST_TEXT ="Добро пожаловать\n в обучение!\n Нажмите кнопку ниже, чтобы начать";
-    public static final String APP_PREFERENCE_LESSONACTIVITY_HINT_SEC_TEXT ="Здесь находятся данные о Вашем персонаже:\n + Его здоровье - черным цветом, и оставшиеся жизни - красным";
-    public static final String APP_PREFERENCE_LESSONACTIVITY_HINT_THRD_TEXT ="Здесь находятся данные о персонаже противника:\n + Его здоровье - черным цветом, и оставшиеся жизни - красным";
+    public static final String APP_PREFERENCE_LESSONACTIVITY_HINT_SEC_TEXT ="Здесь находятся данные о Вашем персонаже:\n  Его здоровье - черным цветом, и оставшиеся жизни - красным";
+    public static final String APP_PREFERENCE_LESSONACTIVITY_HINT_THRD_TEXT ="Здесь находятся данные о персонаже противника:\n  Его здоровье - черным цветом, и оставшиеся жизни - красным";
     public static final String APP_PREFERENCE_LESSONACTIVITY_HINT_FRTH_TEXT= "Чтобы раздать карты, нажмите на колоду";
     public static final String APP_PREFERENCE_LESSONACTIVITY_HINT_FIFTH_TEXT ="Эти кубики определят силу\n \"Могучего броска\" вашего заклинания";
-    public static final String APP_PREFERENCE_LESSONACTIVITY_HINT_SIXTH_TEXT ="Это ваши заклинания. они раздаются\n случайно. Нажмите на карту и потяните, чтобы переместить:\n +Карта \"Источник\" в желтый слот,\n + \"Качество\" - в Оранжевый,\n \"Действие\" - в Малиновый.";
+    public static final String APP_PREFERENCE_LESSONACTIVITY_HINT_SIXTH_TEXT ="Это ваши заклинания. они раздаются\n случайно. Нажмите на карту и потяните, чтобы переместить:\n Карта \"Источник\" в желтый слот,\n  \"Качество\" - в Оранжевый,\n \"Действие\" - в Малиновый.";
     public static final String APP_PREFERENCE_LESSONACTIVITY_HINT_SEVENTH_TEXT = "Чтобы узнать больше информации, нажмите\n на карту.";
     public static final String APP_PREFERENCE_LESSONACTIVITY_HINT_EIGTH_TEXT = "Как только заклинание будет готово, нажмите ROLL. Дождитесь выпадения значений на кубиках\n и нажмите END OF TURN.\nВаша цель - убить противника заклинаниями. Удачи!";
     public static final String APP_PREFERENCE_LESSONACTIVITY_HINT_NINGTH_TEXT = "     Если вы хотите закончить обучение, перейдите в\n Customization и уберите галочку";
