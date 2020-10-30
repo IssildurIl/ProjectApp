@@ -64,6 +64,7 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
 
             }
         });
+
     }
 
     private void findViewById(){
@@ -73,6 +74,14 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
         APP_PREFERENCES_CUSTOMIZATION_NICK = findViewById(R.id.inputNick);
         APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER = findViewById(R.id.IconeSwither);
         APP_PREFERENCES_CUSTOMIZATION_CHECK_LESSON = findViewById(R.id.checklesson);
+        TextView customActivity = findViewById(R.id.customActivity_BackButton);
+        customActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveText();
+                finish();
+            }
+        });
     }
 
     public void setPositionToIcone() {
@@ -164,10 +173,6 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
         APP_PREFERENCES_CUSTOMIZATION_NEW_ICONE_POSITION = Integer.parseInt(APP_PREFERENCES_CUSTOMIZATION_SAVED_FOTO);
         APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER.setImageResource(APP_PREFERENCES_CUSTOMIZATION_MASS_ICONE[Integer.parseInt(APP_PREFERENCES_CUSTOMIZATION_SAVED_FOTO)]);
         APP_PREFERENCES_CUSTOMIZATION_NICK.setText(APP_PREFERENCES_CUSTOMIZATION_SAVED_TEXT);
-    }
-    public void goToMenu(View view) {
-        saveText();
-        finish();
     }
     @Override
     public void onPause() {

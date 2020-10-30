@@ -49,14 +49,13 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/deckOfCards_BackButton"
+        android:id="@+id/customActivity_BackButton"
         style="@style/otherActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="16dp"
         android:clickable="true"
-        android:onClick="goToMenu"
         android:text="@string/back_button"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -100,7 +99,6 @@
         android:id="@+id/seekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/deckOfCards_BackButton"
+        app:layout_constraintBottom_toTopOf="@+id/customActivity_BackButton"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
