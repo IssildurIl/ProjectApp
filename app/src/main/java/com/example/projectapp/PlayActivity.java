@@ -1731,4 +1731,17 @@ public class PlayActivity extends AppCompatActivity {
         DatabaseReference root = FirebaseDatabase.getInstance().getReference("rooms/"+playerName);
         root.setValue(null);
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopService(new Intent(PlayActivity.this, BattlePlayer.class));
+        stopService(new Intent(PlayActivity.this, CommonPlayer.class));
+    }
+
+    // развернули приложение
+    @Override
+    public void onResume() {
+        super.onResume();
+        startService(new Intent(PlayActivity.this, BattlePlayer.class));
+    }
 }

@@ -104,4 +104,17 @@ public class LogInActivity extends AppCompatActivity {
        APP_PREFERENCE_LOGINACTIVITY_BUTTON_LOG_IN =  findViewById(R.id.login);
        APP_PREFERENCE_LOGINACTIVITY_BUTTON_RESET = findViewById(R.id.reset_password);
    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopService(new Intent(LogInActivity.this, BattlePlayer.class));
+        stopService(new Intent(LogInActivity.this, CommonPlayer.class));
+    }
+
+    // развернули приложение
+    @Override
+    public void onResume() {
+        super.onResume();
+        startService(new Intent(LogInActivity.this, CommonPlayer.class));
+    }
 }

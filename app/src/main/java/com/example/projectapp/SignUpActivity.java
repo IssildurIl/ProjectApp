@@ -86,6 +86,18 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopService(new Intent(SignUpActivity.this, BattlePlayer.class));
+        stopService(new Intent(SignUpActivity.this, CommonPlayer.class));
+    }
 
+    // развернули приложение
+    @Override
+    public void onResume() {
+        super.onResume();
+        startService(new Intent(SignUpActivity.this, CommonPlayer.class));
+    }
 
 }

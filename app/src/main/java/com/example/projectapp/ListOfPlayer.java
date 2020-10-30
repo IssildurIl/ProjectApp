@@ -122,5 +122,17 @@ public class ListOfPlayer extends AppCompatActivity {
         nick = findViewById(R.id.usernick);
         nick.setText("Игрок: "+playerName);
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopService(new Intent(ListOfPlayer.this, BattlePlayer.class));
+        stopService(new Intent(ListOfPlayer.this, CommonPlayer.class));
+    }
 
+    // развернули приложение
+    @Override
+    public void onResume() {
+        super.onResume();
+        startService(new Intent(ListOfPlayer.this, CommonPlayer.class));
+    }
 }

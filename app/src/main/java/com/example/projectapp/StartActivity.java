@@ -123,5 +123,18 @@ public class StartActivity extends AppCompatActivity {
         Intent i = new Intent(StartActivity.this, LogInActivity.class);
         startActivity(i);
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopService(new Intent(StartActivity.this, BattlePlayer.class));
+        stopService(new Intent(StartActivity.this, CommonPlayer.class));
+    }
+
+    // развернули приложение
+    @Override
+    public void onResume() {
+        super.onResume();
+        startService(new Intent(StartActivity.this, CommonPlayer.class));
+    }
 
 }

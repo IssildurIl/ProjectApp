@@ -144,4 +144,17 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
         saveText();
         finish();
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopService(new Intent(Customization.this, CommonPlayer.class));
+        stopService(new Intent(Customization.this, BattlePlayer.class));
+    }
+
+    // развернули приложение
+    @Override
+    public void onResume() {
+        super.onResume();
+        startService(new Intent(Customization.this, CommonPlayer.class));
+    }
 }

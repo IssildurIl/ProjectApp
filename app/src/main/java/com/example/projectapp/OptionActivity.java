@@ -52,5 +52,18 @@ public class OptionActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopService(new Intent(OptionActivity.this, BattlePlayer.class));
+        stopService(new Intent(OptionActivity.this, CommonPlayer.class));
+    }
+
+    // развернули приложение
+    @Override
+    public void onResume() {
+        super.onResume();
+        startService(new Intent(OptionActivity.this, CommonPlayer.class));
+    }
 
 }
