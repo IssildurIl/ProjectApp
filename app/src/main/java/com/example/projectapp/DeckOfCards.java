@@ -866,55 +866,6 @@ public class DeckOfCards extends AppCompatActivity{
         main_cards.add(R.drawable.k_nature_5);
 
         main_cards.add(R.drawable.k_secret_1);
-
-
-
-
-        main_cards.add(R.drawable.d_darkness_1);
-        main_cards.add(R.drawable.d_darkness_2);
-        main_cards.add(R.drawable.d_darkness_3);
-        main_cards.add(R.drawable.d_darkness_4);
-
-        main_cards.add(R.drawable.d_element_1);
-        main_cards.add(R.drawable.d_element_2);
-        main_cards.add(R.drawable.d_element_3);
-        main_cards.add(R.drawable.d_element_4);
-
-        main_cards.add(R.drawable.d_illusion_4);
-
-        main_cards.add(R.drawable.d_nature_1);
-        main_cards.add(R.drawable.d_nature_2);
-        main_cards.add(R.drawable.d_nature_3);
-        main_cards.add(R.drawable.d_nature_4);
-        main_cards.add(R.drawable.d_nature_5);
-        main_cards.add(R.drawable.i_darkness_1);
-        main_cards.add(R.drawable.i_darkness_3);
-        main_cards.add(R.drawable.i_darkness_4);
-
-        main_cards.add(R.drawable.i_element_1);
-        main_cards.add(R.drawable.i_element_2);
-        main_cards.add(R.drawable.i_element_3);
-        main_cards.add(R.drawable.i_element_4);
-
-        main_cards.add(R.drawable.i_nature_1);
-        main_cards.add(R.drawable.i_nature_2);
-        main_cards.add(R.drawable.i_nature_4);
-        main_cards.add(R.drawable.i_nature_5);
-
-        main_cards.add(R.drawable.k_darkness_1);
-        main_cards.add(R.drawable.k_darkness_2);
-        main_cards.add(R.drawable.k_darkness_4);
-
-        main_cards.add(R.drawable.k_element_1);
-        main_cards.add(R.drawable.k_element_2);
-        main_cards.add(R.drawable.k_element_3);
-
-        main_cards.add(R.drawable.k_nature_1);
-        main_cards.add(R.drawable.k_nature_3);
-        main_cards.add(R.drawable.k_nature_4);
-        main_cards.add(R.drawable.k_nature_5);
-
-        main_cards.add(R.drawable.k_secret_1);
     }
     public void createArrayListOfI(ArrayList main_cards) {
         main_cards.add(R.drawable.i_darkness_1);
@@ -946,7 +897,6 @@ public class DeckOfCards extends AppCompatActivity{
         main_cards.add(R.drawable.k_nature_5);
 
         main_cards.add(R.drawable.k_secret_1);
-
     }
     public void createArrayListOfD(ArrayList main_cards) {
         main_cards.add(R.drawable.d_darkness_1);
@@ -1053,5 +1003,18 @@ public class DeckOfCards extends AppCompatActivity{
         }
         APP_PREFERENCE_DECKOFCARDS_LEAVE_PLAYER_CARD = 0;
     }
+    // свернули приложение
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopService(new Intent(DeckOfCards.this, BattlePlayer.class));
+        stopService(new Intent(DeckOfCards.this, CommonPlayer.class));
+    }
 
+    // развернули приложение
+    @Override
+    public void onResume() {
+        super.onResume();
+        startService(new Intent(DeckOfCards.this, BattlePlayer.class));
+    }
 }

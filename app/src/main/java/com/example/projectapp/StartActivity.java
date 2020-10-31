@@ -89,11 +89,6 @@ public class StartActivity extends AppCompatActivity {
         imagefire.setY(imagefireY);
     }
 
-    //Переход в параметры
-    public void goToOptions(View view) {
-        Intent i = new Intent(StartActivity.this, OptionActivity.class);
-        startActivity(i);
-    }
     public void goToCustom(View view){
         Intent i = new Intent(StartActivity.this, Customization.class);
         startActivity(i);
@@ -122,6 +117,19 @@ public class StartActivity extends AppCompatActivity {
     public void ToNet(View view){
         Intent i = new Intent(StartActivity.this, LogInActivity.class);
         startActivity(i);
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopService(new Intent(StartActivity.this, BattlePlayer.class));
+        stopService(new Intent(StartActivity.this, CommonPlayer.class));
+    }
+
+    // развернули приложение
+    @Override
+    public void onResume() {
+        super.onResume();
+        startService(new Intent(StartActivity.this, CommonPlayer.class));
     }
 
 }

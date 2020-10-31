@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -62,5 +63,17 @@ public class ResPasActivity extends AppCompatActivity {
         btnReset = findViewById(R.id.btn_res_pas);
         btnBack = findViewById(R.id.btn_back);
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopService(new Intent(ResPasActivity.this, BattlePlayer.class));
+        stopService(new Intent(ResPasActivity.this, CommonPlayer.class));
+    }
 
+    // развернули приложение
+    @Override
+    public void onResume() {
+        super.onResume();
+        startService(new Intent(ResPasActivity.this, CommonPlayer.class));
+    }
 }

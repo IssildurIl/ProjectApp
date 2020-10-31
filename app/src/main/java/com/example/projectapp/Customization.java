@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -14,6 +15,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 import static com.example.projectapp.Constants.*;
@@ -39,6 +41,30 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
         APP_PREFERENCES_CUSTOMIZATION_NEW_ICONE_POSITION = Integer.parseInt(APP_PREFERENCES_ICONE);
         APP_PREFERENCES_CUSTOMIZATION_GESTURE_DESTRUCTOR = new GestureDetector(this, this);
         loadText();
+        SeekBar volumeControl;
+        final AudioManager audioManager;
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int curValue = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+
+        volumeControl = (SeekBar) findViewById(R.id.seekBar);
+        volumeControl.setMax(maxVolume);
+        volumeControl.setProgress(curValue);
+        volumeControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
     }
 
     private void findViewById(){
@@ -48,6 +74,14 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
         APP_PREFERENCES_CUSTOMIZATION_NICK = findViewById(R.id.inputNick);
         APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER = findViewById(R.id.IconeSwither);
         APP_PREFERENCES_CUSTOMIZATION_CHECK_LESSON = findViewById(R.id.checklesson);
+        TextView customActivity = findViewById(R.id.customActivity_BackButton);
+        customActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveText();
+                finish();
+            }
+        });
     }
 
     public void setPositionToIcone() {
@@ -140,8 +174,17 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
         APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER.setImageResource(APP_PREFERENCES_CUSTOMIZATION_MASS_ICONE[Integer.parseInt(APP_PREFERENCES_CUSTOMIZATION_SAVED_FOTO)]);
         APP_PREFERENCES_CUSTOMIZATION_NICK.setText(APP_PREFERENCES_CUSTOMIZATION_SAVED_TEXT);
     }
-    public void goToMenu(View view) {
-        saveText();
-        finish();
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopService(new Intent(Customization.this, CommonPlayer.class));
+        stopService(new Intent(Customization.this, BattlePlayer.class));
+    }
+
+    // развернули приложение
+    @Override
+    public void onResume() {
+        super.onResume();
+        startService(new Intent(Customization.this, CommonPlayer.class));
     }
 }
