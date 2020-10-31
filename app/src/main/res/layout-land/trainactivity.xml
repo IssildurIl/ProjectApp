@@ -365,7 +365,7 @@
         android:id="@+id/end"
         android:layout_width="90sp"
         android:layout_height="40sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/brick_end_of_turn"
         app:layout_constraintEnd_toStartOf="@+id/spells"
         app:layout_constraintStart_toEndOf="@+id/spells2"
@@ -375,7 +375,7 @@
         android:id="@+id/Roll"
         android:layout_width="90sp"
         android:layout_height="40sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/brick_roll"
         app:layout_constraintEnd_toStartOf="@+id/spells"
         app:layout_constraintStart_toEndOf="@+id/spells2"
@@ -574,14 +574,12 @@
 
     <ImageButton
         android:id="@+id/NextHint"
-        android:layout_width="64dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="150dp"
+        android:layout_width="90sp"
+        android:layout_height="40sp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/playbt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/end"
+        app:layout_constraintTop_toBottomOf="@+id/end" />
 
     <TextView
         android:id="@+id/hintcard"
