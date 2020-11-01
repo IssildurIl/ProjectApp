@@ -128,6 +128,10 @@ public class PlayActivity extends AppCompatActivity {
                     case "guest":
                         getPrompt(Constants.TAKE);
                         tableAction(guestTable);
+                        if (Constants.MAIN_CARDS.size()<card_num){
+                            card_num=0;
+                            Collections.shuffle(Constants.MAIN_CARDS);
+                        }
                         card_num=hostHand.takeCards(card_num, Constants.MAIN_CARDS);
                         message+="card+"+hostHand.getString();
                         message+="table*"+guestTable.getString();
@@ -157,21 +161,14 @@ public class PlayActivity extends AppCompatActivity {
         switch(role){
             case "host":
                 getPrompt(Constants.CONNECT);
-                //message= role+":table*"+hostTable.getString();
                 message= role+":table*"+hostTable.getString();
                 break;
             case "guest":
                 getPrompt(Constants.WAIT);
-                if (Constants.MAIN_CARDS.size()<card_num){
-                    card_num=0;
-                    Collections.shuffle(Constants.MAIN_CARDS);
-                }
                 card_num=guestHand.takeCards(card_num, Constants.MAIN_CARDS);
-                //Toast.makeText(PlayActivity.this, ""+card_num, Toast.LENGTH_SHORT).show();
                 setHand(guestHand.getCards());
                 card_num=hostHand.takeCards(card_num, Constants.MAIN_CARDS);
                 message= role+":card+"+hostHand.getString()+"table*"+guestTable.getString()+"dice111";
-                //message= role+":card:0+table:0*dice11";
         }
         messageRef.setValue(message);
         addRoomEventListener();
@@ -199,12 +196,6 @@ public class PlayActivity extends AppCompatActivity {
         fstcard.setOnDragListener(dragListener);
         seccard.setOnDragListener(dragListener);
         thirdcard.setOnDragListener(dragListener);
-        /*
-        fstcard.setImageResource(R.drawable.i_card);
-        seccard.setImageResource(R.drawable.k_card);
-        thirdcard.setImageResource(R.drawable.d_card);
-
-         */
 
         iv_card1.setOnLongClickListener(longClickListener);
         iv_card2.setOnLongClickListener(longClickListener);
@@ -268,12 +259,10 @@ public class PlayActivity extends AppCompatActivity {
                 int d1s = value1, d2s = value2, d3s = value3;
                 int d1, d2, d3;
                 int last_index, prev_index;
-                //String[] sub_str = { "", "", "", "", "", "", "" };
                 if(role.equals("host")){
                     try{
                         if(dataSnapshot.getValue(String.class).contains("guest:")) {
                             rollDicesButton.setEnabled(true);
-
                             prev_index = text.indexOf("+");
                             last_index = text.lastIndexOf("+");
                             hostHand.setCards(text.substring(prev_index + 1, last_index).split("\\+"));
@@ -295,8 +284,6 @@ public class PlayActivity extends AppCompatActivity {
                             tableActionOpp(guestTable);
                             fooSetDice(d1s, d2s, d3s);
                             tableAction(hostTable);
-                            //guestTable.cleanTable();
-                            //hostTable.cleanTable();
                             Click.setEnabled(true);
                         }
                     }catch (NullPointerException e){}
@@ -323,18 +310,14 @@ public class PlayActivity extends AppCompatActivity {
                         }
                     }catch (NullPointerException e){}
                 }
-                /*
                 try{
                     if(dataSnapshot.getValue(String.class).contains("exit")){
                         Toast.makeText(PlayActivity.this,text.replace("Игра закончена, противник вышел из игры",""),Toast.LENGTH_SHORT).show();
                         removeDataFromDatabase();
-                        finish();
-                        //Intent i = new Intent(PlayActivity.this, StartActivity.class);
-                        //startActivity(i);
+                        Intent i = new Intent(PlayActivity.this, StartActivity.class);
+                        startActivity(i);
                     }
                 }catch (NullPointerException e){}
-
-                 */
             }
 
             @Override
@@ -459,14 +442,10 @@ public class PlayActivity extends AppCompatActivity {
                     }
                     // 12.05.2020 13:35 смещение карт в руке
                     if (flag){
-
-                        //cardAction(detectCard(get_im));
-                        //card_table[leave_card-1]=detectCard(get_im);
                         switch(role){
                             case "guest":
                                 guestTable.addCard2Table(detectCard(get_im));
                                 guestHand.removeById(detectCard(get_im));
-
                                 switch (view.getId()) {
                                     case R.id.iv_card1:
                                         iv_card1.setImageResource(guestHand.getCardByNum(0));
@@ -485,7 +464,6 @@ public class PlayActivity extends AppCompatActivity {
                             case "host":
                                 hostTable.addCard2Table(detectCard(get_im));
                                 hostHand.removeById(detectCard(get_im));
-
                                 switch (view.getId()) {
                                     case R.id.iv_card1:
                                         iv_card1.setImageResource(hostHand.getCardByNum(0));
@@ -551,9 +529,6 @@ public class PlayActivity extends AppCompatActivity {
         }
         return 0;
     }
-
-
-
 
     public void fooSetDice(int d1, int d2, int d3){
         value1 = d1;
@@ -1266,9 +1241,8 @@ public class PlayActivity extends AppCompatActivity {
                 alertDialog.setIcon(R.drawable.end_win);
                 alertDialog.setButton("Back", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        //PlayActivity.this.finish();
-                        //Intent i = new Intent(PlayActivity.this, StartActivity.class);
-                        //startActivity(i);
+                        Intent i = new Intent(PlayActivity.this, StartActivity.class);
+                        startActivity(i);
                     }
                 });
                 alertDialog.show();
@@ -1298,8 +1272,8 @@ public class PlayActivity extends AppCompatActivity {
                 removeDataFromDatabase();
                 alertDialog.setButton("Back", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        //Intent i = new Intent(PlayActivity.this, StartActivity.class);
-                        //startActivity(i);
+                        Intent i = new Intent(PlayActivity.this, StartActivity.class);
+                        startActivity(i);
                     }
                 });
                 alertDialog.show();
@@ -1357,8 +1331,6 @@ public class PlayActivity extends AppCompatActivity {
         DatabaseReference root = FirebaseDatabase.getInstance().getReference("rooms/"+playerName);
         root.setValue(null);
     }
-
-
 
     @Override
     public void onPause() {

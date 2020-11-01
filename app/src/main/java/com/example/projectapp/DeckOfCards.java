@@ -212,6 +212,9 @@ public class DeckOfCards extends AppCompatActivity{
             default:
                 drawable = getDrawable(R.drawable.magic_back);
         }
+        if (drawable==null){
+            return;
+        }
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(DeckOfCards.this, R.style.CustomDialog);
         final ImageView image = new ImageView(this);
         image.setImageDrawable(drawable);
