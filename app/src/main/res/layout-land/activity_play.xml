@@ -365,17 +365,17 @@
         android:id="@+id/end"
         android:layout_width="90sp"
         android:layout_height="40sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/brick_end_of_turn"
         app:layout_constraintEnd_toStartOf="@+id/spells"
         app:layout_constraintStart_toEndOf="@+id/spells2"
-        app:layout_constraintTop_toBottomOf="@+id/imageview_right" />
+        app:layout_constraintTop_toBottomOf="@+id/Roll" />
 
     <ImageButton
         android:id="@+id/Roll"
         android:layout_width="90sp"
         android:layout_height="40sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/brick_roll"
         app:layout_constraintEnd_toStartOf="@+id/spells"
         app:layout_constraintStart_toEndOf="@+id/spells2"

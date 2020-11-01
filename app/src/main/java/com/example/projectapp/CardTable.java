@@ -14,8 +14,21 @@ public class CardTable {
         this.qntCard = 0;
     }
 
-    public int setTable(int ... v){
-        this.cleanTable();
+    public int getCardByNum(int num){
+        return cards[num];
+    }
+
+    public void setCards(String[] mas){
+        this.qntCard=0;
+        for (int i=0; i<mas.length; i++){
+            this.cards[i]=Integer.parseInt(mas[i]);
+            if (this.cards[i]!=0){
+                this.qntCard++;
+            }
+        }
+    }
+
+    public int layOutTable(int ... v){
         int res=0;
         for (int i = 0; i < v.length; i++) {
             if (Constants.I_MAIN_CARDS.contains(v[i])){
@@ -43,7 +56,6 @@ public class CardTable {
     }
 
     public int addCard2Table(int card){
-        this.cleanTable();
         if (Constants.I_MAIN_CARDS.contains(card)){
             this.cards[0]=card;
             this.qntCard++;
@@ -69,7 +81,7 @@ public class CardTable {
     public void cleanTable(){
         this.cards[0]=Constants.I_CARD;
         this.cards[1]=Constants.K_CARD;
-        this.cards[3]=Constants.D_CARD;
+        this.cards[2]=Constants.D_CARD;
         for (int i=0; i<3; i++){
             this.symbols[i]=0;
         }
@@ -78,6 +90,14 @@ public class CardTable {
 
     public int[] getCardTable(){
         return this.cards;
+    }
+
+    public String getString(){
+        String res="";
+        for (int i=0; i<3; i++){
+            res+=""+this.cards[i]+"*";
+        }
+        return res;
     }
 
     public int[] getCardTableWith0(){
