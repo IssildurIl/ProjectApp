@@ -5,12 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 import static com.example.projectapp.Constants.*;
 
@@ -39,7 +36,7 @@ public class ResPasActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = inputEmail.getText().toString().trim();
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplication(), R.string.regemail, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), getString(R.string.regemail), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 progressBar.setVisibility(View.VISIBLE);
@@ -48,9 +45,9 @@ public class ResPasActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(ResPasActivity.this, R.string.sendInst, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ResPasActivity.this, getString(R.string.sendInst), Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(ResPasActivity.this, R.string.errorpas, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ResPasActivity.this, getString(R.string.errorpas), Toast.LENGTH_SHORT).show();
                                 }
                                 progressBar.setVisibility(View.GONE);
                             }
