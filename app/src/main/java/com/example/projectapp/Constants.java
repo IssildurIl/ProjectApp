@@ -111,6 +111,16 @@ public class Constants {
     public static EditText APP_PREFERENCE_LOGINACTIVITY_INPUT_EMAIL, APP_PREFERENCE_LOGINACTIVITY_INPUT_PASSWORD;
     public static Button APP_PREFERENCE_LOGINACTIVITY_BUTTON_SIGN_UP, APP_PREFERENCE_LOGINACTIVITY_BUTTON_LOG_IN, APP_PREFERENCE_LOGINACTIVITY_BUTTON_RESET;
     //PlayActivity
+    public static String CONNECT = "Подождите поключения противника";
+    public static String WAIT = "Составьте заклинание и дождитесь конца хода противника";
+    public static String HOST_WAIT = "Дождитесь конца хода противника";
+    public static String ACTIV_ROLL = "Составьте заклинание и нажмите на кнопку, чтобы бросить кубики";
+    public static String ROLL = "Нажмите на кнопку, чтобы бросить кубики";
+    public static String END = "Нажмите на кнопку, чтобы закончить ход";
+    public static String TAKE = "Нажмите на колоду, чтобы взять карты";
+    public static String NOTHING = " . . . ";
+
+
 
     //ResPas
     public static EditText inputEmail;

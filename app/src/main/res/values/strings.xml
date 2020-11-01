@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">BattleMages</string>
-    <string name="menu_start_game">Начать игру</string>
-    <string name="menu_quick_game">Настройка игрового профиля</string>
+    <string name="menu_start_game">Игра с компьютером</string>
+    <string name="menu_quick_game">Настройки профиля</string>
     <string name="menu_settings_game">Игровые настройки</string>
     <string name="menu_rules">Правила</string>
     <string name="menu_exit">Выход</string>
@@ -30,6 +30,7 @@
     <string name="sixsignerr">Пароль слишком короткий. Он должен быть не менее 6 знаков!</string>
     <string name="regsuccess">Регистрация прошла успешно!</string>
     <string name="refailure">Ошибка регестрации</string>
+
 
 
 </resources>

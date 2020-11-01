@@ -146,14 +146,14 @@ public class PlayActivity extends AppCompatActivity {
                 message= role+":";
                 switch (role){
                     case "guest":
+                        getPrompt(Constants.TAKE);
                         tableAction(guestTable);
                         card_num=hostHand.takeCards(card_num, Constants.MAIN_CARDS);
-                        //Toast.makeText(PlayActivity.this,""+s_card_hand[0]+"-"+s_card_hand[5],Toast.LENGTH_SHORT).show();
                         message+="card+"+hostHand.getString();
-                        //Toast.makeText(PlayActivity.this,mas_card,Toast.LENGTH_SHORT).show();
                         message+="table*"+guestTable.getString();
                         break;
                     case "host":
+                        getPrompt(Constants.HOST_WAIT);
                         message+="table*"+hostTable.getString();
                 }
                 message+="dice"+value1+value2+value3;
@@ -173,19 +173,20 @@ public class PlayActivity extends AppCompatActivity {
                 }
         });
         messageRef = database.getReference("rooms/"+ roomName+"/message");
+        cleanTable();
         switch(role){
             case "host":
+                getPrompt(Constants.CONNECT);
                 //message= role+":table*"+hostTable.getString();
                 message= role+":table*0*0*0*";
                 break;
             case "guest":
+                getPrompt(Constants.WAIT);
                 card_num=guestHand.takeCards(card_num, Constants.MAIN_CARDS);
                 //Toast.makeText(PlayActivity.this, ""+card_num, Toast.LENGTH_SHORT).show();
-                Toast.makeText(PlayActivity.this, ""+guestHand.getCards(), Toast.LENGTH_SHORT).show();
-                //setHand(guestHand.getCards());
+                setHand(guestHand.getCards());
                 card_num=hostHand.takeCards(card_num, Constants.MAIN_CARDS);
                 message= role+":card+"+hostHand.getString()+"table*"+guestTable.getString()+"dice111";
-                //message= role+":card+0+0+0+0+0+0+table*0*0*0*dice111";
                 //message= role+":card:0+table:0*dice11";
         }
         messageRef.setValue(message);
@@ -235,7 +236,13 @@ public class PlayActivity extends AppCompatActivity {
                 soundPool.play(sound1, 1, 1, 0, 0, 1);
                 switch(role){
                     case "guest":
+                        getPrompt(Constants.WAIT);
                         card_num=guestHand.takeCards(card_num, Constants.MAIN_CARDS);
+                        setHand(guestHand.getCards());
+                        break;
+                    case "host":
+                        getPrompt(Constants.ACTIV_ROLL);
+                        setHand(hostHand.getCards());
                 }
                 cleanTable();
             }
@@ -251,6 +258,7 @@ public class PlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 soundPool.play(sound4, 1, 1, 0, 0, 1);
+                getPrompt(Constants.END);
                 Click.setEnabled(true);
                 rollDicesButton.setEnabled(false);
                 fooRollDice();
@@ -265,13 +273,27 @@ public class PlayActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String text=""+ dataSnapshot.getValue(String.class);
+                int d1s = value1, d2s = value2, d3s = value3;
                 int d1, d2, d3;
                 int last_index, prev_index;
                 //String[] sub_str = { "", "", "", "", "", "", "" };
-                if(role.equals("host")){
+                if(text.contains("exit")){
+                    Toast.makeText(PlayActivity.this,text.replace("Игра закончена, противник вышел из игры",""),Toast.LENGTH_SHORT).show();
+                    removeDataFromDatabase();
+                    finish();
+                    //Intent i = new Intent(PlayActivity.this, StartActivity.class);
+                    //startActivity(i);
+                }
+                else if(role.equals("host")){
                     try{
                         if(dataSnapshot.getValue(String.class).contains("guest:")) {
                             rollDicesButton.setEnabled(true);
+                            if (hostTable.qntCardOnTable()==0) {
+                                getPrompt(Constants.ACTIV_ROLL);
+                            }else{
+                                getPrompt(Constants.TAKE);
+                            }
+
                             prev_index = text.indexOf("+");
                             last_index = text.lastIndexOf("+");
                             hostHand.setCards(text.substring(prev_index + 1, last_index).split("\\+"));
@@ -286,6 +308,7 @@ public class PlayActivity extends AppCompatActivity {
                             fooSetDice(d1, d2, d3);
                             setTable(guestTable.getCardTable());
                             tableActionOpp(guestTable);
+                            fooSetDice(d1s, d2s, d3s);
                             tableAction(hostTable);
                             guestTable.cleanTable();
                             hostTable.cleanTable();
@@ -304,6 +327,7 @@ public class PlayActivity extends AppCompatActivity {
                     try{
                         if(dataSnapshot.getValue(String.class).contains("host:")){
                             rollDicesButton.setEnabled(true);
+                            getPrompt(Constants.ROLL);
 
                             prev_index = text.indexOf("*");
                             last_index = text.lastIndexOf("*");
@@ -338,7 +362,7 @@ public class PlayActivity extends AppCompatActivity {
                     if(dataSnapshot.getValue(String.class).contains("exit")){
                         Toast.makeText(PlayActivity.this,text.replace("Игра закончена, противник вышел из игры",""),Toast.LENGTH_SHORT).show();
                         removeDataFromDatabase();
-                        PlayActivity.this.finish();
+                        finish();
                         //Intent i = new Intent(PlayActivity.this, StartActivity.class);
                         //startActivity(i);
                     }
@@ -474,7 +498,7 @@ public class PlayActivity extends AppCompatActivity {
                             case "guest":
                                 guestTable.addCard2Table(detectCard(get_im));
                                 guestHand.removeById(detectCard(get_im));
-                                /*
+
                                 switch (view.getId()) {
                                     case R.id.iv_card1:
                                         iv_card1.setImageResource(guestHand.getCardByNum(0));
@@ -489,13 +513,11 @@ public class PlayActivity extends AppCompatActivity {
                                     case R.id.iv_card6:
                                         iv_card6.setImageResource(guestHand.getCardByNum(5));                                      
                                 }
-
-                                 */
                                 break;
                             case "host":
                                 hostTable.addCard2Table(detectCard(get_im));
                                 hostHand.removeById(detectCard(get_im));
-                                /*
+
                                 switch (view.getId()) {
                                     case R.id.iv_card1:
                                         iv_card1.setImageResource(hostHand.getCardByNum(0));
@@ -510,8 +532,6 @@ public class PlayActivity extends AppCompatActivity {
                                     case R.id.iv_card6:
                                         iv_card6.setImageResource(hostHand.getCardByNum(5));
                                 }
-
-                                 */
                                 break;
                         }
                         /*
@@ -608,12 +628,12 @@ public class PlayActivity extends AppCompatActivity {
         ((ImageView) findViewById(R.id.thirdcard2)).setImageResource(mas[2]);
     }
     public void setHand(int[] mas){
-        iv_card1.setImageResource(mas[0]);
-        iv_card2.setImageResource(mas[1]);
-        iv_card3.setImageResource(mas[2]);
-        iv_card4.setImageResource(mas[3]);
-        iv_card5.setImageResource(mas[4]);
-        iv_card6.setImageResource(mas[5]);
+        ((ImageView) findViewById(R.id.iv_card1)).setImageResource(mas[0]);
+        ((ImageView) findViewById(R.id.iv_card2)).setImageResource(mas[1]);
+        ((ImageView) findViewById(R.id.iv_card3)).setImageResource(mas[2]);
+        ((ImageView) findViewById(R.id.iv_card4)).setImageResource(mas[3]);
+        ((ImageView) findViewById(R.id.iv_card5)).setImageResource(mas[4]);
+        ((ImageView) findViewById(R.id.iv_card6)).setImageResource(mas[5]);
     }
     /*
     public void opp_turn(){
@@ -1398,9 +1418,9 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     public void cleanTable(){
-        fstcard.setImageResource(Constants.I_CARD);
-        seccard.setImageResource(Constants.K_CARD);
-        thirdcard.setImageResource(Constants.D_CARD);
+        ((ImageView)findViewById(R.id.fstcard)).setImageResource(Constants.I_CARD);
+        ((ImageView)findViewById(R.id.seccard)).setImageResource(Constants.K_CARD);
+        ((ImageView)findViewById(R.id.thirdcard)).setImageResource(Constants.D_CARD);
         ((ImageView)findViewById(R.id.fstcard2)).setImageResource(Constants.I_CARD);
         ((ImageView)findViewById(R.id.seccard2)).setImageResource(Constants.K_CARD);
         ((ImageView)findViewById(R.id.thirdcard2)).setImageResource(Constants.D_CARD);
@@ -1435,6 +1455,10 @@ public class PlayActivity extends AppCompatActivity {
                 "drawable", "com.example.projectapp");
         mRightImageView.setImageResource(res2);
         mRightImageView.animate().setDuration(1000).rotationYBy(3600f).start();
+    }
+
+    public void getPrompt(String mes){
+        ((TextView)findViewById(R.id.prompt)).setText(mes);
     }
 
     void removeDataFromDatabase(){
