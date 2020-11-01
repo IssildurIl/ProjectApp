@@ -49,11 +49,11 @@ public class LogInActivity extends AppCompatActivity {
                 final String email = APP_PREFERENCE_LOGINACTIVITY_INPUT_EMAIL.getText().toString();
                 final String password = APP_PREFERENCE_LOGINACTIVITY_INPUT_PASSWORD.getText().toString();
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), R.string.eaddr, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.eaddr), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), R.string.epass, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.epass), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 APP_PREFERENCE_FIREBASE_AUTHENTIFICATION.signInWithEmailAndPassword(email, password)
