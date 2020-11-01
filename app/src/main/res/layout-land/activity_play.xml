@@ -72,7 +72,7 @@
 
     <TextView
         android:id="@+id/hp"
-        android:layout_width="40sp"
+        android:layout_width="25sp"
         android:layout_height="35sp"
         android:shadowColor="#000000"
         android:shadowDx="2.5"
@@ -81,7 +81,7 @@
         android:text="@string/hp"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="30sp"
+        android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/dead3"
         app:layout_constraintTop_toTopOf="@+id/dead3" />
@@ -105,7 +105,7 @@
 
     <TextView
         android:id="@+id/hp2"
-        android:layout_width="35sp"
+        android:layout_width="25sp"
         android:layout_height="35sp"
         android:shadowColor="#000000"
         android:shadowDx="2.5"

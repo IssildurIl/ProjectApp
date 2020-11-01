@@ -51,23 +51,9 @@ public class PlayActivity extends AppCompatActivity {
     public CardTable hostTable = new CardTable();
     public CardTable guestTable = new CardTable();
 
-     /*
-    public CardHand hostHand;
-    public CardHand guestHand;
-    public CardTable hostTable;
-    public CardTable guestTable;
-     */
-    public int[] c_card_table = { 0, 0, 0};
-    public int[] c_table_opp = { 0, 0, 0};
-    public int[] c_card_hand = { 0, 0, 0, 0, 0, 0};
-    public int[] s_card_table = { 0, 0, 0};
-    public int[] s_table_opp = { 0, 0, 0};
-    public int[] s_card_hand = { 0, 0, 0, 0, 0, 0, 0};
-    ArrayList main_cards;
     ImageView fstcard,seccard,thirdcard;
-    int card_num=0, c_leave_card=6, c_leave_opp=0, s_leave_card=6, s_leave_opp=6;
+    int card_num=0;
     ImageView PlayerIcon, mLeftImageView,mRightImageView,mMidImageView;
-    int countSymbol[] = new int[3];
     //
     private SharedPreferences mSettings;
     private int[] mIcone = { R.drawable.icon_enchanter, R.drawable.icon_genie,
@@ -92,12 +78,6 @@ public class PlayActivity extends AppCompatActivity {
         stopService(new Intent(PlayActivity.this, CommonPlayer.class));
         startService(new Intent(PlayActivity.this, BattlePlayer.class));
 
-        /*
-        hostHand = new CardHand();
-        guestHand = new CardHand();
-        hostTable = new CardTable();
-        guestTable = new CardTable();
-         */
         //местные звуки
         soundPool = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
 
@@ -119,7 +99,7 @@ public class PlayActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        playerName = mSettings.getString(APP_PREFERENCES_NETNAME,"default player");
+        playerName = mSettings.getString(APP_PREFERENCES_NETNAME,"Player");
         String savedIcone = mSettings.getString(APP_PREFERENCES_ICONE, "0");
         getText();
 
@@ -178,10 +158,14 @@ public class PlayActivity extends AppCompatActivity {
             case "host":
                 getPrompt(Constants.CONNECT);
                 //message= role+":table*"+hostTable.getString();
-                message= role+":table*0*0*0*";
+                message= role+":table*"+hostTable.getString();
                 break;
             case "guest":
                 getPrompt(Constants.WAIT);
+                if (Constants.MAIN_CARDS.size()<card_num){
+                    card_num=0;
+                    Collections.shuffle(Constants.MAIN_CARDS);
+                }
                 card_num=guestHand.takeCards(card_num, Constants.MAIN_CARDS);
                 //Toast.makeText(PlayActivity.this, ""+card_num, Toast.LENGTH_SHORT).show();
                 setHand(guestHand.getCards());
@@ -234,10 +218,18 @@ public class PlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 soundPool.play(sound1, 1, 1, 0, 0, 1);
+                guestTable.cleanTable();
+                hostTable.cleanTable();
                 switch(role){
                     case "guest":
+                        if (Constants.MAIN_CARDS.size()<card_num){
+                            card_num=0;
+                            Collections.shuffle(Constants.MAIN_CARDS);
+                        }
                         getPrompt(Constants.WAIT);
+                        //Toast.makeText(PlayActivity.this, ""+card_num+" "+guestHand.qntCardInHand(), Toast.LENGTH_SHORT).show();
                         card_num=guestHand.takeCards(card_num, Constants.MAIN_CARDS);
+                        Toast.makeText(PlayActivity.this, ""+Constants.MAIN_CARDS.size()+" "+card_num+" "+guestHand.qntCardInHand(), Toast.LENGTH_SHORT).show();
                         setHand(guestHand.getCards());
                         break;
                     case "host":
@@ -277,27 +269,20 @@ public class PlayActivity extends AppCompatActivity {
                 int d1, d2, d3;
                 int last_index, prev_index;
                 //String[] sub_str = { "", "", "", "", "", "", "" };
-                if(text.contains("exit")){
-                    Toast.makeText(PlayActivity.this,text.replace("Игра закончена, противник вышел из игры",""),Toast.LENGTH_SHORT).show();
-                    removeDataFromDatabase();
-                    finish();
-                    //Intent i = new Intent(PlayActivity.this, StartActivity.class);
-                    //startActivity(i);
-                }
-                else if(role.equals("host")){
+                if(role.equals("host")){
                     try{
                         if(dataSnapshot.getValue(String.class).contains("guest:")) {
                             rollDicesButton.setEnabled(true);
-                            if (hostTable.qntCardOnTable()==0) {
-                                getPrompt(Constants.ACTIV_ROLL);
-                            }else{
-                                getPrompt(Constants.TAKE);
-                            }
 
                             prev_index = text.indexOf("+");
                             last_index = text.lastIndexOf("+");
                             hostHand.setCards(text.substring(prev_index + 1, last_index).split("\\+"));
-                            setHand(hostHand.getCards());
+                            if (hostTable.qntCardOnTable()==0) {
+                                getPrompt(Constants.ACTIV_ROLL);
+                                setHand(hostHand.getCards());
+                            }else{
+                                getPrompt(Constants.TAKE);
+                            }
                             prev_index = text.indexOf("*");
                             last_index = text.lastIndexOf("*");
                             guestTable.setCards(text.substring(prev_index + 1, last_index).split("\\*"));
@@ -310,17 +295,9 @@ public class PlayActivity extends AppCompatActivity {
                             tableActionOpp(guestTable);
                             fooSetDice(d1s, d2s, d3s);
                             tableAction(hostTable);
-                            guestTable.cleanTable();
-                            hostTable.cleanTable();
-                        /*
-                        prev_index=text.indexOf("dice");
-                        d1=Integer.parseInt(text.substring(prev_index+4,prev_index+5));
-                        d2=Integer.parseInt(text.substring(prev_index+5,prev_index+6));
-                        fooSetDice(d1,d2);
-                                                */
+                            //guestTable.cleanTable();
+                            //hostTable.cleanTable();
                             Click.setEnabled(true);
-                            //((TextView)findViewById(R.id.test)).setText(text);
-                            //Toast.makeText(PlayActivity.this, text.replace("guest:", ""), Toast.LENGTH_SHORT).show();
                         }
                     }catch (NullPointerException e){}
                 }else if(role.equals("guest")){
@@ -343,21 +320,10 @@ public class PlayActivity extends AppCompatActivity {
                             for (int i=0; i<3; i++) {
                                 hostHand.removeById(hostTable.getCardByNum(i));
                             }
-                            guestTable.cleanTable();
-                            hostTable.cleanTable();
-
-
-                        /*
-                        prev_index=text.indexOf("dice");
-                        d1=Integer.parseInt(text.substring(prev_index+4,prev_index+5));
-                        d2=Integer.parseInt(text.substring(prev_index+5,prev_index+6));
-                        fooSetDice(d1,d2);
-                                              */
-                            //((TextView)findViewById(R.id.test)).setText(text);
-                            //Toast.makeText(PlayActivity.this,text.replace("host:",""),Toast.LENGTH_SHORT).show();
                         }
                     }catch (NullPointerException e){}
                 }
+                /*
                 try{
                     if(dataSnapshot.getValue(String.class).contains("exit")){
                         Toast.makeText(PlayActivity.this,text.replace("Игра закончена, противник вышел из игры",""),Toast.LENGTH_SHORT).show();
@@ -367,6 +333,8 @@ public class PlayActivity extends AppCompatActivity {
                         //startActivity(i);
                     }
                 }catch (NullPointerException e){}
+
+                 */
             }
 
             @Override
@@ -534,26 +502,6 @@ public class PlayActivity extends AppCompatActivity {
                                 }
                                 break;
                         }
-                        /*
-                        switch (view.getId()) {
-                            case R.id.iv_card1:
-                                get_im=iv_card2.getDrawable();
-                                iv_card1.setImageDrawable(get_im);
-                            case R.id.iv_card2:
-                                get_im=iv_card3.getDrawable();
-                                iv_card2.setImageDrawable(get_im);
-                            case R.id.iv_card3:
-                                get_im=iv_card4.getDrawable();
-                                iv_card3.setImageDrawable(get_im);
-                            case R.id.iv_card4:
-                                get_im=iv_card5.getDrawable();
-                                iv_card4.setImageDrawable(get_im);
-                            case R.id.iv_card5:
-                                get_im=iv_card6.getDrawable();
-                                iv_card5.setImageDrawable(get_im);
-                            case R.id.iv_card6:
-                                iv_card6.setImageDrawable(null);
-                        }*/
                     }
             }
             return true;
@@ -635,58 +583,6 @@ public class PlayActivity extends AppCompatActivity {
         ((ImageView) findViewById(R.id.iv_card5)).setImageResource(mas[4]);
         ((ImageView) findViewById(R.id.iv_card6)).setImageResource(mas[5]);
     }
-    /*
-    public void opp_turn(){
-        leave_opp=0;
-        int num;
-        for (num=0; num<card_opp.length; num++){
-            if (cards_i.indexOf(card_opp[num])>-1){
-                ((ImageView)findViewById(R.id.fstcard2)).setImageResource(card_opp[num]);
-                remove_card_opp(num);
-                card_table[leave_opp]=card_opp[num];
-                leave_opp++;
-                break;
-            }
-        }
-        for (num=0; num<card_opp.length; num++){
-            if (cards_k.indexOf(card_opp[num])>-1){
-                ((ImageView)findViewById(R.id.seccard2)).setImageResource(card_opp[num]);
-                remove_card_opp(num);
-                card_table[leave_opp]=card_opp[num];
-                leave_opp++;
-                break;
-            }
-        }
-        for (num=0; num<card_opp.length; num++){
-            if (cards_d.indexOf(card_opp[num])>-1){
-                ((ImageView)findViewById(R.id.thirdcard2)).setImageResource(card_opp[num]);
-                remove_card_opp(num);
-                card_table[leave_opp]=card_opp[num];
-                leave_opp++;
-                break;
-            }
-        }
-
-    }
-     */
-/*
-    public void remove_card_opp(int iter){
-        switch (iter) {
-            case 0:
-                card_opp[0]=card_opp[1];
-            case 1:
-                card_opp[1]=card_opp[2];
-            case 2:
-                card_opp[2]=card_opp[3];
-            case 3:
-                card_opp[3]=card_opp[4];
-            case 4:
-                card_opp[4]=card_opp[5];
-            case 5:
-                card_opp[5]=0;
-        }
-    }
- */
 
     public int[] cardAction(CardTable card, int pos){
         card.defAllSymbols();
@@ -1366,15 +1262,11 @@ public class PlayActivity extends AppCompatActivity {
                 AlertDialog alertDialog = new AlertDialog.Builder(PlayActivity.this).create();
                 alertDialog.setTitle("Игра окончена");
                 alertDialog.setMessage("Вы победили!");
-                /*
-                message="exit";
-                messageRef.setValue(message);
-                */
                 removeDataFromDatabase();
                 alertDialog.setIcon(R.drawable.end_win);
                 alertDialog.setButton("Back", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        PlayActivity.this.finish();
+                        //PlayActivity.this.finish();
                         //Intent i = new Intent(PlayActivity.this, StartActivity.class);
                         //startActivity(i);
                     }
@@ -1406,8 +1298,8 @@ public class PlayActivity extends AppCompatActivity {
                 removeDataFromDatabase();
                 alertDialog.setButton("Back", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent i = new Intent(PlayActivity.this, StartActivity.class);
-                        startActivity(i);
+                        //Intent i = new Intent(PlayActivity.this, StartActivity.class);
+                        //startActivity(i);
                     }
                 });
                 alertDialog.show();
@@ -1465,6 +1357,9 @@ public class PlayActivity extends AppCompatActivity {
         DatabaseReference root = FirebaseDatabase.getInstance().getReference("rooms/"+playerName);
         root.setValue(null);
     }
+
+
+
     @Override
     public void onPause() {
         super.onPause();
@@ -1478,4 +1373,6 @@ public class PlayActivity extends AppCompatActivity {
         super.onResume();
         startService(new Intent(PlayActivity.this, BattlePlayer.class));
     }
+
+
 }

@@ -75,16 +75,29 @@ public class CardHand {
     }
 
     public int takeCards(int position, ArrayList<Integer> arr){
+        /*
         int stop=0;
-        if (arr.size()-position > 6-this.qntCard){
+        if ((arr.size()-position) > (6-this.qntCard)){
             stop=6-this.qntCard;
         }else{
             stop=arr.size()-position;
         }
-        for (int i=0; i<stop; i++){
+        for (int i=this.qntCard; i<stop; i++){
             this.cards[i]=arr.get(i+position);
             this.qntCard++;
         }
         return position+stop;
+              */
+        int iterator=0;
+        try{
+            for (iterator=this.qntCard; iterator<6; iterator++){
+                this.cards[iterator]=arr.get(iterator+position);
+                this.qntCard++;
+            }
+        } catch(Exception e){
+
+        }finally {
+            return position+iterator;
+        }
     }
 }

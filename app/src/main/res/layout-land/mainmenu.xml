@@ -63,7 +63,7 @@
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="30sp"
         android:layout_height="30sp"
-        android:layout_marginEnd="170dp"
+        android:layout_marginEnd="223sp"
         android:layout_marginBottom="120dp"
         android:src="@drawable/firemove2"
         fbutton:layout_constraintBottom_toBottomOf="parent"
@@ -73,7 +73,7 @@
         android:id="@+id/gifImageView2"
         android:layout_width="30sp"
         android:layout_height="30sp"
-        android:layout_marginStart="165dp"
+        android:layout_marginStart="223sp"
         android:layout_marginBottom="120dp"
         android:src="@drawable/firemove2"
         fbutton:layout_constraintBottom_toBottomOf="parent"

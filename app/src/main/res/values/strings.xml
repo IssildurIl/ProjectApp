@@ -10,8 +10,8 @@
     <string name="action_settings">Settings</string>
     <string name="length_min_pas">Короткий пароль!</string>
     <string name="auth_fail">Ошибка аутентификации</string>
-    <string name="hp">10</string>
-    <string name="opphp">10</string>
+    <string name="hp">5</string>
+    <string name="opphp">5</string>
     <string name="trainhp">5</string>
     <string name="eaddr">Введите Еmail адрес!</string>
     <string name="epass">Введите пароль!</string>
