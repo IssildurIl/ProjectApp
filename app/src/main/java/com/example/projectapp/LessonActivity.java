@@ -759,9 +759,6 @@ public class LessonActivity extends AppCompatActivity {
         int[] hp = {0, 0};
         for (int i = 0; i < qnt; i++) {
             hp = cardAction(APP_PREFERENCE_DECKOFCARDS_CARD_TABLE[i]);
-            /*aa= ((TextView) findViewById(R.id.playerNick)).getText().toString();
-            aa+=" "+hp[0]+";"+hp[1];
-            ((TextView) findViewById(R.id.playerNick)).setText(aa);*/
             setHP(getHP() + hp[1]);
             setSelfHP(getSelfHP() + hp[0]);
         }
