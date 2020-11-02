@@ -218,9 +218,8 @@ public class PlayActivity extends AppCompatActivity {
                             Collections.shuffle(Constants.MAIN_CARDS);
                         }
                         getPrompt(Constants.WAIT);
-                        //Toast.makeText(PlayActivity.this, ""+card_num+" "+guestHand.qntCardInHand(), Toast.LENGTH_SHORT).show();
                         card_num=guestHand.takeCards(card_num, Constants.MAIN_CARDS);
-                        Toast.makeText(PlayActivity.this, ""+Constants.MAIN_CARDS.size()+" "+card_num+" "+guestHand.qntCardInHand(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(PlayActivity.this, ""+Constants.MAIN_CARDS.size()+" "+card_num+" "+guestHand.qntCardInHand(), Toast.LENGTH_SHORT).show();
                         setHand(guestHand.getCards());
                         break;
                     case "host":
@@ -261,7 +260,16 @@ public class PlayActivity extends AppCompatActivity {
                 int last_index, prev_index;
                 if(role.equals("host")){
                     try{
-                        if(dataSnapshot.getValue(String.class).contains("guest:")) {
+                        if(text.contains("guest:result:")){
+                            if (text.contains("win")){
+                                loss();
+
+                            }else{
+                                win();
+
+                            }
+                        }
+                        else if(dataSnapshot.getValue(String.class).contains("guest:")) {
                             rollDicesButton.setEnabled(true);
                             prev_index = text.indexOf("+");
                             last_index = text.lastIndexOf("+");
@@ -286,10 +294,19 @@ public class PlayActivity extends AppCompatActivity {
                             tableAction(hostTable);
                             Click.setEnabled(true);
                         }
-                    }catch (NullPointerException e){}
+                    }catch (Exception e){}
                 }else if(role.equals("guest")){
                     try{
-                        if(dataSnapshot.getValue(String.class).contains("host:")){
+                        if(text.contains("host:result:")){
+                            if (text.contains("win")){
+                                loss();
+
+                            }else{
+                                win();
+
+                            }
+                        }
+                        else if(dataSnapshot.getValue(String.class).contains("host:")){
                             rollDicesButton.setEnabled(true);
                             getPrompt(Constants.ROLL);
 
@@ -308,11 +325,11 @@ public class PlayActivity extends AppCompatActivity {
                                 hostHand.removeById(hostTable.getCardByNum(i));
                             }
                         }
-                    }catch (NullPointerException e){}
+                    }catch (Exception e){}
                 }
                 try{
                     if(dataSnapshot.getValue(String.class).contains("exit")){
-                        Toast.makeText(PlayActivity.this,text.replace("Игра закончена, противник вышел из игры",""),Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(PlayActivity.this,text.replace("Игра закончена, противник вышел из игры",""),Toast.LENGTH_SHORT).show();
                         removeDataFromDatabase();
                         Intent i = new Intent(PlayActivity.this, StartActivity.class);
                         startActivity(i);
@@ -1234,18 +1251,7 @@ public class PlayActivity extends AppCompatActivity {
             }else{
                 ((TextView)findViewById(R.id.dead2)).setText("3");
                 ((TextView)findViewById(R.id.hp2)).setText("0");
-                AlertDialog alertDialog = new AlertDialog.Builder(PlayActivity.this).create();
-                alertDialog.setTitle("Игра окончена");
-                alertDialog.setMessage("Вы победили!");
-                removeDataFromDatabase();
-                alertDialog.setIcon(R.drawable.end_win);
-                alertDialog.setButton("Back", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent i = new Intent(PlayActivity.this, StartActivity.class);
-                        startActivity(i);
-                    }
-                });
-                alertDialog.show();
+                win();
             }
         }else{
             ((TextView)findViewById(R.id.hp2)).setText(Integer.toString(hp));
@@ -1265,18 +1271,7 @@ public class PlayActivity extends AppCompatActivity {
             }else{
                 ((TextView)findViewById(R.id.dead)).setText("3");
                 ((TextView)findViewById(R.id.hp)).setText("0");
-                AlertDialog alertDialog = new AlertDialog.Builder(PlayActivity.this).create();
-                alertDialog.setTitle("Игра окончена");
-                alertDialog.setMessage("Вы проиграли! Не отчаивайтесь, это не конец света, есть же некромантия!");
-                alertDialog.setIcon(R.drawable.end_dead);
-                removeDataFromDatabase();
-                alertDialog.setButton("Back", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent i = new Intent(PlayActivity.this, StartActivity.class);
-                        startActivity(i);
-                    }
-                });
-                alertDialog.show();
+                loss();
             }
         }else{
             ((TextView)findViewById(R.id.hp)).setText(Integer.toString(hp));
@@ -1344,6 +1339,46 @@ public class PlayActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         startService(new Intent(PlayActivity.this, BattlePlayer.class));
+    }
+
+    public void win(){
+        AlertDialog alertDialog = new AlertDialog.Builder(PlayActivity.this).create();
+        alertDialog.setTitle("Игра окончена");
+        alertDialog.setMessage("Вы победили!");
+        removeDataFromDatabase();
+        alertDialog.setIcon(R.drawable.end_win);
+        alertDialog.setButton("Back", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(PlayActivity.this, StartActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        messageRef.setValue(""+role+"result:win");
+        alertDialog.show();
+        Intent i = new Intent(PlayActivity.this, StartActivity.class);
+        startActivity(i);
+
+    }
+
+    public void loss(){
+        AlertDialog alertDialog = new AlertDialog.Builder(PlayActivity.this).create();
+        alertDialog.setTitle("Игра окончена");
+        alertDialog.setMessage("Вы проиграли! Не отчаивайтесь, это не конец света, есть же некромантия!");
+        alertDialog.setIcon(R.drawable.end_dead);
+        removeDataFromDatabase();
+        alertDialog.setButton("Back", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(PlayActivity.this, StartActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        messageRef.setValue(""+role+"result:loss");
+        alertDialog.show();
+        Intent i = new Intent(PlayActivity.this, StartActivity.class);
+        startActivity(i);
+
     }
 
 
