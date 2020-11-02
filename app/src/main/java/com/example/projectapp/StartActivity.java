@@ -118,6 +118,10 @@ public class StartActivity extends AppCompatActivity {
         Intent i = new Intent(StartActivity.this, LogInActivity.class);
         startActivity(i);
     }
+    public void goToRules(View view){
+        Intent i = new Intent(StartActivity.this, RulesActivity.class);
+        startActivity(i);
+    }
     @Override
     public void onPause() {
         super.onPause();

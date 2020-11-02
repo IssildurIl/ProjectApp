@@ -18,6 +18,7 @@
         <activity android:name=".SignUpActivity" android:screenOrientation="landscape"/>
         <activity android:name=".DeckOfCards" android:screenOrientation="landscape"/>
         <activity android:name=".Customization" android:screenOrientation="landscape"/>
+        <activity android:name=".RulesActivity" android:screenOrientation="landscape"/>
         <activity android:name=".SplashScreenLayout" android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -70,7 +70,7 @@ public class Customization extends AppCompatActivity implements ViewSwitcher.Vie
     private void findViewById(){
         APP_PREFERENCES_CUSTOMIZATION_TITLE = findViewById(R.id.title);
         APP_PREFERENCES_CUSTOMIZATION_HINT = findViewById(R.id.hint);
-        APP_PREFERENCES_CUSTOMIZATION_BUTTON_BACK = findViewById(R.id.deckOfCards_BackButton);
+        APP_PREFERENCES_CUSTOMIZATION_BUTTON_BACK = findViewById(R.id.customActivity_BackButton);
         APP_PREFERENCES_CUSTOMIZATION_NICK = findViewById(R.id.inputNick);
         APP_PREFERENCES_CUSTOMIZATION_ICONE_SWITCHER = findViewById(R.id.IconeSwither);
         APP_PREFERENCES_CUSTOMIZATION_CHECK_LESSON = findViewById(R.id.checklesson);
