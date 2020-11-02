@@ -81,7 +81,7 @@
         android:text="@string/hp"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="25sp"
+        android:textSize="23sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/dead3"
         app:layout_constraintTop_toTopOf="@+id/dead3" />
@@ -114,7 +114,7 @@
         android:text="@string/opphp"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="25sp"
+        android:textSize="23sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/hp3"
         app:layout_constraintTop_toTopOf="@+id/hp3" />
@@ -138,7 +138,7 @@
         android:text="0"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="25sp"
+        android:textSize="23sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/dead4"
         app:layout_constraintTop_toTopOf="@+id/dead4" />
@@ -167,7 +167,7 @@
         android:text="0"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="25sp"
+        android:textSize="23sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -407,7 +407,7 @@
             android:id="@+id/fstcard2"
             android:layout_width="90dp"
             android:layout_height="135dp"
-            android:layout_marginLeft="1dp"
+            android:layout_marginLeft="2dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
             android:onClick="onImClick"
@@ -541,9 +541,11 @@
 
     <TextView
         android:id="@+id/hintopp"
+        style="@style/ourFont"
         android:layout_width="315dp"
         android:layout_height="163dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/parchment2"
         android:paddingStart="37dp"
         android:paddingTop="14dp"
@@ -551,17 +553,16 @@
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="20dp"
-        style="@style/ourFont"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/playerIcon"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/hintdice"
+        style="@style/ourFont"
         android:layout_width="195dp"
         android:layout_height="120dp"
-        android:layout_marginStart="288dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/parchment2"
         android:paddingStart="37dp"
         android:paddingTop="10dp"
@@ -569,10 +570,9 @@
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="16dp"
-        style="@style/ourFont"
         android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/playerNick2"
-        app:layout_constraintTop_toBottomOf="@+id/hand2" />
+        app:layout_constraintStart_toEndOf="@+id/imageview_mid"
+        app:layout_constraintTop_toTopOf="@+id/imageview_right" />
 
     <ImageButton
         android:id="@+id/NextHint"
@@ -585,14 +585,15 @@
 
     <TextView
         android:id="@+id/hintcard"
+        style="@style/ourFont"
         android:layout_width="340dp"
         android:layout_height="158dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/parchment2"
         android:paddingStart="30dp"
         android:paddingTop="14dp"
         android:paddingEnd="25dp"
         android:textAlignment="center"
-        style="@style/ourFont"
         android:textColor="#000000"
         android:textSize="16dp"
         android:visibility="invisible"
@@ -601,6 +602,7 @@
 
     <TextView
         android:id="@+id/hintcardhelp"
+        style="@style/ourFont"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/parchment2"
@@ -611,15 +613,14 @@
         android:textColor="#000000"
         android:textSize="20dp"
         android:visibility="gone"
-        style="@style/ourFont"
-        app:layout_constraintBottom_toTopOf="@+id/hand"
-        app:layout_constraintEnd_toEndOf="@+id/end" />
+        app:layout_constraintStart_toEndOf="@+id/imageview_mid"
+        app:layout_constraintTop_toTopOf="@+id/imageview_mid" />
 
     <TextView
         android:id="@+id/hintfinal"
+        style="@style/ourFont"
         android:layout_width="594dp"
         android:layout_height="150dp"
-        android:layout_marginTop="80dp"
         android:background="@drawable/parchment2"
         android:paddingStart="30dp"
         android:paddingTop="15dp"
@@ -627,17 +628,17 @@
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="19dp"
-        style="@style/ourFont"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/imageview_right"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/hello"
         style="@style/ourFont"
         android:layout_width="303dp"
         android:layout_height="134dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/parchment2"
         android:paddingStart="37dp"
         android:paddingTop="7dp"
@@ -645,15 +646,16 @@
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="22dp"
+        app:layout_constraintBottom_toBottomOf="@+id/end"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/hinttable"
         style="@style/ourFont"
         android:layout_width="203dp"
         android:layout_height="90dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/parchment2"
         android:paddingStart="37dp"
@@ -663,6 +665,6 @@
         android:textColor="#000000"
         android:textSize="18dp"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/iv_deck"
+        app:layout_constraintStart_toEndOf="@+id/iv_deck"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

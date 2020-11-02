@@ -588,7 +588,7 @@ public class DeckOfCards extends AppCompatActivity{
                values = new int[]{c3, c4};
                break;
            }
-           Toast.makeText(DeckOfCards.this,"я нанес 1"+values,Toast.LENGTH_SHORT).show();
+           //Toast.makeText(DeckOfCards.this,"я нанес 1"+values,Toast.LENGTH_SHORT).show();
            break;
        case 2:
            switch (APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_1 + APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_2){
@@ -602,7 +602,7 @@ public class DeckOfCards extends AppCompatActivity{
                    values = new int[]{c5, c6};
                    break;
            }
-           Toast.makeText(DeckOfCards.this,"я нанес 2"+values,Toast.LENGTH_SHORT).show();
+           //Toast.makeText(DeckOfCards.this,"я нанес 2"+values,Toast.LENGTH_SHORT).show();
            break;
        case 3:
            switch (APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_1 + APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_2 + APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_3){
@@ -616,10 +616,10 @@ public class DeckOfCards extends AppCompatActivity{
                    values = new int[]{c5, c6};
                    break;
            }
-           Toast.makeText(DeckOfCards.this,"я нанес 3"+values,Toast.LENGTH_SHORT).show();
+           //Toast.makeText(DeckOfCards.this,"я нанес 3"+values,Toast.LENGTH_SHORT).show();
            break;
             default:
-                Toast.makeText(DeckOfCards.this,"я не сработал",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(DeckOfCards.this,"я не сработал",Toast.LENGTH_SHORT).show();
 
    }
        return values;

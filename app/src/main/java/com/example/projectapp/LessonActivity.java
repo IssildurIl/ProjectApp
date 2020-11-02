@@ -597,7 +597,7 @@ public class LessonActivity extends AppCompatActivity {
                     case 5:case 6:
                     val = new int[]{c3, c4};
                 }
-                Toast.makeText(LessonActivity.this,"я нанес 1"+val,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LessonActivity.this,"я нанес 1"+val,Toast.LENGTH_SHORT).show();
                 break;
             case 2:
                 switch (APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_1 + APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_2){
@@ -608,7 +608,7 @@ public class LessonActivity extends AppCompatActivity {
                     case 10: case 11: case 12:
                         val = new int[]{c5, c6};
                 }
-                Toast.makeText(LessonActivity.this,"я нанес 2"+val,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LessonActivity.this,"я нанес 2"+val,Toast.LENGTH_SHORT).show();
                 break;
             case 3:
                 switch (APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_1 + APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_2 + APP_PREFERENCE_DECKOFCARDS_DICE_VALUE_3){
@@ -619,10 +619,10 @@ public class LessonActivity extends AppCompatActivity {
                     case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17:case 18:
                         val = new int[]{c5, c6};
                 }
-                Toast.makeText(LessonActivity.this,"я нанес 3"+val,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LessonActivity.this,"я нанес 3"+val,Toast.LENGTH_SHORT).show();
                 break;
             default:
-                Toast.makeText(LessonActivity.this,"я не сработал",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LessonActivity.this,"я не сработал",Toast.LENGTH_SHORT).show();
 
         }
         return val;
@@ -759,9 +759,6 @@ public class LessonActivity extends AppCompatActivity {
         int[] hp = {0, 0};
         for (int i = 0; i < qnt; i++) {
             hp = cardAction(APP_PREFERENCE_DECKOFCARDS_CARD_TABLE[i]);
-            /*aa= ((TextView) findViewById(R.id.playerNick)).getText().toString();
-            aa+=" "+hp[0]+";"+hp[1];
-            ((TextView) findViewById(R.id.playerNick)).setText(aa);*/
             setHP(getHP() + hp[1]);
             setSelfHP(getSelfHP() + hp[0]);
         }
